@@ -1,0 +1,3 @@
+[submodule "themes/MarpX"]
+	path = themes/MarpX
+	url = https://github.com/cunhapaulo/MarpX.git
