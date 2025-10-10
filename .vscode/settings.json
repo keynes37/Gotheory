@@ -1,0 +1,10 @@
+{
+  "markdown.marp.themes": [
+    "/themes/MarpX/themes/marpx.css",
+    "/themes/MarpX/themes/sparta.css"
+  ],
+  "markdown.marp.enableHtml": true,
+  "markdown.marp.html": true,
+  "markdown.marp.exportType": "pdf",
+  "markdown.marp.previewAutoReload": true
+}
