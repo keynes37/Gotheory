@@ -65,7 +65,7 @@ math: mathjax
 </div>
 
 </div>
-
+<figcaption align="center"> <i>Figuras de Internet</i> Free Commons.</figcaption>
 ---
 # Si no mas bien de:
 
@@ -111,7 +111,7 @@ En realidad juega roles en *diferentes* **juegos**
 
 ![h:380 drop-shadow:0,5px,10px,#00000066 center](
 https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTczdnQxaWRxazZucWQ0b2R2azNpZzAwNjlsNTgyZmcxNjFoZXY4byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lgeL0sh6Hg9tC/giphy.gif)
-
+<figcaption align="center"> <i>Condor de los andes</i> Free commons.</figcaption>
 </div>
 </div>
 
@@ -329,7 +329,7 @@ $$\text{Estrategia A da pagos de}\;: \color{blue}{1} \quad \color{blue}{10}$$
 VS
 </center>
 
-$$\text{Estrategia B le da pagos de}\;  \color{red}{0} \quad \color{red}{2}$$
+$$\text{Estrategia B le da pagos de}\;:  \color{red}{0} \quad \color{red}{2}$$
 
 ---
 # Esto es
