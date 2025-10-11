@@ -9,7 +9,7 @@ footer: "[Click para el inicio](#3)"
 marp: true
 theme: sparta
 paginate: true
-transition: none
+transition: fade
 size: 16:9
 lang: es
 math: mathjax
