@@ -1,7 +1,7 @@
 # Game Theory Class
 This is a class from the Microeconomics II course at the Universidad del Norte. Link to the classes at:
 
-### Class
+### Class 01
 
 All class presentations are available as long as the GitHub links are present.
 
