@@ -65,7 +65,9 @@ math: mathjax
 </div>
 
 </div>
-<figcaption align="center"> <i>Figuras de Internet</i> Free Commons.</figcaption>
+
+
+
 ---
 # Si no mas bien de:
 
