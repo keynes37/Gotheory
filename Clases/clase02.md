@@ -40,11 +40,11 @@ math: mathjax
 
 1. [Inicio](#1)
 2. [Contenido](#3)
-3. [Ingredientes](#7)
-4. [Vamos con todo](#11)
-5. [Elija](#14)
-6. [Tipos de Juego](#24)
-7. [Referencias](#30)
+3. [Teoría de Juegos vs Decisión](#5)
+4. [Equilibrio de Nash](#10)
+5. [Preguntemos](#18)
+6. [Juegos Extensivos](#34)
+7. [Referencias](#29)
 
 ---
 <!-- _class: "nobrand" -->
