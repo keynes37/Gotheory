@@ -322,7 +322,7 @@ Si Maria juega $S_{M}=Mitad$ y Andrés escoge $S_{A}=abajo$, el perfil estratég
 
 $$S= \left ( mitad,\ abajo \right )$$
 
-El espacio de todos los perfiles \textbf{estratégico} por ejemplo es:
+El espacio de todos los perfiles **estratégico** por ejemplo es:
 
 $$S=S_{M}\;\times\;S_{A}= \left \{ \left( mitad, arriba \right),\left( \dots \right),\left( derecha, arriba \right), \dots   \right \}$$
 
