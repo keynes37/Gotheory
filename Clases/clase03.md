@@ -210,7 +210,7 @@ La empresa **lider** define <br> precio y la siguen las demas firmas.
 ---
 # Gráfico de reacción
 
-![](/imagen/c3g1.png)
+![](../imagen/c3g1.png)
 
 ---
 # Ejemplo de equilibrio
