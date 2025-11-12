@@ -13,3 +13,5 @@ All class presentations are available as long as the GitHub links are present.
 [Clase 3](https://keynes37.github.io/Gotheory/Clases/clase03.html#1)
 
 [Clase 4](https://keynes37.github.io/Gotheory/Clases/clase04.html#1)
+
+[Clase 5](https://keynes37.github.io/Gotheory/Clases/clase05.html#1)
