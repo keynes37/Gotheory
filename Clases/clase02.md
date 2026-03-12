@@ -23,7 +23,7 @@ math: mathjax
 <div class="title">Introducción a la Teoría de Juegos</div>
 <div class="subtitle">Equilibrio de Nash</div>
 <div class="author">Carlos A. Yanes Guerra</div>
-<div class="date">Barranquilla, 2025</div>
+<div class="date">Barranquilla, 2026</div>
 <div class="organization">Universidad del Norte - Departamento de Economía</div>
 
 ---
