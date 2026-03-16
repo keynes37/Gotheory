@@ -1,5 +1,5 @@
 # Game Theory Class 2026 v01
-This is a class from the Microeconomics II course at the Universidad del Norte. Link to the classes at:
+This is a class from the Microeconomics II course at the Universidad del Norte (barranquilla). Link to the classes at:
 
 ### Class output on html
 
