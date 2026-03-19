@@ -23,7 +23,7 @@ math: mathjax
 <div class="title">Introducción a la Teoría de Juegos</div>
 <div class="subtitle">Cournot-Nash</div>
 <div class="author">Carlos A. Yanes Guerra</div>
-<div class="date">Barranquilla, 2025</div>
+<div class="date">Barranquilla, 2026</div>
 <div class="organization">Universidad del Norte - Departamento de Economía</div>
 
 ---
@@ -185,11 +185,11 @@ La empresa **lider** define <br> precio y la siguen las demas firmas.
   </thead>
   <tbody>
     <tr>
-      <td style="border: 1px solid black; padding: 8px;">60</td>
+      <td style="border: 1px solid black; padding: 8px;">30</td>
       <td style="border: 1px solid black; padding: 8px;">0</td>
     </tr>
     <tr>
-      <td style="border: 1px solid black; padding: 8px;">40</td>
+      <td style="border: 1px solid black; padding: 8px;">20</td>
       <td style="border: 1px solid black; padding: 8px;">20</td>
     </tr>
     <tr>
