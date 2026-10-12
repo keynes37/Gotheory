@@ -1,0 +1,9 @@
+# Configuración de Marp CLI para esta carpeta.
+# Úselo así: npx @marp-team/marp-cli@latest -c marp-config.yml clase.md
+
+html: true              # Permite los <div>, tablas e <iframe> de las diapositivas
+allowLocalFiles: true   # Permite usar las imágenes de ../imagen en el PDF
+themeSet:
+  - ../themes           # Carpeta donde está sparta.css (ajústela si está en otro lugar)
+pdfNotes: true          # Incluye las notas del profesor en el PDF
+pdfOutlines: true       # Agrega índice navegable al PDF

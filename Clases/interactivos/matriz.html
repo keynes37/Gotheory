@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matriz de pagos interactiva</title>
+<style>
+  :root { --rojo:#c62828; --azul:#1565c0; --tinta:#1a1a1a; --suave:#f4f1ec; --borde:#222; --nash:#ffe08a; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:10px 16px; font-family: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--tinta); background:#fff; }
+  .barra { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px; }
+  .barra b { margin-right:2px; }
+  .sep { width:1px; height:26px; background:#ccc; margin:0 6px; }
+  button { font:inherit; font-size:15px; padding:6px 12px; border:1.5px solid var(--borde); background:#fff; border-radius:6px; cursor:pointer; }
+  button:hover { background:var(--suave); }
+  button.on { background:var(--tinta); color:#fff; }
+  .zona { display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; }
+  .titulo-col { text-align:center; font-weight:700; font-size:19px; margin:0 0 4px 120px; }
+  table { border-collapse:collapse; font-size:21px; }
+  th { background:var(--rojo); color:#fff; border:1px solid var(--borde); padding:6px 10px; font-weight:600; }
+  th.vacio { background:none; border:none; }
+  th input { background:transparent; border:none; color:#fff; font:inherit; font-weight:600; text-align:center; width:110px; }
+  th input:focus { outline:1px dashed #fff; }
+  td { border:1px solid var(--borde); width:150px; height:76px; text-align:center; transition:background .25s; }
+  td input { width:52px; font:inherit; text-align:center; border:1px solid transparent; border-radius:4px; padding:2px; background:transparent; }
+  td input:hover, td input:focus { border-color:#999; outline:none; }
+  td input.p1 { color:var(--azul); }
+  td input.p2 { color:var(--rojo); }
+  td input.mr { font-weight:800; text-decoration:underline; text-decoration-thickness:3px; text-underline-offset:5px; }
+  td.nash { background:var(--nash); }
+  .panel { flex:1; min-width:250px; font-size:17px; line-height:1.45; }
+  .panel h3 { margin:0 0 6px; font-size:19px; }
+  .panel p { margin:0 0 8px; }
+  .nota { color:#666; font-size:14px; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<div class="barra">
+  <b>Juego:</b>
+  <button data-preset="clase">A o B (clase)</button>
+  <button data-preset="penalti">Penalti</button>
+  <button data-preset="coord">Coordinación</button>
+  <span class="sep"></span>
+  <button id="bMR1">Mejor respuesta J1</button>
+  <button id="bMR2">Mejor respuesta J2</button>
+  <button id="bNash">Equilibrio de Nash</button>
+  <button id="bLimpiar">Limpiar</button>
+</div>
+
+<div class="zona">
+  <div>
+    <div class="titulo-col"><input id="n2" style="border:none;font:inherit;font-weight:700;text-align:center;width:160px"></div>
+    <table>
+      <tr>
+        <th class="vacio"></th><th class="vacio"></th>
+        <th><input id="c0"></th><th><input id="c1"></th>
+      </tr>
+      <tr>
+        <th rowspan="2"><input id="n1" style="width:100px"></th>
+        <th><input id="f0"></th>
+        <td id="t00"><input class="p1" id="a00"> , <input class="p2" id="b00"></td>
+        <td id="t01"><input class="p1" id="a01"> , <input class="p2" id="b01"></td>
+      </tr>
+      <tr>
+        <th><input id="f1"></th>
+        <td id="t10"><input class="p1" id="a10"> , <input class="p2" id="b10"></td>
+        <td id="t11"><input class="p1" id="a11"> , <input class="p2" id="b11"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="panel" id="panel"></div>
+</div>
+
+<script>
+const juegos = {
+  clase:   { n1:"Jugador 1", n2:"Jugador 2", f:["A","B"], c:["A","B"],
+             a:[[1,10],[0,2]], b:[[1,0],[10,2]] },
+  penalti: { n1:"Delantero", n2:"Portero", f:["Derecha","Izquierda"], c:["Derecha","Izquierda"],
+             a:[[-1,1],[1,-1]], b:[[1,-1],[-1,1]] },
+  coord:   { n1:"Jugador 1", n2:"Jugador 2", f:["Cine","Fútbol"], c:["Cine","Fútbol"],
+             a:[[2,0],[0,1]], b:[[1,0],[0,2]] }
+};
+const ver = { mr1:false, mr2:false, nash:false };
+const $ = id => document.getElementById(id);
+
+function cargar(nombre) {
+  const g = juegos[nombre] || juegos.clase;
+  $("n1").value = g.n1; $("n2").value = g.n2;
+  for (let k = 0; k < 2; k++) { $("f"+k).value = g.f[k]; $("c"+k).value = g.c[k]; }
+  for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) {
+    $("a"+i+j).value = g.a[i][j]; $("b"+i+j).value = g.b[i][j];
+  }
+  ver.mr1 = ver.mr2 = ver.nash = false;
+  pintar();
+}
+
+function leer() {
+  const num = id => parseFloat($(id).value.replace(",", ".")) || 0;
+  const a = [[num("a00"),num("a01")],[num("a10"),num("a11")]];
+  const b = [[num("b00"),num("b01")],[num("b10"),num("b11")]];
+  return { a, b, f:[$("f0").value,$("f1").value], c:[$("c0").value,$("c1").value],
+           n1:$("n1").value, n2:$("n2").value };
+}
+
+function calcular(g) {
+  // mr1[i][j] = true si la fila i es mejor respuesta de J1 a la columna j
+  const mr1 = [[false,false],[false,false]], mr2 = [[false,false],[false,false]];
+  for (let j = 0; j < 2; j++) {
+    const m = Math.max(g.a[0][j], g.a[1][j]);
+    for (let i = 0; i < 2; i++) mr1[i][j] = g.a[i][j] === m;
+  }
+  for (let i = 0; i < 2; i++) {
+    const m = Math.max(g.b[i][0], g.b[i][1]);
+    for (let j = 0; j < 2; j++) mr2[i][j] = g.b[i][j] === m;
+  }
+  const nash = [];
+  for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++)
+    if (mr1[i][j] && mr2[i][j]) nash.push([i,j]);
+  return { mr1, mr2, nash };
+}
+
+function dominante(g) {
+  const r = [];
+  if (g.a[0][0] > g.a[1][0] && g.a[0][1] > g.a[1][1]) r.push(`${g.n1}: <b>${g.f[0]}</b> es estrictamente dominante.`);
+  if (g.a[1][0] > g.a[0][0] && g.a[1][1] > g.a[0][1]) r.push(`${g.n1}: <b>${g.f[1]}</b> es estrictamente dominante.`);
+  if (g.b[0][0] > g.b[0][1] && g.b[1][0] > g.b[1][1]) r.push(`${g.n2}: <b>${g.c[0]}</b> es estrictamente dominante.`);
+  if (g.b[0][1] > g.b[0][0] && g.b[1][1] > g.b[1][0]) r.push(`${g.n2}: <b>${g.c[1]}</b> es estrictamente dominante.`);
+  return r;
+}
+
+function mixta(g) {
+  const dq = g.a[0][0] - g.a[0][1] - g.a[1][0] + g.a[1][1];
+  const dp = g.b[0][0] - g.b[1][0] - g.b[0][1] + g.b[1][1];
+  if (dq === 0 || dp === 0) return null;
+  const q = (g.a[1][1] - g.a[0][1]) / dq;   // prob. de que J2 juegue la columna 1
+  const p = (g.b[1][1] - g.b[1][0]) / dp;   // prob. de que J1 juegue la fila 1
+  if (p <= 0 || p >= 1 || q <= 0 || q >= 1) return null;
+  return { p, q };
+}
+
+const pct = x => Math.round(x * 100) + "%";
+
+function pintar() {
+  const g = leer(), r = calcular(g);
+  for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) {
+    $("a"+i+j).classList.toggle("mr", ver.mr1 && r.mr1[i][j]);
+    $("b"+i+j).classList.toggle("mr", ver.mr2 && r.mr2[i][j]);
+    $("t"+i+j).classList.toggle("nash", ver.nash && r.nash.some(([x,y]) => x===i && y===j));
+  }
+  $("bMR1").classList.toggle("on", ver.mr1);
+  $("bMR2").classList.toggle("on", ver.mr2);
+  $("bNash").classList.toggle("on", ver.nash);
+
+  let h = "";
+  if (!ver.mr1 && !ver.mr2 && !ver.nash) {
+    h = `<h3>¿Qué haría usted?</h3>
+         <p>Antes de revelar nada: ¿qué le conviene a cada jugador?</p>
+         <p>Puede cambiar cualquier pago o nombre haciendo clic sobre él.</p>`;
+  }
+  if (ver.mr1) {
+    h += `<h3 style="color:var(--azul)">${g.n1} elige la mejor fila</h3>`;
+    for (let j = 0; j < 2; j++) {
+      const filas = [0,1].filter(i => r.mr1[i][j]).map(i => `<b>${g.f[i]}</b>`).join(" o ");
+      h += `<p>Si ${g.n2} juega ${g.c[j]} → le conviene ${filas}.</p>`;
+    }
+  }
+  if (ver.mr2) {
+    h += `<h3 style="color:var(--rojo)">${g.n2} elige la mejor columna</h3>`;
+    for (let i = 0; i < 2; i++) {
+      const cols = [0,1].filter(j => r.mr2[i][j]).map(j => `<b>${g.c[j]}</b>`).join(" o ");
+      h += `<p>Si ${g.n1} juega ${g.f[i]} → le conviene ${cols}.</p>`;
+    }
+  }
+  if (ver.nash) {
+    h += `<h3>Equilibrio de Nash</h3>`;
+    if (r.nash.length) {
+      h += `<p>${r.nash.map(([i,j]) => `<b>(${g.f[i]}, ${g.c[j]})</b>`).join(" y ")}: ninguno quiere cambiar solo.</p>`;
+    } else {
+      h += `<p>No hay equilibrio en estrategias puras.</p>`;
+    }
+    dominante(g).forEach(t => h += `<p>${t}</p>`);
+    const m = mixta(g);
+    if (m) {
+      h += `<p>Equilibrio en estrategias mixtas: ${g.n1} juega ${g.f[0]} con ${pct(m.p)}; `
+         + `${g.n2} juega ${g.c[0]} con ${pct(m.q)}.</p>`;
+    }
+  }
+  h += `<p class="nota">Subrayado = mejor respuesta · Amarillo = equilibrio de Nash</p>`;
+  $("panel").innerHTML = h;
+}
+
+document.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => cargar(b.dataset.preset));
+$("bMR1").onclick = () => { ver.mr1 = !ver.mr1; pintar(); };
+$("bMR2").onclick = () => { ver.mr2 = !ver.mr2; pintar(); };
+$("bNash").onclick = () => { ver.nash = !ver.nash; pintar(); };
+$("bLimpiar").onclick = () => { ver.mr1 = ver.mr2 = ver.nash = false; pintar(); };
+document.querySelectorAll("input").forEach(el => el.addEventListener("input", pintar));
+
+cargar(new URLSearchParams(location.search).get("juego") || "clase");
+</script>
+</body>
+</html>
