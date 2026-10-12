@@ -1,0 +1,865 @@
+<title>Introducción a la Teoría de Juegos</title>
+<!--
+  ============================================================
+  CÓMO USAR ESTA PRESENTACIÓN
+  - Ábrala con doble clic (Chrome o Edge).
+  - Flechas: avanzar / retroceder.   F: pantalla completa.
+  - S: vista del profesor con notas.  Esc: ver todas las diapositivas.
+  - PDF para estudiantes: agregue ?print-pdf al final de la dirección
+    (ej: .../clase1.html?print-pdf), luego Cmd+P → Guardar como PDF,
+    márgenes "Ninguno" y active "Gráficos de fondo".
+
+  QUÉ EDITAR ANTES DE CADA CLASE: solo el bloque CONFIG de abajo.
+  ============================================================
+-->
+<script>
+  const CONFIG = {
+    // Minutos para escribir el papel y echarlo a la bolsa.
+    minutosVotacion: 2,
+
+    // (Opcional) Su propia foto o GIF para la diapositiva del sorteo.
+    // Déjelo vacío "" para usar el dibujo de la bolsa que ya trae.
+    // Ejemplo: "../imagen/bolsa.gif"  (ruta relativa a este archivo)
+    imagenSorteo: "",
+
+    // (Opcional) Resultados de HOY para que salgan en el PDF.
+    // Después de clase escriba cuántas parejas salieron de cada tipo.
+    // Si los deja en null, la diapositiva muestra números de ejemplo.
+    parejas: { AA: null, AB: null, BB: null }
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+/*!
+* reveal.js 5.1.0
+* https://revealjs.com
+* MIT licensed
+*
+* Copyright (C) 2011-2024 Hakim El Hattab, https://hakim.se
+*/
+.reveal .r-stretch,.reveal .stretch{max-width:none;max-height:none}.reveal pre.r-stretch code,.reveal pre.stretch code{height:100%;max-height:100%;box-sizing:border-box}.reveal .r-fit-text{display:inline-block;white-space:nowrap}.reveal .r-stack{display:grid;grid-template-rows:100%}.reveal .r-stack>*{grid-area:1/1;margin:auto}.reveal .r-hstack,.reveal .r-vstack{display:flex}.reveal .r-hstack img,.reveal .r-hstack video,.reveal .r-vstack img,.reveal .r-vstack video{min-width:0;min-height:0;object-fit:contain}.reveal .r-vstack{flex-direction:column;align-items:center;justify-content:center}.reveal .r-hstack{flex-direction:row;align-items:center;justify-content:center}.reveal .items-stretch{align-items:stretch}.reveal .items-start{align-items:flex-start}.reveal .items-center{align-items:center}.reveal .items-end{align-items:flex-end}.reveal .justify-between{justify-content:space-between}.reveal .justify-around{justify-content:space-around}.reveal .justify-start{justify-content:flex-start}.reveal .justify-center{justify-content:center}.reveal .justify-end{justify-content:flex-end}html.reveal-full-page{width:100%;height:100%;height:100vh;height:calc(var(--vh,1vh) * 100);height:100svh;overflow:hidden}.reveal-viewport{height:100%;overflow:hidden;position:relative;line-height:1;margin:0;background-color:#fff;color:#000;--r-controls-spacing:12px}.reveal-viewport:fullscreen{top:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important}.reveal .fragment{transition:all .2s ease}.reveal .fragment:not(.custom){opacity:0;visibility:hidden;will-change:opacity}.reveal .fragment.visible{opacity:1;visibility:inherit}.reveal .fragment.disabled{transition:none}.reveal .fragment.grow{opacity:1;visibility:inherit}.reveal .fragment.grow.visible{transform:scale(1.3)}.reveal .fragment.shrink{opacity:1;visibility:inherit}.reveal .fragment.shrink.visible{transform:scale(.7)}.reveal .fragment.zoom-in{transform:scale(.1)}.reveal .fragment.zoom-in.visible{transform:none}.reveal .fragment.fade-out{opacity:1;visibility:inherit}.reveal .fragment.fade-out.visible{opacity:0;visibility:hidden}.reveal .fragment.semi-fade-out{opacity:1;visibility:inherit}.reveal .fragment.semi-fade-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.strike{opacity:1;visibility:inherit}.reveal .fragment.strike.visible{text-decoration:line-through}.reveal .fragment.fade-up{transform:translate(0,40px)}.reveal .fragment.fade-up.visible{transform:translate(0,0)}.reveal .fragment.fade-down{transform:translate(0,-40px)}.reveal .fragment.fade-down.visible{transform:translate(0,0)}.reveal .fragment.fade-right{transform:translate(-40px,0)}.reveal .fragment.fade-right.visible{transform:translate(0,0)}.reveal .fragment.fade-left{transform:translate(40px,0)}.reveal .fragment.fade-left.visible{transform:translate(0,0)}.reveal .fragment.current-visible,.reveal .fragment.fade-in-then-out{opacity:0;visibility:hidden}.reveal .fragment.current-visible.current-fragment,.reveal .fragment.fade-in-then-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.fade-in-then-semi-out{opacity:0;visibility:hidden}.reveal .fragment.fade-in-then-semi-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.fade-in-then-semi-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.highlight-blue,.reveal .fragment.highlight-current-blue,.reveal .fragment.highlight-current-green,.reveal .fragment.highlight-current-red,.reveal .fragment.highlight-green,.reveal .fragment.highlight-red{opacity:1;visibility:inherit}.reveal .fragment.highlight-red.visible{color:#ff2c2d}.reveal .fragment.highlight-green.visible{color:#17ff2e}.reveal .fragment.highlight-blue.visible{color:#1b91ff}.reveal .fragment.highlight-current-red.current-fragment{color:#ff2c2d}.reveal .fragment.highlight-current-green.current-fragment{color:#17ff2e}.reveal .fragment.highlight-current-blue.current-fragment{color:#1b91ff}.reveal:after{content:"";font-style:italic}.reveal iframe{z-index:1}.reveal a{position:relative}@keyframes bounce-right{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(10px)}30%{transform:translateX(-5px)}}@keyframes bounce-left{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(-10px)}30%{transform:translateX(5px)}}@keyframes bounce-down{0%,10%,25%,40%,50%{transform:translateY(0)}20%{transform:translateY(10px)}30%{transform:translateY(-5px)}}.reveal .controls{display:none;position:absolute;top:auto;bottom:var(--r-controls-spacing);right:var(--r-controls-spacing);left:auto;z-index:11;color:#000;pointer-events:none;font-size:10px}.reveal .controls button{position:absolute;padding:0;background-color:transparent;border:0;outline:0;cursor:pointer;color:currentColor;transform:scale(.9999);transition:color .2s ease,opacity .2s ease,transform .2s ease;z-index:2;pointer-events:auto;font-size:inherit;visibility:hidden;opacity:0;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}.reveal .controls .controls-arrow:after,.reveal .controls .controls-arrow:before{content:"";position:absolute;top:0;left:0;width:2.6em;height:.5em;border-radius:.25em;background-color:currentColor;transition:all .15s ease,background-color .8s ease;transform-origin:.2em 50%;will-change:transform}.reveal .controls .controls-arrow{position:relative;width:3.6em;height:3.6em}.reveal .controls .controls-arrow:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal .controls .controls-arrow:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}.reveal .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(40deg)}.reveal .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-40deg)}.reveal .controls .controls-arrow:active:before{transform:translateX(.5em) translateY(1.55em) rotate(36deg)}.reveal .controls .controls-arrow:active:after{transform:translateX(.5em) translateY(1.55em) rotate(-36deg)}.reveal .controls .navigate-left{right:6.4em;bottom:3.2em;transform:translateX(-10px)}.reveal .controls .navigate-left.highlight{animation:bounce-left 2s 50 both ease-out}.reveal .controls .navigate-right{right:0;bottom:3.2em;transform:translateX(10px)}.reveal .controls .navigate-right .controls-arrow{transform:rotate(180deg)}.reveal .controls .navigate-right.highlight{animation:bounce-right 2s 50 both ease-out}.reveal .controls .navigate-up{right:3.2em;bottom:6.4em;transform:translateY(-10px)}.reveal .controls .navigate-up .controls-arrow{transform:rotate(90deg)}.reveal .controls .navigate-down{right:3.2em;bottom:-1.4em;padding-bottom:1.4em;transform:translateY(10px)}.reveal .controls .navigate-down .controls-arrow{transform:rotate(-90deg)}.reveal .controls .navigate-down.highlight{animation:bounce-down 2s 50 both ease-out}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled{opacity:.3}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled:hover{opacity:1}.reveal .controls[data-controls-back-arrows=hidden] .navigate-up.enabled{opacity:0;visibility:hidden}.reveal .controls .enabled{visibility:visible;opacity:.9;cursor:pointer;transform:none}.reveal .controls .enabled.fragmented{opacity:.5}.reveal .controls .enabled.fragmented:hover,.reveal .controls .enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled{opacity:.3}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=hidden] .navigate-left.enabled{opacity:0;visibility:hidden}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled{opacity:.3}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled:hover{opacity:1}.reveal.rtl .controls[data-controls-back-arrows=hidden] .navigate-right.enabled{opacity:0;visibility:hidden}.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-down,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-up{display:none}.reveal:not(.has-vertical-slides) .controls .navigate-left,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-left{bottom:1.4em;right:5.5em}.reveal:not(.has-vertical-slides) .controls .navigate-right,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-right{bottom:1.4em;right:.5em}.reveal:not(.has-horizontal-slides) .controls .navigate-up{right:1.4em;bottom:5em}.reveal:not(.has-horizontal-slides) .controls .navigate-down{right:1.4em;bottom:.5em}.reveal.has-dark-background .controls{color:#fff}.reveal.has-light-background .controls{color:#000}.reveal.no-hover .controls .controls-arrow:active:before,.reveal.no-hover .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal.no-hover .controls .controls-arrow:active:after,.reveal.no-hover .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}@media screen and (min-width:500px){.reveal-viewport{--r-controls-spacing:0.8em}.reveal .controls[data-controls-layout=edges]{top:0;right:0;bottom:0;left:0}.reveal .controls[data-controls-layout=edges] .navigate-down,.reveal .controls[data-controls-layout=edges] .navigate-left,.reveal .controls[data-controls-layout=edges] .navigate-right,.reveal .controls[data-controls-layout=edges] .navigate-up{bottom:auto;right:auto}.reveal .controls[data-controls-layout=edges] .navigate-left{top:50%;left:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-right{top:50%;right:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-up{top:var(--r-controls-spacing);left:50%;margin-left:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-down{bottom:calc(var(--r-controls-spacing) - 1.4em + .3em);left:50%;margin-left:-1.8em}}.reveal .progress{position:absolute;display:none;height:3px;width:100%;bottom:0;left:0;z-index:10;background-color:rgba(0,0,0,.2);color:#fff}.reveal .progress:after{content:"";display:block;position:absolute;height:10px;width:100%;top:-10px}.reveal .progress span{display:block;height:100%;width:100%;background-color:currentColor;transition:transform .8s cubic-bezier(.26,.86,.44,.985);transform-origin:0 0;transform:scaleX(0)}.reveal .slide-number{position:absolute;display:block;right:8px;bottom:8px;z-index:31;font-family:Helvetica,sans-serif;font-size:12px;line-height:1;color:#fff;background-color:rgba(0,0,0,.4);padding:5px}.reveal .slide-number a{color:currentColor}.reveal .slide-number-delimiter{margin:0 3px}.reveal{position:relative;width:100%;height:100%;overflow:hidden;touch-action:pinch-zoom}.reveal.embedded{touch-action:pan-y}.reveal.embedded.is-vertical-slide{touch-action:none}.reveal .slides{position:absolute;width:100%;height:100%;top:0;right:0;bottom:0;left:0;margin:auto;pointer-events:none;overflow:visible;z-index:1;text-align:center;perspective:600px;perspective-origin:50% 40%}.reveal .slides>section{perspective:600px}.reveal .slides>section,.reveal .slides>section>section{display:none;position:absolute;width:100%;pointer-events:auto;z-index:10;transform-style:flat;transition:transform-origin .8s cubic-bezier(.26,.86,.44,.985),transform .8s cubic-bezier(.26,.86,.44,.985),visibility .8s cubic-bezier(.26,.86,.44,.985),opacity .8s cubic-bezier(.26,.86,.44,.985)}.reveal[data-transition-speed=fast] .slides section{transition-duration:.4s}.reveal[data-transition-speed=slow] .slides section{transition-duration:1.2s}.reveal .slides section[data-transition-speed=fast]{transition-duration:.4s}.reveal .slides section[data-transition-speed=slow]{transition-duration:1.2s}.reveal .slides>section.stack{padding-top:0;padding-bottom:0;pointer-events:none;height:100%}.reveal .slides>section.present,.reveal .slides>section>section.present{display:block;z-index:11;opacity:1}.reveal .slides>section:empty,.reveal .slides>section>section:empty,.reveal .slides>section>section[data-background-interactive],.reveal .slides>section[data-background-interactive]{pointer-events:none}.reveal.center,.reveal.center .slides,.reveal.center .slides section{min-height:0!important}.reveal .slides>section:not(.present),.reveal .slides>section>section:not(.present){pointer-events:none}.reveal.overview .slides>section,.reveal.overview .slides>section>section{pointer-events:auto}.reveal .slides>section.future,.reveal .slides>section.future>section,.reveal .slides>section.past,.reveal .slides>section.past>section,.reveal .slides>section>section.future,.reveal .slides>section>section.past{opacity:0}.reveal .slides>section[data-transition=slide].past,.reveal .slides>section[data-transition~=slide-out].past,.reveal.slide .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=slide].future,.reveal .slides>section[data-transition~=slide-in].future,.reveal.slide .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=slide].past,.reveal .slides>section>section[data-transition~=slide-out].past,.reveal.slide .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=slide].future,.reveal .slides>section>section[data-transition~=slide-in].future,.reveal.slide .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides>section[data-transition=linear].past,.reveal .slides>section[data-transition~=linear-out].past,.reveal.linear .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=linear].future,.reveal .slides>section[data-transition~=linear-in].future,.reveal.linear .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=linear].past,.reveal .slides>section>section[data-transition~=linear-out].past,.reveal.linear .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=linear].future,.reveal .slides>section>section[data-transition~=linear-in].future,.reveal.linear .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides section[data-transition=default].stack,.reveal.default .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=default].past,.reveal .slides>section[data-transition~=default-out].past,.reveal.default .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=default].future,.reveal .slides>section[data-transition~=default-in].future,.reveal.default .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=default].past,.reveal .slides>section>section[data-transition~=default-out].past,.reveal.default .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=default].future,.reveal .slides>section>section[data-transition~=default-in].future,.reveal.default .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=convex].stack,.reveal.convex .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=convex].past,.reveal .slides>section[data-transition~=convex-out].past,.reveal.convex .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=convex].future,.reveal .slides>section[data-transition~=convex-in].future,.reveal.convex .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=convex].past,.reveal .slides>section>section[data-transition~=convex-out].past,.reveal.convex .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=convex].future,.reveal .slides>section>section[data-transition~=convex-in].future,.reveal.convex .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=concave].stack,.reveal.concave .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=concave].past,.reveal .slides>section[data-transition~=concave-out].past,.reveal.concave .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=concave].future,.reveal .slides>section[data-transition~=concave-in].future,.reveal.concave .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=concave].past,.reveal .slides>section>section[data-transition~=concave-out].past,.reveal.concave .slides>section>section:not([data-transition]).past{transform:translate3d(0,-80%,0) rotateX(-70deg) translate3d(0,-80%,0)}.reveal .slides>section>section[data-transition=concave].future,.reveal .slides>section>section[data-transition~=concave-in].future,.reveal.concave .slides>section>section:not([data-transition]).future{transform:translate3d(0,80%,0) rotateX(70deg) translate3d(0,80%,0)}.reveal .slides section[data-transition=zoom],.reveal.zoom .slides section:not([data-transition]){transition-timing-function:ease}.reveal .slides>section[data-transition=zoom].past,.reveal .slides>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section:not([data-transition]).past{visibility:hidden;transform:scale(16)}.reveal .slides>section[data-transition=zoom].future,.reveal .slides>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section:not([data-transition]).future{visibility:hidden;transform:scale(.2)}.reveal .slides>section>section[data-transition=zoom].past,.reveal .slides>section>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section>section:not([data-transition]).past{transform:scale(16)}.reveal .slides>section>section[data-transition=zoom].future,.reveal .slides>section>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section>section:not([data-transition]).future{transform:scale(.2)}.reveal.cube .slides{perspective:1300px}.reveal.cube .slides section{padding:30px;min-height:700px;backface-visibility:hidden;box-sizing:border-box;transform-style:preserve-3d}.reveal.center.cube .slides section{min-height:0}.reveal.cube .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);border-radius:4px;transform:translateZ(-20px)}.reveal.cube .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);transform:translateZ(-90px) rotateX(65deg)}.reveal.cube .slides>section.stack{padding:0;background:0 0}.reveal.cube .slides>section.past{transform-origin:100% 0;transform:translate3d(-100%,0,0) rotateY(-90deg)}.reveal.cube .slides>section.future{transform-origin:0 0;transform:translate3d(100%,0,0) rotateY(90deg)}.reveal.cube .slides>section>section.past{transform-origin:0 100%;transform:translate3d(0,-100%,0) rotateX(90deg)}.reveal.cube .slides>section>section.future{transform-origin:0 0;transform:translate3d(0,100%,0) rotateX(-90deg)}.reveal.page .slides{perspective-origin:0 50%;perspective:3000px}.reveal.page .slides section{padding:30px;min-height:700px;box-sizing:border-box;transform-style:preserve-3d}.reveal.page .slides section.past{z-index:12}.reveal.page .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);transform:translateZ(-20px)}.reveal.page .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);-webkit-transform:translateZ(-90px) rotateX(65deg)}.reveal.page .slides>section.stack{padding:0;background:0 0}.reveal.page .slides>section.past{transform-origin:0 0;transform:translate3d(-40%,0,0) rotateY(-80deg)}.reveal.page .slides>section.future{transform-origin:100% 0;transform:translate3d(0,0,0)}.reveal.page .slides>section>section.past{transform-origin:0 0;transform:translate3d(0,-40%,0) rotateX(80deg)}.reveal.page .slides>section>section.future{transform-origin:0 100%;transform:translate3d(0,0,0)}.reveal .slides section[data-transition=fade],.reveal.fade .slides section:not([data-transition]),.reveal.fade .slides>section>section:not([data-transition]){transform:none;transition:opacity .5s}.reveal.fade.overview .slides section,.reveal.fade.overview .slides>section>section{transition:none}.reveal .slides section[data-transition=none],.reveal.none .slides section:not([data-transition]){transform:none;transition:none}.reveal .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;visibility:hidden;opacity:0;z-index:100;transition:all 1s ease}.reveal .pause-overlay .resume-button{position:absolute;bottom:20px;right:20px;color:#ccc;border-radius:2px;padding:6px 14px;border:2px solid #ccc;font-size:16px;background:0 0;cursor:pointer}.reveal .pause-overlay .resume-button:hover{color:#fff;border-color:#fff}.reveal.paused .pause-overlay{visibility:visible;opacity:1}.reveal .no-transition,.reveal .no-transition *,.reveal .slides.disable-slide-transitions section{transition:none!important}.reveal .slides.disable-slide-transitions section{transform:none!important}.reveal .backgrounds{position:absolute;width:100%;height:100%;top:0;left:0;perspective:600px}.reveal .slide-background{display:none;position:absolute;width:100%;height:100%;opacity:0;visibility:hidden;overflow:hidden;background-color:rgba(0,0,0,0);transition:all .8s cubic-bezier(.26,.86,.44,.985)}.reveal .slide-background-content{position:absolute;width:100%;height:100%;background-position:50% 50%;background-repeat:no-repeat;background-size:cover}.reveal .slide-background.stack{display:block}.reveal .slide-background.present{opacity:1;visibility:visible;z-index:2}.print-pdf .reveal .slide-background{opacity:1!important;visibility:visible!important}.reveal .slide-background video{position:absolute;width:100%;height:100%;max-width:none;max-height:none;top:0;left:0;object-fit:cover}.reveal .slide-background[data-background-size=contain] video{object-fit:contain}.reveal>.backgrounds .slide-background[data-background-transition=none],.reveal[data-background-transition=none]>.backgrounds .slide-background:not([data-background-transition]){transition:none}.reveal>.backgrounds .slide-background[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background:not([data-background-transition]){opacity:1}.reveal>.backgrounds .slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.past:not([data-background-transition]){transform:translate(-100%,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.future:not([data-background-transition]){transform:translate(100%,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){transform:translate(0,-100%)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){transform:translate(0,100%)}.reveal>.backgrounds .slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(-90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(-90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background:not([data-background-transition]){transition-timing-function:ease}.reveal>.backgrounds .slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal[data-transition-speed=fast]>.backgrounds .slide-background{transition-duration:.4s}.reveal[data-transition-speed=slow]>.backgrounds .slide-background{transition-duration:1.2s}.reveal [data-auto-animate-target^=unmatched]{will-change:opacity}.reveal section[data-auto-animate]:not(.stack):not([data-auto-animate=running]) [data-auto-animate-target^=unmatched]{opacity:0}.reveal.overview{perspective-origin:50% 50%;perspective:700px}.reveal.overview .slides{-moz-transform-style:preserve-3d}.reveal.overview .slides section{height:100%;top:0!important;opacity:1!important;overflow:hidden;visibility:visible!important;cursor:pointer;box-sizing:border-box}.reveal.overview .slides section.present,.reveal.overview .slides section:hover{outline:10px solid rgba(150,150,150,.4);outline-offset:10px}.reveal.overview .slides section .fragment{opacity:1;transition:none}.reveal.overview .slides section:after,.reveal.overview .slides section:before{display:none!important}.reveal.overview .slides>section.stack{padding:0;top:0!important;background:0 0;outline:0;overflow:visible}.reveal.overview .backgrounds{perspective:inherit;-moz-transform-style:preserve-3d}.reveal.overview .backgrounds .slide-background{opacity:1;visibility:visible;outline:10px solid rgba(150,150,150,.1);outline-offset:10px}.reveal.overview .backgrounds .slide-background.stack{overflow:visible}.reveal.overview .slides section,.reveal.overview-deactivating .slides section{transition:none}.reveal.overview .backgrounds .slide-background,.reveal.overview-deactivating .backgrounds .slide-background{transition:none}.reveal.rtl .slides,.reveal.rtl .slides h1,.reveal.rtl .slides h2,.reveal.rtl .slides h3,.reveal.rtl .slides h4,.reveal.rtl .slides h5,.reveal.rtl .slides h6{direction:rtl;font-family:sans-serif}.reveal.rtl code,.reveal.rtl pre{direction:ltr}.reveal.rtl ol,.reveal.rtl ul{text-align:right}.reveal.rtl .progress span{transform-origin:100% 0}.reveal.has-parallax-background .backgrounds{transition:all .8s ease}.reveal.has-parallax-background[data-transition-speed=fast] .backgrounds{transition-duration:.4s}.reveal.has-parallax-background[data-transition-speed=slow] .backgrounds{transition-duration:1.2s}.reveal>.overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;background:rgba(0,0,0,.95);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .3s ease}.reveal>.overlay .spinner{position:absolute;display:block;top:50%;left:50%;width:32px;height:32px;margin:-16px 0 0 -16px;z-index:10;background-image:url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);visibility:visible;opacity:.6;transition:all .3s ease}.reveal>.overlay header{position:absolute;left:0;top:0;width:100%;padding:5px;z-index:2;box-sizing:border-box}.reveal>.overlay header a{display:inline-block;width:40px;height:40px;line-height:36px;padding:0 10px;float:right;opacity:.6;box-sizing:border-box}.reveal>.overlay header a:hover{opacity:1}.reveal>.overlay header a .icon{display:inline-block;width:20px;height:20px;background-position:50% 50%;background-size:100%;background-repeat:no-repeat}.reveal>.overlay header a.close .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC)}.reveal>.overlay header a.external .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==)}.reveal>.overlay .viewport{position:absolute;display:flex;top:50px;right:0;bottom:0;left:0}.reveal>.overlay.overlay-preview .viewport iframe{width:100%;height:100%;max-width:100%;max-height:100%;border:0;opacity:0;visibility:hidden;transition:all .3s ease}.reveal>.overlay.overlay-preview.loaded .viewport iframe{opacity:1;visibility:visible}.reveal>.overlay.overlay-preview.loaded .viewport-inner{position:absolute;z-index:-1;left:0;top:45%;width:100%;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-preview .x-frame-error{opacity:0;transition:opacity .3s ease .3s}.reveal>.overlay.overlay-preview.loaded .x-frame-error{opacity:1}.reveal>.overlay.overlay-preview.loaded .spinner{opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.overlay.overlay-help .viewport{overflow:auto;color:#fff}.reveal>.overlay.overlay-help .viewport .viewport-inner{width:600px;margin:auto;padding:20px 20px 80px 20px;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-help .viewport .viewport-inner .title{font-size:20px}.reveal>.overlay.overlay-help .viewport .viewport-inner table{border:1px solid #fff;border-collapse:collapse;font-size:16px}.reveal>.overlay.overlay-help .viewport .viewport-inner table td,.reveal>.overlay.overlay-help .viewport .viewport-inner table th{width:200px;padding:14px;border:1px solid #fff;vertical-align:middle}.reveal>.overlay.overlay-help .viewport .viewport-inner table th{padding-top:20px;padding-bottom:20px}.reveal .playback{position:absolute;left:15px;bottom:20px;z-index:30;cursor:pointer;transition:all .4s ease;-webkit-tap-highlight-color:transparent}.reveal.overview .playback{opacity:0;visibility:hidden}.reveal .hljs{min-height:100%}.reveal .hljs table{margin:initial}.reveal .hljs-ln-code,.reveal .hljs-ln-numbers{padding:0;border:0}.reveal .hljs-ln-numbers{opacity:.6;padding-right:.75em;text-align:right;vertical-align:top}.reveal .hljs.has-highlights tr:not(.highlight-line){opacity:.4}.reveal .hljs.has-highlights.fragment{transition:all .2s ease}.reveal .hljs:not(:first-child).fragment{position:absolute;top:0;left:0;width:100%;box-sizing:border-box}.reveal pre[data-auto-animate-target]{overflow:hidden}.reveal pre[data-auto-animate-target] code{height:100%}.reveal .roll{display:inline-block;line-height:1.2;overflow:hidden;vertical-align:top;perspective:400px;perspective-origin:50% 50%}.reveal .roll:hover{background:0 0;text-shadow:none}.reveal .roll span{display:block;position:relative;padding:0 2px;pointer-events:none;transition:all .4s ease;transform-origin:50% 0;transform-style:preserve-3d;backface-visibility:hidden}.reveal .roll:hover span{background:rgba(0,0,0,.5);transform:translate3d(0,0,-45px) rotateX(90deg)}.reveal .roll span:after{content:attr(data-title);display:block;position:absolute;left:0;top:0;padding:0 2px;backface-visibility:hidden;transform-origin:50% 0;transform:translate3d(0,110%,0) rotateX(-90deg)}.reveal aside.notes{display:none}.reveal .speaker-notes{display:none;position:absolute;width:33.3333333333%;height:100%;top:0;left:100%;padding:14px 18px 14px 18px;z-index:1;font-size:18px;line-height:1.4;border:1px solid rgba(0,0,0,.05);color:#222;background-color:#f5f5f5;overflow:auto;box-sizing:border-box;text-align:left;font-family:Helvetica,sans-serif;-webkit-overflow-scrolling:touch}.reveal .speaker-notes .notes-placeholder{color:#ccc;font-style:italic}.reveal .speaker-notes:focus{outline:0}.reveal .speaker-notes:before{content:"Speaker notes";display:block;margin-bottom:10px;opacity:.5}.reveal.show-notes{max-width:75%;overflow:visible}.reveal.show-notes .speaker-notes{display:block}@media screen and (min-width:1600px){.reveal .speaker-notes{font-size:20px}}@media screen and (max-width:1024px){.reveal.show-notes{border-left:0;max-width:none;max-height:70%;max-height:70vh;overflow:visible}.reveal.show-notes .speaker-notes{top:100%;left:0;width:100%;height:30vh;border:0}}@media screen and (max-width:600px){.reveal.show-notes{max-height:60%;max-height:60vh}.reveal.show-notes .speaker-notes{top:100%;height:40vh}.reveal .speaker-notes{font-size:14px}}.reveal .jump-to-slide{position:absolute;top:15px;left:15px;z-index:30;font-size:32px;-webkit-tap-highlight-color:transparent}.reveal .jump-to-slide-input{background:0 0;padding:8px;font-size:inherit;color:currentColor;border:0}.reveal .jump-to-slide-input::placeholder{color:currentColor;opacity:.5}.reveal.has-dark-background .jump-to-slide-input{color:#fff}.reveal.has-light-background .jump-to-slide-input{color:#222}.reveal .jump-to-slide-input:focus{outline:0}.zoomed .reveal *,.zoomed .reveal :after,.zoomed .reveal :before{backface-visibility:visible!important}.zoomed .reveal .controls,.zoomed .reveal .progress{opacity:0}.zoomed .reveal .roll span{background:0 0}.zoomed .reveal .roll span:after{visibility:hidden}.reveal-viewport.loading-scroll-mode{visibility:hidden}.reveal-viewport.reveal-scroll{margin:0 auto;overflow:auto;overflow-x:hidden;overflow-y:auto;z-index:1;--r-scrollbar-width:7px;--r-scrollbar-trigger-size:5px;--r-controls-spacing:8px}@media screen and (max-width:500px){.reveal-viewport.reveal-scroll{--r-scrollbar-width:3px;--r-scrollbar-trigger-size:3px}}.reveal-viewport.reveal-scroll .backgrounds,.reveal-viewport.reveal-scroll .controls,.reveal-viewport.reveal-scroll .playback,.reveal-viewport.reveal-scroll .progress,.reveal-viewport.reveal-scroll .slide-number,.reveal-viewport.reveal-scroll .speaker-notes{display:none!important}.reveal-viewport.reveal-scroll .overlay,.reveal-viewport.reveal-scroll .pause-overlay{position:fixed}.reveal-viewport.reveal-scroll .reveal{overflow:visible;touch-action:manipulation}.reveal-viewport.reveal-scroll .slides{position:static;pointer-events:initial;left:auto;top:auto;width:100%!important;margin:0;padding:0;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}.reveal-viewport.reveal-scroll .scroll-page{position:relative;width:100%;height:calc(var(--page-height) + var(--page-scroll-padding));z-index:1;overflow:visible}.reveal-viewport.reveal-scroll .scroll-page-sticky{position:sticky;height:var(--page-height);top:0}.reveal-viewport.reveal-scroll .scroll-page-content{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.reveal-viewport.reveal-scroll .scroll-page section{visibility:visible!important;display:block!important;position:absolute!important;width:var(--slide-width)!important;height:var(--slide-height)!important;top:50%!important;left:50%!important;opacity:1!important;transform:scale(var(--slide-scale)) translate(-50%,-50%)!important;transform-style:flat!important;transform-origin:0 0!important}.reveal-viewport.reveal-scroll .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important;visibility:visible;opacity:1;touch-action:manipulation}.reveal-viewport.reveal-scroll[data-scrollbar=auto]::-webkit-scrollbar,.reveal-viewport.reveal-scroll[data-scrollbar=true]::-webkit-scrollbar{display:none}.reveal-viewport.reveal-scroll[data-scrollbar=auto],.reveal-viewport.reveal-scroll[data-scrollbar=true]{scrollbar-width:none}.reveal-viewport.has-dark-background,.reveal.has-dark-background{--r-overlay-element-bg-color:240,240,240;--r-overlay-element-fg-color:0,0,0}.reveal-viewport.has-light-background,.reveal.has-light-background{--r-overlay-element-bg-color:0,0,0;--r-overlay-element-fg-color:240,240,240}.reveal-viewport.reveal-scroll .scrollbar{position:sticky;top:50%;z-index:20;opacity:0;transition:all .3s ease}.reveal-viewport.reveal-scroll .scrollbar.visible,.reveal-viewport.reveal-scroll .scrollbar:hover{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-inner{position:absolute;width:var(--r-scrollbar-width);height:calc(var(--viewport-height) - var(--r-controls-spacing) * 2);right:var(--r-controls-spacing);top:0;transform:translateY(-50%);border-radius:var(--r-scrollbar-width);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-playhead{position:absolute;width:var(--r-scrollbar-width);height:var(--r-scrollbar-width);top:0;left:0;border-radius:var(--r-scrollbar-width);background-color:rgba(var(--r-overlay-element-bg-color),1);z-index:11;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide{position:absolute;width:100%;background-color:rgba(var(--r-overlay-element-bg-color),.2);box-shadow:0 0 0 1px rgba(var(--r-overlay-element-fg-color),.1);border-radius:var(--r-scrollbar-width);transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:after{content:"";position:absolute;width:200%;height:100%;top:0;left:-50%;background:rgba(0,0,0,0);z-index:-1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:hover{background-color:rgba(var(--r-overlay-element-bg-color),.4)}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-trigger{position:absolute;width:100%;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active.has-triggers{background-color:rgba(var(--r-overlay-element-bg-color),.4);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger:after{content:"";position:absolute;width:var(--r-scrollbar-trigger-size);height:var(--r-scrollbar-trigger-size);border-radius:20px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:rgba(var(--r-overlay-element-bg-color),1);transition:transform .2s ease,opacity .2s ease;opacity:.4}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active:after,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active~.scrollbar-trigger:after{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger~.scrollbar-trigger.active:after{transform:translate(calc(var(--r-scrollbar-width) * -2),0);background-color:rgba(var(--r-overlay-element-bg-color),1)}html.reveal-print *{-webkit-print-color-adjust:exact}html.reveal-print{width:100%;height:100%;overflow:visible}html.reveal-print body{margin:0 auto!important;border:0;padding:0;float:none!important;overflow:visible}html.reveal-print .nestedarrow,html.reveal-print .reveal .controls,html.reveal-print .reveal .playback,html.reveal-print .reveal .progress,html.reveal-print .reveal.overview,html.reveal-print .state-background{display:none!important}html.reveal-print .reveal pre code{overflow:hidden!important}html.reveal-print .reveal{width:auto!important;height:auto!important;overflow:hidden!important}html.reveal-print .reveal .slides{position:static;width:100%!important;height:auto!important;zoom:1!important;pointer-events:initial;left:auto;top:auto;margin:0!important;padding:0!important;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}html.reveal-print .reveal .slides .pdf-page{position:relative;overflow:hidden;z-index:1;page-break-after:always}html.reveal-print .reveal .slides .pdf-page:last-of-type{page-break-after:avoid}html.reveal-print .reveal .slides section{visibility:visible!important;display:block!important;position:absolute!important;margin:0!important;padding:0!important;box-sizing:border-box!important;min-height:1px;opacity:1!important;transform-style:flat!important;transform:none!important}html.reveal-print .reveal section.stack{position:relative!important;margin:0!important;padding:0!important;page-break-after:avoid!important;height:auto!important;min-height:auto!important}html.reveal-print .reveal img{box-shadow:none}html.reveal-print .reveal .backgrounds{display:none}html.reveal-print .reveal .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important}html.reveal-print .reveal.show-notes{max-width:none;max-height:none}html.reveal-print .reveal .speaker-notes-pdf{display:block;width:100%;height:auto;max-height:none;top:auto;right:auto;bottom:auto;left:auto;z-index:100}html.reveal-print .reveal .speaker-notes-pdf[data-layout=separate-page]{position:relative;color:inherit;background-color:transparent;padding:20px;page-break-after:always;border:0}html.reveal-print .reveal .slide-number-pdf{display:block;position:absolute;font-size:14px;visibility:visible}html.reveal-print .aria-status{display:none}@media print{html:not(.print-pdf){overflow:visible;width:auto;height:auto}html:not(.print-pdf) body{margin:0;padding:0;overflow:visible}html:not(.print-pdf) .reveal{background:#fff;font-size:20pt}html:not(.print-pdf) .reveal .backgrounds,html:not(.print-pdf) .reveal .controls,html:not(.print-pdf) .reveal .progress,html:not(.print-pdf) .reveal .slide-number,html:not(.print-pdf) .reveal .state-background{display:none!important}html:not(.print-pdf) .reveal li,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal td{font-size:20pt!important;color:#000}html:not(.print-pdf) .reveal h1,html:not(.print-pdf) .reveal h2,html:not(.print-pdf) .reveal h3,html:not(.print-pdf) .reveal h4,html:not(.print-pdf) .reveal h5,html:not(.print-pdf) .reveal h6{color:#000!important;height:auto;line-height:normal;text-align:left;letter-spacing:normal}html:not(.print-pdf) .reveal h1{font-size:28pt!important}html:not(.print-pdf) .reveal h2{font-size:24pt!important}html:not(.print-pdf) .reveal h3{font-size:22pt!important}html:not(.print-pdf) .reveal h4{font-size:22pt!important;font-variant:small-caps}html:not(.print-pdf) .reveal h5{font-size:21pt!important}html:not(.print-pdf) .reveal h6{font-size:20pt!important;font-style:italic}html:not(.print-pdf) .reveal a:link,html:not(.print-pdf) .reveal a:visited{color:#000!important;font-weight:700;text-decoration:underline}html:not(.print-pdf) .reveal div,html:not(.print-pdf) .reveal ol,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal ul{visibility:visible;position:static;width:auto;height:auto;display:block;overflow:visible;margin:0;text-align:left!important}html:not(.print-pdf) .reveal pre,html:not(.print-pdf) .reveal table{margin-left:0;margin-right:0}html:not(.print-pdf) .reveal pre code{padding:20px}html:not(.print-pdf) .reveal blockquote{margin:20px 0}html:not(.print-pdf) .reveal .slides{position:static!important;width:auto!important;height:auto!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:0!important;zoom:1!important;transform:none!important;overflow:visible!important;display:block!important;text-align:left!important;perspective:none;perspective-origin:50% 50%}html:not(.print-pdf) .reveal .slides section{visibility:visible!important;position:static!important;width:auto!important;height:auto!important;display:block!important;overflow:visible!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:60px 20px!important;z-index:auto!important;opacity:1!important;page-break-after:always!important;transform-style:flat!important;transform:none!important;transition:none!important}html:not(.print-pdf) .reveal .slides section.stack{padding:0!important}html:not(.print-pdf) .reveal .slides section:last-of-type{page-break-after:avoid!important}html:not(.print-pdf) .reveal .slides section .fragment{opacity:1!important;visibility:visible!important;transform:none!important}html:not(.print-pdf) .reveal .r-fit-text{white-space:normal!important}html:not(.print-pdf) .reveal section img{display:block;margin:15px 0;background:#fff;border:1px solid #666;box-shadow:none}html:not(.print-pdf) .reveal section small{font-size:.8em}html:not(.print-pdf) .reveal .hljs{max-height:100%;white-space:pre-wrap;word-wrap:break-word;word-break:break-word;font-size:15pt}html:not(.print-pdf) .reveal .hljs .hljs-ln-numbers{white-space:nowrap}html:not(.print-pdf) .reveal .hljs td{font-size:inherit!important;color:inherit!important}}
+</style>
+
+<style>
+/* Layout: aula proyectada. Papel claro, tinta oscura, el rojo Uninorte/Sparta como único acento;
+   azul = Jugador 1, rojo = Jugador 2 en todas las matrices. Tema único y claro (proyector). */
+:root {
+  --papel: #faf8f6;
+  --tarjeta: #ffffff;
+  --tinta: #1f1a19;
+  --gris: #6d6360;
+  --linea: #e6dfdb;
+  --rojo: #c62828;
+  --rojo-suave: #fbe9e7;
+  --azul: #1d5fa8;
+  --azul-suave: #e7f0fa;
+  --nash: #ffe08a;
+  --apagado: #c9c1bd;
+  --kraft: #d9b98c;
+  --kraft-oscuro: #b8925f;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-texto: "Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; background: var(--papel); color: var(--tinta); }
+body { margin: 0; }
+
+.reveal { font-family: var(--f-texto); font-size: 28px; color: var(--tinta); background: var(--papel); }
+.reveal .slides { text-align: left; }
+.reveal .slides section { height: 100%; box-sizing: border-box; padding: 6px 8px; }
+.reveal h1, .reveal h2, .reveal h3 { font-family: var(--f-display); color: var(--tinta); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.reveal h1 { font-size: 76px; font-weight: 800; line-height: 1.02; }
+.reveal h2 { font-size: 50px; font-weight: 800; line-height: 1.08; margin-bottom: 22px; }
+.reveal h3 { font-size: 30px; font-weight: 600; margin-bottom: 8px; }
+.reveal p { margin: 0 0 14px; line-height: 1.4; }
+.reveal ul { margin: 0; padding-left: 1.1em; }
+.reveal li { margin-bottom: 10px; line-height: 1.35; }
+.reveal li::marker { color: var(--rojo); }
+.reveal strong { font-weight: 700; }
+.reveal a { color: var(--rojo); text-decoration: underline; text-underline-offset: 3px; }
+.reveal .controls { color: var(--rojo); }
+.reveal .progress { color: var(--rojo); height: 5px; }
+.reveal .slide-number { background: transparent; color: var(--gris); font-family: var(--f-num); font-size: 14px; }
+
+.ceja { font-family: var(--f-num); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rojo); margin-bottom: 12px; font-weight: 600; }
+.sub { color: var(--gris); font-size: 26px; }
+.peq { font-size: 21px; color: var(--gris); }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.j1 { color: var(--azul); }
+.j2 { color: var(--rojo); }
+.fila { display: flex; gap: 40px; align-items: flex-start; }
+.fila > * { min-width: 0; }
+.col { flex: 1; }
+.centro-v { align-items: center; }
+
+/* Portada */
+.portada { display: grid; grid-template-columns: 1.25fr 1fr; gap: 50px; align-items: center; height: 100%; }
+.portada .autor { margin-top: 34px; font-size: 22px; color: var(--gris); line-height: 1.5; }
+.portada .autor b { color: var(--tinta); }
+
+/* Matrices de pagos */
+.matriz { border-collapse: collapse; font-size: 26px; margin: 0 auto; }
+.matriz th { font-family: var(--f-texto); font-weight: 700; font-size: 20px; padding: 8px 14px; color: var(--gris); }
+.matriz .jug { font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+.matriz td { border: 2px solid var(--tinta); width: 150px; height: 82px; text-align: center; font-family: var(--f-num); font-weight: 600; background: var(--tarjeta); transition: background .3s; }
+.matriz td.nash { background: var(--nash); }
+.matriz td.apagada { color: var(--apagado); }
+.matriz .lado { writing-mode: vertical-rl; transform: rotate(180deg); }
+
+/* Tarjetas de situaciones */
+.rejilla { display: grid; gap: 18px; }
+.rejilla.tres { grid-template-columns: repeat(3, 1fr); }
+.rejilla.dos { grid-template-columns: repeat(2, 1fr); }
+.caso { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.caso h3 { font-size: 25px; margin: 0; }
+.caso p { font-size: 20px; margin: 0; color: var(--tinta); line-height: 1.35; }
+.etiqueta { align-self: flex-start; font-family: var(--f-num); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; background: var(--rojo-suave); color: var(--rojo); }
+.etiqueta.az { background: var(--azul-suave); color: var(--azul); }
+.fuente { font-size: 15px; color: var(--gris); }
+
+/* Ingredientes */
+.ingred { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.ingred > div { padding: 18px 20px 0 0; }
+.ingred b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.ingred span { font-size: 21px; color: var(--gris); line-height: 1.35; display: block; }
+.ingred i { font-style: normal; font-family: var(--f-num); color: var(--rojo); font-size: 17px; }
+
+.definicion { border-left: 5px solid var(--rojo); padding: 6px 0 6px 22px; font-size: 27px; line-height: 1.4; margin: 0 0 30px; max-width: 30em; }
+
+/* Botones e insumos */
+.reveal button { font-family: var(--f-texto); font-size: 19px; font-weight: 600; padding: 9px 16px; border: 2px solid var(--tinta); background: var(--tarjeta); color: var(--tinta); border-radius: 7px; cursor: pointer; }
+.reveal button:hover { background: var(--rojo-suave); }
+.reveal button:focus-visible, .reveal input:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+.reveal button.on { background: var(--tinta); color: var(--papel); }
+.reveal button.primario { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.reveal input[type=number], .reveal input.celda { font-family: var(--f-num); font-weight: 600; font-size: 24px; width: 64px; text-align: center; border: 1.5px solid transparent; border-radius: 5px; background: transparent; color: inherit; padding: 2px; }
+.reveal input.celda:hover { border-color: var(--apagado); }
+.reveal input.celda.mr { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; font-weight: 700; }
+
+/* Sorteo con papel y bolsa */
+.bolsa { width: 330px; max-width: 100%; height: auto; display: block; }
+.bolsa .cuerpo { fill: var(--kraft); stroke: var(--kraft-oscuro); stroke-width: 3; }
+.bolsa .pliegue { fill: var(--kraft-oscuro); }
+.bolsa .boca { fill: var(--tinta); opacity: .85; }
+.bolsa .papel rect { fill: #fff; stroke: var(--tinta); stroke-width: 2; }
+.bolsa .papel text { font-family: var(--f-display); font-weight: 800; font-size: 30px; text-anchor: middle; dominant-baseline: central; }
+.bolsa .papel { animation: caer 3.6s ease-in infinite; transform-box: fill-box; transform-origin: center; }
+.bolsa .papel.p2 { animation-delay: 1.2s; }
+.bolsa .papel.p3 { animation-delay: 2.4s; }
+@keyframes caer { 0%, 15% { transform: translateY(0) rotate(0); opacity: 1; } 70% { transform: translateY(150px) rotate(25deg); opacity: 1; } 80%, 100% { transform: translateY(170px) rotate(30deg); opacity: 0; } }
+html.print-pdf .bolsa .papel { animation: none; }
+.foto-sorteo { max-width: 360px; max-height: 300px; border-radius: 8px; border: 2px solid var(--tinta); }
+.pasos { list-style: none; padding: 0 !important; counter-reset: paso; margin-top: 20px !important; }
+.pasos li { counter-increment: paso; display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: baseline; font-size: 23px; margin-bottom: 8px; }
+.pasos li::before { content: counter(paso); font-family: var(--f-num); font-weight: 600; color: var(--papel); background: var(--rojo); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 17px; }
+.pasos li::marker { content: ""; }
+.contador { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.contador .tipo { border: 2px solid var(--tinta); border-radius: 8px; padding: 10px 12px; background: var(--tarjeta); display: flex; flex-direction: column; gap: 4px; }
+.contador .tipo b { font-family: var(--f-display); font-size: 26px; }
+.contador .tipo .cuenta { font-family: var(--f-num); font-size: 40px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.contador .tipo span { font-size: 16px; color: var(--gris); }
+.contador button { margin-top: 4px; }
+.reloj { font-family: var(--f-num); font-size: 58px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.reglas { list-style: none; padding: 0 !important; }
+.reglas li { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--linea); margin: 0; }
+.reglas li::marker { content: ""; }
+
+/* Panel explicativo de la matriz */
+.panel { font-size: 21px; line-height: 1.4; }
+.panel h3 { font-size: 23px; margin: 10px 0 4px; }
+.panel p { margin: 0 0 6px; }
+
+/* Barras */
+.barras { display: flex; flex-direction: column; gap: 10px; }
+.barra { display: grid; grid-template-columns: 210px 1fr 80px; gap: 12px; align-items: center; font-size: 21px; }
+.barra .pista { height: 30px; background: var(--linea); border-radius: 4px; overflow: hidden; }
+.barra .relleno { height: 100%; background: var(--tinta); border-radius: 4px; transition: width .5s; }
+.barra .relleno.r { background: var(--rojo); }
+.barra .relleno.a { background: var(--azul); }
+.barra .v { font-family: var(--f-num); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.dato { font-family: var(--f-num); font-size: 44px; font-weight: 600; line-height: 1; }
+
+/* Torneo */
+.opciones { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 19px; }
+.opciones label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.reveal input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--rojo); }
+.reveal input[type=range] { accent-color: var(--rojo); width: 200px; }
+
+/* Penalti */
+.arco { display: flex; gap: 14px; }
+.arco button { flex: 1; font-size: 24px; padding: 18px; }
+.tiros { display: flex; flex-wrap: wrap; gap: 6px; min-height: 34px; }
+.tiro { font-family: var(--f-num); font-size: 15px; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+.tiro.gol { background: var(--azul-suave); color: var(--azul); }
+.tiro.atajada { background: var(--rojo-suave); color: var(--rojo); }
+
+/* Árbol */
+.arbol line { stroke: var(--tinta); stroke-width: 3; transition: stroke .3s, opacity .3s; }
+.arbol line.elegida { stroke: var(--rojo); stroke-width: 6; }
+.arbol line.descartada { opacity: .2; }
+.arbol circle { fill: var(--tinta); }
+.arbol text { font-family: var(--f-texto); font-size: 20px; fill: var(--tinta); }
+.arbol text.nodo { font-weight: 700; font-size: 21px; }
+.arbol text.pago { font-family: var(--f-num); font-weight: 600; font-size: 22px; }
+.arbol .descartada-t { opacity: .3; }
+
+/* Tipos de juego */
+.contrastes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 40px; }
+.contraste { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.contraste .par { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.contraste b { font-family: var(--f-display); font-size: 25px; display: block; }
+.contraste span { font-size: 19px; color: var(--gris); line-height: 1.35; display: block; }
+.contraste .hoy { margin-top: 8px; font-size: 16px; font-family: var(--f-num); color: var(--rojo); }
+
+.refs { font-size: 18px; line-height: 1.4; columns: 2; column-gap: 40px; }
+.refs p { break-inside: avoid; margin-bottom: 10px; }
+.nueva { font-family: var(--f-num); font-size: 12px; color: var(--rojo); font-weight: 600; letter-spacing: .05em; }
+
+/* Lo que va solo en vivo o solo en el PDF */
+.solo-pdf { display: none; }
+html.print-pdf .solo-clase { display: none !important; }
+html.print-pdf .solo-pdf { display: block !important; }
+@media print { .solo-clase { display: none !important; } .solo-pdf { display: block !important; } }
+.solo-pdf.recuadro { border: 1.5px dashed var(--apagado); border-radius: 8px; padding: 14px 18px; font-size: 20px; color: var(--gris); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 · PORTADA -->
+<section>
+  <div class="portada">
+    <div>
+      <div class="ceja">Microeconomía II · Universidad del Norte</div>
+      <h1>Introducción a la Teoría de Juegos</h1>
+      <p class="sub" style="margin-top:18px">Estrategia, racionalidad y equilibrio</p>
+      <div class="autor"><b>Carlos A. Yanes Guerra</b><br>Departamento de Economía · Barranquilla, 2026</div>
+    </div>
+    <table class="matriz" aria-label="Matriz del juego A o B">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Jugador 2</th></tr>
+      <tr><th></th><th></th><th>A</th><th>B</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Jugador 1</span></th><th>A</th>
+        <td class="nash"><span class="j1">1</span> , <span class="j2">1</span></td>
+        <td><span class="j1">10</span> , <span class="j2">0</span></td></tr>
+      <tr><th>B</th>
+        <td><span class="j1">0</span> , <span class="j2">10</span></td>
+        <td><span class="j1">2</span> , <span class="j2">2</span></td></tr>
+    </table>
+  </div>
+  <aside class="notes">Bienvenida. No explicar la matriz todavía: es el juego que van a jugar en 15 minutos.</aside>
+</section>
+
+<!-- 2 · USTED YA JUEGA -->
+<section>
+  <div class="ceja">Antes de las fórmulas</div>
+  <h2>Usted ya juega todos los días</h2>
+  <p class="sub" style="margin-top:-8px;margin-bottom:22px">No hablamos de juegos de mesa ni de videojuegos. Hablamos de decisiones donde lo que a usted le conviene depende de lo que hagan los demás.</p>
+  <div class="rejilla tres">
+    <div class="caso fragment"><span class="etiqueta">Dilema del prisionero</span><h3>El trabajo en grupo</h3><p>Si todos trabajan, sale bien. Pero a cada uno le conviene que otro haga la parte difícil.</p></div>
+    <div class="caso fragment"><span class="etiqueta az">Coordinación</span><h3>Trancón en la Circunvalar</h3><p>¿Se mete por el carril que avanza o espera su turno? Depende de lo que hagan los otros carros.</p></div>
+    <div class="caso fragment"><span class="etiqueta">Competencia</span><h3>La tienda contra el D1</h3><p>¿Bajar precios o fidelizar con el fiado? La respuesta depende de lo que haga el vecino.</p></div>
+    <div class="caso fragment"><span class="etiqueta">Guerra de precios</span><h3>Barranquilla–Bogotá</h3><p>Una aerolínea baja la tarifa. ¿Las demás la siguen o la dejan sola?</p></div>
+    <div class="caso fragment"><span class="etiqueta az">Juego repetido</span><h3>El parcial con curva</h3><p>Si todos estudian más, la nota relativa no cambia. Si nadie estudia, tampoco.</p></div>
+    <div class="caso fragment"><span class="etiqueta">Suma cero</span><h3>El penalti</h3><p>El portero adivina, el delantero también. Lo que gana uno lo pierde el otro.</p></div>
+  </div>
+  <aside class="notes">Mostrar una por una. Preguntar al salón: ¿en cuál de estas le ha tocado estar esta semana? Los jugadores también pueden ser empresas, países o la naturaleza.</aside>
+</section>
+
+<!-- 3 · INGREDIENTES -->
+<section>
+  <div class="ceja">Ingredientes</div>
+  <h2>¿Qué hace que algo sea un juego?</h2>
+  <p class="definicion">Un <strong>juego</strong> es una situación en la que cada jugador toma decisiones <strong>estratégicas</strong>: tiene en cuenta lo que harán y responderán los demás.</p>
+  <div class="ingred">
+    <div class="fragment"><i>¿Quiénes?</i><b>Jugadores</b><span>Personas, empresas, gobiernos, incluso la naturaleza.</span></div>
+    <div class="fragment"><i>¿Qué pueden hacer?</i><b>Estrategias</b><span>Planes de acción completos para cada situación.</span></div>
+    <div class="fragment"><i>¿Qué obtienen?</i><b>Pagos</b><span>Utilidad, dinero o puntos que dependen de lo que elijan <em>todos</em>.</span></div>
+    <div class="fragment"><i>¿Qué saben?</i><b>Información</b><span>Quién mueve primero y qué sabe cada uno al decidir.</span></div>
+  </div>
+</section>
+
+<!-- 4 · MATEMÁTICA -->
+<section>
+  <div class="ceja">Lo que matemáticamente requiere</div>
+  <h2>En notación</h2>
+  <div class="fila">
+    <div class="col">
+      <p style="font-size:34px">\[ G = \{\, S_1, \dots, S_n \,;\; u_1, \dots, u_n \,\} \]</p>
+      <ul>
+        <li class="fragment">Jugadores \( i \in \{1, 2, \dots, n\} \), con \( n \geq 2 \)</li>
+        <li class="fragment">Estrategias: \( s_i \in S_i \), donde \( S_i \) es el espacio estratégico de \( i \)</li>
+        <li class="fragment">Pagos: \( u_i : S_1 \times \cdots \times S_n \rightarrow \mathbb{R} \)</li>
+        <li class="fragment">Notación útil: \( u_i(s_i, s_{-i}) \), donde \( s_{-i} \) es lo que eligen <em>los demás</em></li>
+      </ul>
+    </div>
+  </div>
+  <p class="peq fragment" style="margin-top:26px">Tranquilo: para hoy basta con comparar números en una tabla. Álgebra simple, promedios y, más adelante, derivar.</p>
+</section>
+
+<!-- 5 · ACTIVIDAD -->
+<section>
+  <div class="ceja">Actividad · Bonificación sobre el examen final</div>
+  <h2>Juguemos: A o B</h2>
+  <div class="fila">
+    <div class="col">
+      <p>Elija en secreto <strong>A</strong> o <strong>B</strong>. La bolsa decide su pareja: no sabrá con quién le tocó hasta el final.</p>
+      <ul class="reglas">
+        <li><span class="num">Usted A, otro B</span><span>Usted gana <strong class="num">+10</strong>; su pareja, <strong class="num">0</strong></span></li>
+        <li><span class="num">Ambos B</span><span><strong class="num">+2</strong> para cada uno</span></li>
+        <li><span class="num">Ambos A</span><span><strong class="num">+1</strong> para cada uno</span></li>
+      </ul>
+      <ol class="pasos">
+        <li class="fragment">Escriba en un papel su letra y su nombre completo</li>
+        <li class="fragment">Dóblelo dos veces para que nadie vea la letra</li>
+        <li class="fragment">Échelo en la bolsa</li>
+        <li class="fragment">Saco los papeles de dos en dos: cada par es una pareja</li>
+      </ol>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex:0 0 360px">
+      <div id="ilustracionSorteo">
+        <svg class="bolsa" viewBox="0 0 330 330" role="img" aria-label="Papeles con las letras A y B cayendo en una bolsa de papel">
+          <path class="cuerpo" d="M60 150 L270 150 L285 320 L45 320 Z"/>
+          <path class="pliegue" d="M60 150 L270 150 L262 168 L68 168 Z"/>
+          <ellipse class="boca" cx="165" cy="152" rx="104" ry="9"/>
+          <path d="M120 230 Q165 250 210 230" style="fill:none;stroke:var(--kraft-oscuro);stroke-width:3"/>
+          <g class="papel p1"><rect x="80" y="10" width="54" height="44" rx="3" transform="rotate(-12 107 32)"/><text x="107" y="32" style="fill:var(--azul)">A</text></g>
+          <g class="papel p2"><rect x="140" y="0" width="54" height="44" rx="3" transform="rotate(8 167 22)"/><text x="167" y="22" style="fill:var(--rojo)">B</text></g>
+          <g class="papel p3"><rect x="200" y="18" width="54" height="44" rx="3" transform="rotate(-5 227 40)"/><text x="227" y="40" style="fill:var(--azul)">A</text></g>
+        </svg>
+      </div>
+      <div class="solo-clase" style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <div class="reloj" id="reloj">2:00</div>
+        <div class="botones"><button id="btnReloj" class="primario">Iniciar tiempo</button><button id="btnRelojR">Reiniciar</button></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Repartir papelitos antes de mostrar esta diapositiva. Iniciar el reloj. Pasar la bolsa por las filas y sacudirla bien. No sacar parejas todavía: primero resolvemos el juego en el tablero. Si el número de estudiantes es impar, el papel que sobra juega contra uno sacado de nuevo de la bolsa o contra el profesor.</aside>
+</section>
+
+<!-- 6 · FORMA NORMAL -->
+<section>
+  <div class="ceja">Forma normal</div>
+  <h2>Así se escribe el juego</h2>
+  <div class="fila centro-v">
+    <table class="matriz">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Jugador 2</th></tr>
+      <tr><th></th><th></th><th>A</th><th>B</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Jugador 1</span></th><th>A</th>
+        <td><span class="j1">1</span> , <span class="j2">1</span></td><td><span class="j1">10</span> , <span class="j2">0</span></td></tr>
+      <tr><th>B</th>
+        <td><span class="j1">0</span> , <span class="j2">10</span></td><td><span class="j1">2</span> , <span class="j2">2</span></td></tr>
+    </table>
+    <div class="col">
+      <p>Cada celda es un resultado posible. El primer número es el pago del <strong class="j1">Jugador 1</strong> (filas); el segundo, del <strong class="j2">Jugador 2</strong> (columnas).</p>
+      <ul>
+        <li class="fragment">Hay más de un jugador</li>
+        <li class="fragment">Cada uno tiene estrategias disponibles</li>
+        <li class="fragment">Los pagos dependen de lo que eligen <strong>ambos</strong></li>
+        <li class="fragment">No sabe quién es el otro, pero debe pensar en cómo responderá</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · DOMINANCIA -->
+<section>
+  <div class="ceja">Cómo resolverlo</div>
+  <h2>Estrategia estrictamente dominante</h2>
+  <p>Una estrategia que da <strong>más utilidad</strong> que cualquier otra, <strong>sin importar</strong> lo que haga el contrario.</p>
+  <p style="font-size:32px">\[ u_i(s_i, s_{-i}) \;>\; u_i(s_i', s_{-i}) \qquad \forall\, s_{-i} \]</p>
+  <div class="fila" style="margin-top:6px">
+    <div class="col caso fragment"><span class="etiqueta az">Si el otro elige A</span><p style="font-size:24px">A me da <b class="num j1">1</b>, B me da <b class="num j1">0</b> → me conviene <b>A</b></p></div>
+    <div class="col caso fragment"><span class="etiqueta az">Si el otro elige B</span><p style="font-size:24px">A me da <b class="num j1">10</b>, B me da <b class="num j1">2</b> → me conviene <b>A</b></p></div>
+  </div>
+  <p class="fragment" style="margin-top:20px">Pase lo que pase, <strong>A domina a B</strong>. El Jugador 2 razona igual, así que el resultado es <strong>(A, A)</strong>.</p>
+  <aside class="notes">Analogía: si a usted le gusta más la pizza que la hamburguesa en cualquier circunstancia, siempre pide pizza. El jugador 1 compara entre filas; el jugador 2, entre columnas.</aside>
+</section>
+
+<!-- 8 · MATRIZ INTERACTIVA -->
+<section>
+  <div class="ceja">Pruébelo usted</div>
+  <h2>Mejores respuestas y equilibrio de Nash</h2>
+  <div class="solo-clase">
+    <div class="botones" style="margin-bottom:16px">
+      <button data-juego="clase">A o B</button>
+      <button data-juego="penalti">Penalti</button>
+      <button data-juego="coord">Coordinación</button>
+      <span style="width:16px"></span>
+      <button id="bMR1">Mejor respuesta J1</button>
+      <button id="bMR2">Mejor respuesta J2</button>
+      <button id="bNash">Equilibrio de Nash</button>
+    </div>
+    <div class="fila">
+      <table class="matriz" id="mInt">
+        <tr><th></th><th></th><th colspan="2" class="jug j2"><span id="mN2">Jugador 2</span></th></tr>
+        <tr><th></th><th></th><th id="mC0">A</th><th id="mC1">B</th></tr>
+        <tr><th rowspan="2" class="jug j1"><span class="lado" id="mN1">Jugador 1</span></th><th id="mF0">A</th>
+          <td id="t00"><input class="celda j1" id="a00" aria-label="Pago J1 fila 1 columna 1"> , <input class="celda j2" id="b00" aria-label="Pago J2 fila 1 columna 1"></td>
+          <td id="t01"><input class="celda j1" id="a01" aria-label="Pago J1 fila 1 columna 2"> , <input class="celda j2" id="b01" aria-label="Pago J2 fila 1 columna 2"></td></tr>
+        <tr><th id="mF1">B</th>
+          <td id="t10"><input class="celda j1" id="a10" aria-label="Pago J1 fila 2 columna 1"> , <input class="celda j2" id="b10" aria-label="Pago J2 fila 2 columna 1"></td>
+          <td id="t11"><input class="celda j1" id="a11" aria-label="Pago J1 fila 2 columna 2"> , <input class="celda j2" id="b11" aria-label="Pago J2 fila 2 columna 2"></td></tr>
+      </table>
+      <div class="col panel" id="panel"></div>
+    </div>
+  </div>
+  <div class="solo-pdf recuadro">
+    En clase usamos una matriz interactiva: se subrayan las mejores respuestas de cada jugador y la celda donde coinciden es el <strong>equilibrio de Nash</strong>.
+    En el juego A o B el equilibrio es <strong>(A, A)</strong> con pagos (1, 1), aunque <strong>(B, B)</strong> daría (2, 2) a ambos. En el penalti no hay equilibrio en estrategias puras: cada jugador elige cada lado con 50 %.
+  </div>
+  <aside class="notes">Pedir a un estudiante que invente pagos. El salón predice el equilibrio antes de presionar el botón. Cualquier número se puede cambiar haciendo clic sobre él.</aside>
+</section>
+
+<!-- 9 · RESULTADOS -->
+<section>
+  <div class="ceja">Sacamos los papeles de la bolsa</div>
+  <h2>¿Qué parejas salieron?</h2>
+  <div class="fila">
+    <div class="col">
+      <div class="contador">
+        <div class="tipo"><b>A – A</b><span class="cuenta" id="cAA">0</span><span>+1 y +1</span><button class="solo-clase" data-par="AA">+ pareja</button></div>
+        <div class="tipo"><b>A – B</b><span class="cuenta" id="cAB">0</span><span>+10 para A, 0 para B</span><button class="solo-clase" data-par="AB">+ pareja</button></div>
+        <div class="tipo"><b>B – B</b><span class="cuenta" id="cBB">0</span><span>+2 y +2</span><button class="solo-clase" data-par="BB">+ pareja</button></div>
+      </div>
+      <div class="botones solo-clase" style="margin:12px 0 16px"><button id="parDeshacer">Deshacer</button><button id="parReiniciar">Empezar en cero</button></div>
+      <div class="barras" style="margin-top:12px">
+        <div class="barra"><span>Eligieron <b>A</b></span><div class="pista"><div class="relleno r" id="barA"></div></div><span class="v" id="pA"></span></div>
+        <div class="barra"><span>Eligieron <b>B</b></span><div class="pista"><div class="relleno a" id="barB"></div></div><span class="v" id="pB"></span></div>
+      </div>
+      <p class="peq" id="avisoEjemplo" style="margin-top:10px">Números de ejemplo. Al sumar la primera pareja de hoy, el contador empieza en cero.</p>
+    </div>
+    <div class="col">
+      <h3>Pago esperado con pareja al azar</h3>
+      <div class="barras">
+        <div class="barra"><span>Si eligió A</span><div class="pista"><div class="relleno r" id="eAbar"></div></div><span class="v" id="eA"></span></div>
+        <div class="barra"><span>Si eligió B</span><div class="pista"><div class="relleno a" id="eBbar"></div></div><span class="v" id="eB"></span></div>
+      </div>
+      <p class="peq" style="margin-top:12px" id="lecturaRes"></p>
+      <p style="margin-top:16px;font-size:22px" id="puntosSalon"></p>
+    </div>
+  </div>
+  <aside class="notes">Sacar dos papeles, leerlos en voz alta y presionar el botón de esa pareja. El pago esperado se calcula con la fracción del salón que eligió A: E[A] = p·1 + (1−p)·10 y E[B] = p·0 + (1−p)·2. A siempre gana, cualquiera que sea p. Pero si todos hubieran elegido B, cada uno tendría 2 en vez de 1.</aside>
+</section>
+
+<!-- 10 · DILEMA -->
+<section>
+  <div class="ceja">Lo que acabamos de jugar</div>
+  <h1 style="font-size:84px;margin-bottom:28px">El dilema del prisionero</h1>
+  <div class="fila">
+    <p class="col" style="font-size:30px">Lo que es racional para cada uno lleva a un resultado <strong>peor para todos</strong>. (A, A) es equilibrio; (B, B) era mejor para ambos, pero nadie puede comprometerse a jugarlo.</p>
+    <p class="col peq">Lo formularon Merrill Flood y Melvin Dresher en la RAND Corporation en 1950. Albert W. Tucker le puso la historia de los dos presos que hoy le da nombre.</p>
+  </div>
+</section>
+
+<!-- 11 · MUNDO REAL -->
+<section>
+  <div class="ceja">No es solo un ejercicio de clase</div>
+  <h2>El mismo dilema, en el mundo real</h2>
+  <div class="rejilla dos">
+    <div class="caso fragment"><span class="etiqueta">Comercio</span><h3>Guerras de aranceles</h3><p>A cada país le conviene poner aranceles si el otro no lo hace. Si ambos los ponen, los dos comercian menos y pierden.</p></div>
+    <div class="caso fragment"><span class="etiqueta">Clima</span><h3>Acuerdos de emisiones</h3><p>Todos ganan si todos reducen emisiones, pero a cada país le conviene que los demás asuman el costo.</p></div>
+    <div class="caso fragment"><span class="etiqueta">Mercados</span><h3>Guerras de precios</h3><p>Dos aerolíneas en la misma ruta: bajar la tarifa roba clientes, pero si ambas la bajan, ambas ganan menos.</p></div>
+    <div class="caso fragment"><span class="etiqueta az">Inteligencia artificial</span><h3>Algoritmos que coluden</h3><p>Algoritmos de precios que aprenden solos llegaron a sostener precios altos y a "castigar" a quien bajaba, sin que nadie se lo programara.</p><span class="fuente">Calvano, Calzolari, Denicolò y Pastorello, <em>American Economic Review</em>, 2020</span></div>
+  </div>
+  <aside class="notes">Pregunta para cerrar: ¿por qué los algoritmos sí lograron cooperar y ustedes no? Respuesta: juegan muchas veces. Eso lleva a la siguiente diapositiva.</aside>
+</section>
+
+<!-- 12 · TORNEO -->
+<section>
+  <div class="ceja">Juegos repetidos</div>
+  <h2>¿Y si jugamos muchas veces?</h2>
+  <div class="fila solo-clase">
+    <div style="flex:0 0 470px;display:flex;flex-direction:column;gap:14px">
+      <p class="peq" style="margin:0">En 1980 Robert Axelrod organizó un torneo: programas que jugaban el dilema entre sí, muchas rondas. Elija quiénes compiten.</p>
+      <div class="opciones" id="estrategias"></div>
+      <label class="peq" style="display:flex;gap:10px;align-items:center">Rondas por partida <input type="range" id="rondas" min="1" max="200" value="100"> <b class="num" id="rondasV">100</b></label>
+      <label class="peq" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="ruido"> Errores: 5 % de las jugadas salen al revés</label>
+      <div class="botones"><button class="primario" id="btnTorneo">Jugar torneo</button></div>
+      <p class="fuente" style="margin:0">Pagos por ronda: ambos cooperan 3 · ambos traicionan 1 · traiciona contra quien coopera 5 y 0.</p>
+    </div>
+    <div class="col">
+      <h3>Puntos promedio por ronda</h3>
+      <div class="barras" id="resTorneo"></div>
+      <p class="peq" id="lecturaTorneo" style="margin-top:12px"></p>
+    </div>
+  </div>
+  <div class="solo-pdf recuadro">
+    En clase simulamos el torneo de Axelrod (1980). Cuando el juego se repite muchas veces, estrategias que cooperan pero castigan la traición, como <strong>Ojo por ojo</strong>, superan a <strong>Siempre traiciona</strong>. Con una sola ronda, traicionar vuelve a ser lo mejor. Para explorar más: <em>La evolución de la confianza</em>, de Nicky Case (ncase.me/trust).
+  </div>
+  <aside class="notes">Probar: 1 ronda (gana traicionar), 100 rondas (gana ojo por ojo o rencoroso), quitar a "Siempre coopera" y ver qué pasa. Con errores activados, el generoso mejora.</aside>
+</section>
+
+<!-- 13 · PENALTI -->
+<section>
+  <div class="ceja">Suma cero y estrategias mixtas</div>
+  <h2>Usted patea, el portero aprende</h2>
+  <div class="fila">
+    <div class="col">
+      <p>Lo que gana uno lo pierde el otro. No hay equilibrio en estrategias puras: si usted es predecible, el portero lo aprovecha.</p>
+      <p class="peq">Ignacio Palacios-Huerta analizó más de 1.400 penaltis de ligas profesionales: delanteros y porteros eligen cada lado con frecuencias muy cercanas a las del equilibrio en estrategias mixtas.</p>
+      <p class="fuente">Palacios-Huerta, <em>Review of Economic Studies</em>, 2003</p>
+    </div>
+    <div class="col solo-clase" style="display:flex;flex-direction:column;gap:14px">
+      <div class="arco"><button id="patIzq">⟵ Izquierda</button><button id="patDer">Derecha ⟶</button></div>
+      <div style="display:flex;gap:30px;align-items:flex-end">
+        <div><div class="dato j2" id="goles">0</div><div class="peq">goles</div></div>
+        <div><div class="dato" id="atajadas">0</div><div class="peq">atajadas</div></div>
+        <div style="margin-left:auto"><button id="patReset">Reiniciar</button></div>
+      </div>
+      <div class="tiros" id="tiros"></div>
+      <p class="peq" id="lecturaPenal" style="margin:0">Patee unas 15 veces. El portero se fija en sus patrones.</p>
+    </div>
+    <div class="col solo-pdf recuadro">En clase: un estudiante patea contra un portero que aprende de sus patrones. Quien repite lado o alterna de forma predecible recibe más atajadas. La mejor defensa es elegir al azar, 50 % cada lado.</div>
+  </div>
+  <aside class="notes">Pasar un estudiante al frente. El portero predice con base en la última jugada del estudiante y su historial. Conectar con el equilibrio mixto: abrir la matriz interactiva con "Penalti".</aside>
+</section>
+
+<!-- 14 · SECUENCIAL -->
+<section>
+  <div class="ceja">Forma extensiva · Juegos secuenciales</div>
+  <h2>Piense hacia atrás</h2>
+  <div class="fila">
+    <div style="flex:0 0 640px">
+      <svg class="arbol" viewBox="0 0 760 420" width="100%" role="img" aria-label="Árbol del juego de entrada al mercado">
+        <line id="eNo" x1="380" y1="60" x2="170" y2="220"/>
+        <line id="eSi" x1="380" y1="60" x2="590" y2="220"/>
+        <line id="eGuerra" x1="590" y1="220" x2="470" y2="360"/>
+        <line id="eAcom" x1="590" y1="220" x2="710" y2="360"/>
+        <circle cx="380" cy="60" r="10"/><circle cx="590" cy="220" r="10"/>
+        <text class="nodo" x="380" y="32" text-anchor="middle">App nueva</text>
+        <text class="nodo" x="608" y="214">App establecida</text>
+        <text x="245" y="130" text-anchor="end" id="tNo">No entra</text>
+        <text x="505" y="130" id="tSi">Entra</text>
+        <text x="500" y="300" text-anchor="end" id="tGuerra">Guerra de precios</text>
+        <text x="668" y="300" id="tAcom">Acomoda</text>
+        <text class="pago" x="170" y="255" text-anchor="middle" id="pNo"><tspan class="j1">0</tspan> , <tspan class="j2">10</tspan></text>
+        <text class="pago" x="470" y="395" text-anchor="middle" id="pGuerra"><tspan class="j1">−2</tspan> , <tspan class="j2">2</tspan></text>
+        <text class="pago" x="710" y="395" text-anchor="middle" id="pAcom"><tspan class="j1">3</tspan> , <tspan class="j2">5</tspan></text>
+      </svg>
+    </div>
+    <div class="col">
+      <p>Una app nueva de domicilios decide si entra a Barranquilla. La establecida amenaza con una guerra de precios. ¿Le cree?</p>
+      <p class="peq">Pagos: <span class="j1">(nueva</span>, <span class="j2">establecida)</span></p>
+      <div class="botones solo-clase"><button class="primario" id="btnArbol">Paso 1: la última decisión</button></div>
+      <p id="lecturaArbol" style="margin-top:14px"></p>
+      <p class="solo-pdf">Inducción hacia atrás: si la nueva entra, a la establecida le conviene acomodar (5 > 2). Sabiendo eso, la nueva compara 3 contra 0 y entra. La amenaza de guerra <strong>no es creíble</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · TIPOS -->
+<section>
+  <div class="ceja">Mapa del curso</div>
+  <h2>Tipos de juegos</h2>
+  <div class="contrastes">
+    <div class="contraste fragment"><div class="par"><div><b>Cooperativos</b><span>Pueden firmar contratos que obligan a cumplir.</span></div><div><b>No cooperativos</b><span>No hay contratos vinculantes.</span></div></div><div class="hoy">Hoy: A o B era no cooperativo</div></div>
+    <div class="contraste fragment"><div class="par"><div><b>Simultáneos</b><span>Todos eligen a la vez, sin ver al otro.</span></div><div><b>Secuenciales</b><span>Uno mueve, el otro observa y responde.</span></div></div><div class="hoy">Hoy: la votación y la app de domicilios</div></div>
+    <div class="contraste fragment"><div class="par"><div><b>De una vez</b><span>Se juega una sola ronda.</span></div><div><b>Repetidos</b><span>Se juega muchas veces, incluso sin fin conocido.</span></div></div><div class="hoy">Hoy: el torneo de Axelrod</div></div>
+    <div class="contraste fragment"><div class="par"><div><b>Suma cero</b><span>Lo que uno gana, el otro lo pierde.</span></div><div><b>Suma no cero</b><span>Ambos pueden ganar o perder juntos.</span></div></div><div class="hoy">Hoy: el penalti contra el dilema</div></div>
+  </div>
+</section>
+
+<!-- 16 · PARA LLEVAR -->
+<section>
+  <div class="ceja">Para llevar</div>
+  <h2>Tres ideas de hoy</h2>
+  <ul style="font-size:31px">
+    <li class="fragment">En un juego, su mejor decisión depende de lo que haga el otro. Escriba la matriz antes de decidir.</li>
+    <li class="fragment">Un equilibrio no es lo mejor para el grupo: es donde nadie quiere cambiar solo.</li>
+    <li class="fragment">Repetir el juego, moverse en orden o aleatorizar cambia por completo lo que conviene.</li>
+  </ul>
+</section>
+
+<!-- 17 · REFERENCIAS -->
+<section>
+  <div class="ceja">Referencias</div>
+  <h2>Para leer más</h2>
+  <div class="refs">
+    <p>Osborne, M. J. y Rubinstein, A. (1994). <em>A Course in Game Theory</em>. MIT Press.</p>
+    <p>Dixit, A. K., Skeath, S. y Reiley, D. H. (2020). <em>Games of Strategy</em> (5.ª ed.). W. W. Norton.</p>
+    <p>Gibbons, R. (1992). <em>A Primer in Game Theory</em>. Harvester Wheatsheaf.</p>
+    <p>Myerson, R. B. (1991). <em>Game Theory: Analysis of Conflict</em>. Harvard University Press.</p>
+    <p>Fudenberg, D. y Tirole, J. (1991). <em>Game Theory</em>. MIT Press.</p>
+    <p>Binmore, K. (2007). <em>Playing for Real</em>. Oxford University Press.</p>
+    <p>Von Neumann, J. y Morgenstern, O. (1944). <em>Theory of Games and Economic Behavior</em>. Princeton University Press.</p>
+    <p>Safner, R. (2021). <em>Lecture Notes on Game Theory</em>. Hood College.</p>
+    <p><span class="nueva">NUEVA</span><br>Axelrod, R. (1984). <em>The Evolution of Cooperation</em>. Basic Books.</p>
+    <p><span class="nueva">NUEVA</span><br>Palacios-Huerta, I. (2003). Professionals Play Minimax. <em>Review of Economic Studies</em>, 70(2).</p>
+    <p><span class="nueva">NUEVA</span><br>Calvano, E., Calzolari, G., Denicolò, V. y Pastorello, S. (2020). Artificial Intelligence, Algorithmic Pricing, and Collusion. <em>American Economic Review</em>, 110(10).</p>
+    <p><span class="nueva">NUEVA</span><br>Case, N. (2017). <em>The Evolution of Trust</em> (interactivo). ncase.me/trust</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] }, svg: { fontCache: "global" } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+
+/* ---------- Presentación ---------- */
+Reveal.initialize({
+  width: 1280, height: 720, margin: 0.05,
+  center: false, hash: true, transition: "fade", transitionSpeed: "fast",
+  slideNumber: "c/t", controls: true, progress: true,
+  pdfSeparateFragments: false,
+  plugins: typeof RevealNotes !== "undefined" ? [RevealNotes] : []
+});
+
+/* ---------- Imagen del sorteo y reloj ---------- */
+(function () {
+  if (CONFIG.imagenSorteo) {
+    const img = document.createElement("img");
+    img.src = CONFIG.imagenSorteo; img.alt = "Sorteo con papeles en una bolsa"; img.className = "foto-sorteo";
+    $("ilustracionSorteo").replaceChildren(img);
+  }
+
+  const total = Math.round(CONFIG.minutosVotacion * 60);
+  let quedan = total, timer = null;
+  const pinta = () => { const m = Math.floor(quedan / 60), s = quedan % 60;
+    $("reloj").textContent = quedan > 0 ? m + ":" + String(s).padStart(2, "0") : "¡Tiempo!"; };
+  pinta();
+  $("btnReloj").onclick = () => {
+    if (timer) { clearInterval(timer); timer = null; $("btnReloj").textContent = "Continuar"; return; }
+    $("btnReloj").textContent = "Pausar";
+    timer = setInterval(() => { quedan = Math.max(0, quedan - 1); pinta();
+      if (!quedan) { clearInterval(timer); timer = null; $("btnReloj").textContent = "Iniciar tiempo"; } }, 1000);
+  };
+  $("btnRelojR").onclick = () => { clearInterval(timer); timer = null; quedan = total; pinta(); $("btnReloj").textContent = "Iniciar tiempo"; };
+})();
+
+/* ---------- Matriz interactiva ---------- */
+(function () {
+  const juegos = {
+    clase:   { n1: "Jugador 1", n2: "Jugador 2", f: ["A", "B"], c: ["A", "B"], a: [[1, 10], [0, 2]], b: [[1, 0], [10, 2]] },
+    penalti: { n1: "Delantero", n2: "Portero", f: ["Izq.", "Der."], c: ["Izq.", "Der."], a: [[-1, 1], [1, -1]], b: [[1, -1], [-1, 1]] },
+    coord:   { n1: "Jugador 1", n2: "Jugador 2", f: ["Cine", "Fútbol"], c: ["Cine", "Fútbol"], a: [[2, 0], [0, 1]], b: [[1, 0], [0, 2]] }
+  };
+  const ver = { mr1: false, mr2: false, nash: false };
+  let g = null;
+
+  function cargar(k) {
+    g = JSON.parse(JSON.stringify(juegos[k]));
+    $("mN1").textContent = g.n1; $("mN2").textContent = g.n2;
+    for (let i = 0; i < 2; i++) { $("mF" + i).textContent = g.f[i]; $("mC" + i).textContent = g.c[i]; }
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) { $("a" + i + j).value = g.a[i][j]; $("b" + i + j).value = g.b[i][j]; }
+    ver.mr1 = ver.mr2 = ver.nash = false;
+    document.querySelectorAll("[data-juego]").forEach(b => b.classList.toggle("on", b.dataset.juego === k));
+    pintar();
+  }
+  function leer() {
+    const n = id => parseFloat(String($(id).value).replace(",", ".")) || 0;
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) { g.a[i][j] = n("a" + i + j); g.b[i][j] = n("b" + i + j); }
+  }
+  function calcular() {
+    const mr1 = [[0, 0], [0, 0]], mr2 = [[0, 0], [0, 0]], nash = [];
+    for (let j = 0; j < 2; j++) { const m = Math.max(g.a[0][j], g.a[1][j]); for (let i = 0; i < 2; i++) mr1[i][j] = g.a[i][j] === m; }
+    for (let i = 0; i < 2; i++) { const m = Math.max(g.b[i][0], g.b[i][1]); for (let j = 0; j < 2; j++) mr2[i][j] = g.b[i][j] === m; }
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) if (mr1[i][j] && mr2[i][j]) nash.push([i, j]);
+    return { mr1, mr2, nash };
+  }
+  function mixta() {
+    const dq = g.a[0][0] - g.a[0][1] - g.a[1][0] + g.a[1][1];
+    const dp = g.b[0][0] - g.b[1][0] - g.b[0][1] + g.b[1][1];
+    if (!dq || !dp) return null;
+    const q = (g.a[1][1] - g.a[0][1]) / dq, p = (g.b[1][1] - g.b[1][0]) / dp;
+    return (p > 0 && p < 1 && q > 0 && q < 1) ? { p, q } : null;
+  }
+  function dominantes() {
+    const r = [];
+    for (let i = 0; i < 2; i++) if (g.a[i][0] > g.a[1 - i][0] && g.a[i][1] > g.a[1 - i][1]) r.push(`${g.n1}: <b>${g.f[i]}</b> es estrictamente dominante.`);
+    for (let j = 0; j < 2; j++) if (g.b[0][j] > g.b[0][1 - j] && g.b[1][j] > g.b[1][1 - j]) r.push(`${g.n2}: <b>${g.c[j]}</b> es estrictamente dominante.`);
+    return r;
+  }
+  const pct = x => Math.round(x * 100) + " %";
+  function pintar() {
+    leer(); const r = calcular();
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) {
+      $("a" + i + j).classList.toggle("mr", ver.mr1 && !!r.mr1[i][j]);
+      $("b" + i + j).classList.toggle("mr", ver.mr2 && !!r.mr2[i][j]);
+      $("t" + i + j).classList.toggle("nash", ver.nash && r.nash.some(([x, y]) => x === i && y === j));
+    }
+    $("bMR1").classList.toggle("on", ver.mr1); $("bMR2").classList.toggle("on", ver.mr2); $("bNash").classList.toggle("on", ver.nash);
+    let h = "";
+    if (!ver.mr1 && !ver.mr2 && !ver.nash) h = `<h3>¿Qué haría usted?</h3><p>Antes de revelar nada: ¿qué le conviene a cada jugador?</p><p class="peq">Haga clic en cualquier número para cambiarlo.</p>`;
+    if (ver.mr1) {
+      h += `<h3 class="j1">${g.n1} elige la mejor fila</h3>`;
+      for (let j = 0; j < 2; j++) h += `<p>Si ${g.n2} juega ${g.c[j]} → ${[0, 1].filter(i => r.mr1[i][j]).map(i => "<b>" + g.f[i] + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.mr2) {
+      h += `<h3 class="j2">${g.n2} elige la mejor columna</h3>`;
+      for (let i = 0; i < 2; i++) h += `<p>Si ${g.n1} juega ${g.f[i]} → ${[0, 1].filter(j => r.mr2[i][j]).map(j => "<b>" + g.c[j] + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.nash) {
+      h += `<h3>Equilibrio de Nash</h3>`;
+      h += r.nash.length ? `<p>${r.nash.map(([i, j]) => `<b>(${g.f[i]}, ${g.c[j]})</b>`).join(" y ")}: nadie quiere cambiar solo.</p>` : `<p>No hay equilibrio en estrategias puras.</p>`;
+      dominantes().forEach(t => h += `<p>${t}</p>`);
+      const m = mixta();
+      if (m) h += `<p>En estrategias mixtas: ${g.n1} juega ${g.f[0]} con ${pct(m.p)}; ${g.n2} juega ${g.c[0]} con ${pct(m.q)}.</p>`;
+    }
+    h += `<p class="fuente" style="margin-top:10px">Subrayado: mejor respuesta · Amarillo: equilibrio de Nash</p>`;
+    $("panel").innerHTML = h;
+  }
+  document.querySelectorAll("[data-juego]").forEach(b => b.onclick = () => cargar(b.dataset.juego));
+  $("bMR1").onclick = () => { ver.mr1 = !ver.mr1; pintar(); };
+  $("bMR2").onclick = () => { ver.mr2 = !ver.mr2; pintar(); };
+  $("bNash").onclick = () => { ver.nash = !ver.nash; pintar(); };
+  document.querySelectorAll("#mInt input").forEach(el => el.addEventListener("input", pintar));
+  cargar("clase");
+})();
+
+/* ---------- Resultados del salón ---------- */
+(function () {
+  const hoy = CONFIG.parejas || {};
+  const tieneHoy = ["AA", "AB", "BB"].some(k => typeof hoy[k] === "number");
+  let ejemplo = !tieneHoy;
+  let par = tieneHoy ? { AA: +hoy.AA || 0, AB: +hoy.AB || 0, BB: +hoy.BB || 0 } : { AA: 4, AB: 7, BB: 4 };
+  const historial = [];
+  function pintar() {
+    ["AA", "AB", "BB"].forEach(k => $("c" + k).textContent = par[k]);
+    const A = 2 * par.AA + par.AB, B = par.AB + 2 * par.BB, n = A + B;
+    $("avisoEjemplo").hidden = !ejemplo;
+    const puntos = 2 * par.AA + 10 * par.AB + 4 * par.BB;
+    $("puntosSalon").innerHTML = n
+      ? `Puntos repartidos en el salón: <b class="num">${puntos}</b>. Si todos hubieran elegido B: <b class="num">${2 * n}</b>.`
+      : "";
+    const p = n ? A / n : 0;
+    $("barA").style.width = (p * 100) + "%"; $("barB").style.width = ((n ? 1 - p : 0) * 100) + "%";
+    $("pA").textContent = n ? Math.round(p * 100) + " %" : "–"; $("pB").textContent = n ? Math.round((1 - p) * 100) + " %" : "–";
+    const eA = p * 1 + (1 - p) * 10, eB = p * 0 + (1 - p) * 2;
+    $("eAbar").style.width = (eA / 10 * 100) + "%"; $("eBbar").style.width = (eB / 10 * 100) + "%";
+    $("eA").textContent = n ? eA.toFixed(1) : "–"; $("eB").textContent = n ? eB.toFixed(1) : "–";
+    $("lecturaRes").innerHTML = n
+      ? `Con ${Math.round(p * 100)} % eligiendo A, quien eligió A esperaba <b>${eA.toFixed(1)}</b> puntos y quien eligió B, <b>${eB.toFixed(1)}</b>. A gana para cualquier porcentaje. Si todos hubieran elegido B, cada uno tendría <b>2</b>.`
+      : "Saque la primera pareja de la bolsa y presione su botón.";
+  }
+  document.querySelectorAll("[data-par]").forEach(b => b.onclick = () => {
+    if (ejemplo) { par = { AA: 0, AB: 0, BB: 0 }; ejemplo = false; historial.length = 0; }
+    par[b.dataset.par]++; historial.push(b.dataset.par); pintar();
+  });
+  $("parDeshacer").onclick = () => { const k = historial.pop(); if (k) { par[k]--; pintar(); } };
+  $("parReiniciar").onclick = () => { par = { AA: 0, AB: 0, BB: 0 }; ejemplo = false; historial.length = 0; pintar(); };
+  pintar();
+})();
+
+/* ---------- Torneo de Axelrod ---------- */
+(function () {
+  const E = {
+    coop:  { n: "Siempre coopera", f: () => "C" },
+    trai:  { n: "Siempre traiciona", f: () => "D" },
+    ojo:   { n: "Ojo por ojo", f: (m, o) => o.length ? o[o.length - 1] : "C" },
+    renc:  { n: "Rencoroso", f: (m, o) => o.includes("D") ? "D" : "C" },
+    gene:  { n: "Ojo por ojo generoso", f: (m, o) => o.length && o[o.length - 1] === "D" ? (Math.random() < 0.3 ? "C" : "D") : "C" },
+    azar:  { n: "Al azar", f: () => Math.random() < 0.5 ? "C" : "D" }
+  };
+  const activos = new Set(Object.keys(E));
+  const cont = $("estrategias");
+  Object.entries(E).forEach(([k, v]) => {
+    const l = document.createElement("label");
+    l.innerHTML = `<input type="checkbox" id="est-${k}" checked> ${v.n}`;
+    l.querySelector("input").onchange = e => { e.target.checked ? activos.add(k) : activos.delete(k); };
+    cont.appendChild(l);
+  });
+  $("rondas").oninput = () => $("rondasV").textContent = $("rondas").value;
+  const P = { CC: [3, 3], CD: [0, 5], DC: [5, 0], DD: [1, 1] };
+  function partida(x, y, R, ruido) {
+    const hx = [], hy = []; let sx = 0, sy = 0;
+    for (let t = 0; t < R; t++) {
+      let mx = E[x].f(hx, hy), my = E[y].f(hy, hx);
+      if (ruido && Math.random() < 0.05) mx = mx === "C" ? "D" : "C";
+      if (ruido && Math.random() < 0.05) my = my === "C" ? "D" : "C";
+      const p = P[mx + my]; sx += p[0]; sy += p[1]; hx.push(mx); hy.push(my);
+    }
+    return [sx / R, sy / R];
+  }
+  function torneo() {
+    const ks = [...activos];
+    if (ks.length < 2) { $("resTorneo").innerHTML = `<p class="peq">Elija al menos dos estrategias.</p>`; $("lecturaTorneo").textContent = ""; return; }
+    const R = +$("rondas").value, ruido = $("ruido").checked, REP = 20;
+    const tot = Object.fromEntries(ks.map(k => [k, 0])), cnt = Object.fromEntries(ks.map(k => [k, 0]));
+    for (let i = 0; i < ks.length; i++) for (let j = i; j < ks.length; j++) {
+      let sx = 0, sy = 0;
+      for (let r = 0; r < REP; r++) { const [a, b] = partida(ks[i], ks[j], R, ruido); sx += a; sy += b; }
+      sx /= REP; sy /= REP;
+      if (i === j) { tot[ks[i]] += (sx + sy) / 2; cnt[ks[i]]++; }
+      else { tot[ks[i]] += sx; cnt[ks[i]]++; tot[ks[j]] += sy; cnt[ks[j]]++; }
+    }
+    const res = ks.map(k => ({ k, v: tot[k] / cnt[k] })).sort((a, b) => b.v - a.v);
+    $("resTorneo").innerHTML = res.map((r, i) =>
+      `<div class="barra"><span>${E[r.k].n}</span><div class="pista"><div class="relleno ${i === 0 ? "r" : ""}" style="width:${r.v / 5 * 100}%"></div></div><span class="v">${r.v.toFixed(2)}</span></div>`).join("");
+    $("lecturaTorneo").innerHTML = R === 1
+      ? `Con una sola ronda gana <b>${E[res[0].k].n}</b>: sin futuro, no hay a quién castigar ni a quién premiar.`
+      : `Gana <b>${E[res[0].k].n}</b>. Cambie las rondas, quite estrategias o active los errores y vea si cambia.`;
+  }
+  $("btnTorneo").onclick = torneo;
+  torneo();
+})();
+
+/* ---------- Penalti contra un portero que aprende ---------- */
+(function () {
+  let hist = [], goles = 0, atajadas = 0;
+  function predecir() {
+    if (!hist.length) return Math.random() < 0.5 ? "I" : "D";
+    const ult = hist[hist.length - 1], tr = { I: 0, D: 0 }, fr = { I: 0, D: 0 };
+    for (let i = 1; i < hist.length; i++) if (hist[i - 1] === ult) tr[hist[i]]++;
+    hist.forEach(h => fr[h]++);
+    const sc = { I: tr.I * 2 + fr.I, D: tr.D * 2 + fr.D };
+    if (sc.I === sc.D) return Math.random() < 0.5 ? "I" : "D";
+    return sc.I > sc.D ? "I" : "D";
+  }
+  function patear(lado) {
+    const portero = predecir(), gol = portero !== lado;
+    gol ? goles++ : atajadas++;
+    hist.push(lado);
+    $("goles").textContent = goles; $("atajadas").textContent = atajadas;
+    const chip = document.createElement("span");
+    chip.className = "tiro " + (gol ? "gol" : "atajada");
+    chip.textContent = (lado === "I" ? "Izq" : "Der") + (gol ? " ✓" : " ✗");
+    $("tiros").appendChild(chip);
+    const t = $("tiros"); while (t.children.length > 20) t.removeChild(t.firstChild);
+    const n = hist.length, izq = hist.filter(h => h === "I").length;
+    $("lecturaPenal").innerHTML = n < 8
+      ? `Lleva ${n} tiros. Siga pateando.`
+      : `Pateó a la izquierda el ${Math.round(izq / n * 100)} % de las veces. El portero atajó el <b>${Math.round(atajadas / n * 100)} %</b>. ${atajadas / n > 0.55 ? "Usted es predecible: el portero lo leyó." : "Usted está siendo difícil de leer. Eso es aleatorizar."}`;
+  }
+  $("patIzq").onclick = () => patear("I");
+  $("patDer").onclick = () => patear("D");
+  $("patReset").onclick = () => { hist = []; goles = atajadas = 0; $("goles").textContent = 0; $("atajadas").textContent = 0; $("tiros").innerHTML = ""; $("lecturaPenal").textContent = "Patee unas 15 veces. El portero se fija en sus patrones."; };
+})();
+
+/* ---------- Árbol: inducción hacia atrás ---------- */
+(function () {
+  let paso = 0;
+  const marca = (ids, cls) => ids.forEach(id => $(id).classList.add(cls));
+  function reiniciar() {
+    ["eNo", "eSi", "eGuerra", "eAcom"].forEach(id => $(id).classList.remove("elegida", "descartada"));
+    ["tNo", "tGuerra", "pNo", "pGuerra"].forEach(id => $(id).classList.remove("descartada-t"));
+    $("lecturaArbol").innerHTML = ""; $("btnArbol").textContent = "Paso 1: la última decisión"; paso = 0;
+  }
+  $("btnArbol").onclick = () => {
+    paso++;
+    if (paso === 1) {
+      marca(["eAcom"], "elegida"); marca(["eGuerra"], "descartada"); marca(["tGuerra", "pGuerra"], "descartada-t");
+      $("lecturaArbol").innerHTML = `Si la nueva entra, la establecida compara <b class="j2 num">2</b> (guerra) contra <b class="j2 num">5</b> (acomodar). Acomoda.`;
+      $("btnArbol").textContent = "Paso 2: la primera decisión";
+    } else if (paso === 2) {
+      marca(["eSi"], "elegida"); marca(["eNo"], "descartada"); marca(["tNo", "pNo"], "descartada-t");
+      $("lecturaArbol").innerHTML += `<br>Sabiendo eso, la nueva compara <b class="j1 num">3</b> (entrar) contra <b class="j1 num">0</b> (no entrar). Entra.<br><b>La amenaza de guerra no es creíble.</b>`;
+      $("btnArbol").textContent = "Reiniciar";
+    } else reiniciar();
+  };
+})();
+</script>
