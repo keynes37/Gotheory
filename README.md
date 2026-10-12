@@ -18,4 +18,4 @@ All class presentations are available as long as the GitHub links are present.
 
 ### Clases en nuevo formato
 
-[Clase 1 2026](https://keynes37.github.io/Gotheory/presentaciones/clase01.html#1)
+[Clase 1 2026](https://keynes37.github.io/Gotheory/presentaciones/clase01.html)
