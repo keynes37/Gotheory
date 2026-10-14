@@ -1,0 +1,960 @@
+<title>Teoría de Juegos · Clase 2</title>
+<!--
+  ============================================================
+  CLASE 2 · EQUILIBRIO DE NASH
+  - Ábrala desde su link de GitHub Pages o con doble clic.
+  - Flechas: avanzar / retroceder.   F: pantalla completa.
+  - S: vista del profesor con notas.  Esc: ver todas las diapositivas.
+  - Inicio (fn + ←): volver a la portada.
+  - PDF: agregue ?print-pdf al final de la dirección y guarde como PDF.
+    En el PDF los interactivos salen ya resueltos.
+
+  QUÉ EDITAR ANTES DE CLASE: solo el bloque CONFIG de abajo.
+  ============================================================
+-->
+<script>
+  const CONFIG = {
+    // Cuántos estudiantes hay en la lista. El sorteo saca un número de 1 a este valor.
+    totalEstudiantes: 23,
+
+    // (Opcional) Nombres para sortear en lugar de números.
+    // Ojo: si el repositorio es público, cualquiera puede ver estos nombres.
+    // Ejemplo: ["Ana Pérez", "Luis Gómez"]
+    nombres: [],
+
+    // Minutos que tiene cada grupo para representar su juego.
+    minutosPresentacion: 5,
+
+    // Video de YouTube de la escena de Una mente brillante (solo el código).
+    video: "EajIlG_OCvw",
+
+    // Foto de Nash, relativa a este archivo. Si no existe, la diapositiva se ve igual sin foto.
+    imagenNash: "../imagen/Nash.png"
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+/*!
+* reveal.js 5.1.0
+* https://revealjs.com
+* MIT licensed
+*
+* Copyright (C) 2011-2024 Hakim El Hattab, https://hakim.se
+*/
+.reveal .r-stretch,.reveal .stretch{max-width:none;max-height:none}.reveal pre.r-stretch code,.reveal pre.stretch code{height:100%;max-height:100%;box-sizing:border-box}.reveal .r-fit-text{display:inline-block;white-space:nowrap}.reveal .r-stack{display:grid;grid-template-rows:100%}.reveal .r-stack>*{grid-area:1/1;margin:auto}.reveal .r-hstack,.reveal .r-vstack{display:flex}.reveal .r-hstack img,.reveal .r-hstack video,.reveal .r-vstack img,.reveal .r-vstack video{min-width:0;min-height:0;object-fit:contain}.reveal .r-vstack{flex-direction:column;align-items:center;justify-content:center}.reveal .r-hstack{flex-direction:row;align-items:center;justify-content:center}.reveal .items-stretch{align-items:stretch}.reveal .items-start{align-items:flex-start}.reveal .items-center{align-items:center}.reveal .items-end{align-items:flex-end}.reveal .justify-between{justify-content:space-between}.reveal .justify-around{justify-content:space-around}.reveal .justify-start{justify-content:flex-start}.reveal .justify-center{justify-content:center}.reveal .justify-end{justify-content:flex-end}html.reveal-full-page{width:100%;height:100%;height:100vh;height:calc(var(--vh,1vh) * 100);height:100svh;overflow:hidden}.reveal-viewport{height:100%;overflow:hidden;position:relative;line-height:1;margin:0;background-color:#fff;color:#000;--r-controls-spacing:12px}.reveal-viewport:fullscreen{top:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important}.reveal .fragment{transition:all .2s ease}.reveal .fragment:not(.custom){opacity:0;visibility:hidden;will-change:opacity}.reveal .fragment.visible{opacity:1;visibility:inherit}.reveal .fragment.disabled{transition:none}.reveal .fragment.grow{opacity:1;visibility:inherit}.reveal .fragment.grow.visible{transform:scale(1.3)}.reveal .fragment.shrink{opacity:1;visibility:inherit}.reveal .fragment.shrink.visible{transform:scale(.7)}.reveal .fragment.zoom-in{transform:scale(.1)}.reveal .fragment.zoom-in.visible{transform:none}.reveal .fragment.fade-out{opacity:1;visibility:inherit}.reveal .fragment.fade-out.visible{opacity:0;visibility:hidden}.reveal .fragment.semi-fade-out{opacity:1;visibility:inherit}.reveal .fragment.semi-fade-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.strike{opacity:1;visibility:inherit}.reveal .fragment.strike.visible{text-decoration:line-through}.reveal .fragment.fade-up{transform:translate(0,40px)}.reveal .fragment.fade-up.visible{transform:translate(0,0)}.reveal .fragment.fade-down{transform:translate(0,-40px)}.reveal .fragment.fade-down.visible{transform:translate(0,0)}.reveal .fragment.fade-right{transform:translate(-40px,0)}.reveal .fragment.fade-right.visible{transform:translate(0,0)}.reveal .fragment.fade-left{transform:translate(40px,0)}.reveal .fragment.fade-left.visible{transform:translate(0,0)}.reveal .fragment.current-visible,.reveal .fragment.fade-in-then-out{opacity:0;visibility:hidden}.reveal .fragment.current-visible.current-fragment,.reveal .fragment.fade-in-then-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.fade-in-then-semi-out{opacity:0;visibility:hidden}.reveal .fragment.fade-in-then-semi-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.fade-in-then-semi-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.highlight-blue,.reveal .fragment.highlight-current-blue,.reveal .fragment.highlight-current-green,.reveal .fragment.highlight-current-red,.reveal .fragment.highlight-green,.reveal .fragment.highlight-red{opacity:1;visibility:inherit}.reveal .fragment.highlight-red.visible{color:#ff2c2d}.reveal .fragment.highlight-green.visible{color:#17ff2e}.reveal .fragment.highlight-blue.visible{color:#1b91ff}.reveal .fragment.highlight-current-red.current-fragment{color:#ff2c2d}.reveal .fragment.highlight-current-green.current-fragment{color:#17ff2e}.reveal .fragment.highlight-current-blue.current-fragment{color:#1b91ff}.reveal:after{content:"";font-style:italic}.reveal iframe{z-index:1}.reveal a{position:relative}@keyframes bounce-right{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(10px)}30%{transform:translateX(-5px)}}@keyframes bounce-left{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(-10px)}30%{transform:translateX(5px)}}@keyframes bounce-down{0%,10%,25%,40%,50%{transform:translateY(0)}20%{transform:translateY(10px)}30%{transform:translateY(-5px)}}.reveal .controls{display:none;position:absolute;top:auto;bottom:var(--r-controls-spacing);right:var(--r-controls-spacing);left:auto;z-index:11;color:#000;pointer-events:none;font-size:10px}.reveal .controls button{position:absolute;padding:0;background-color:transparent;border:0;outline:0;cursor:pointer;color:currentColor;transform:scale(.9999);transition:color .2s ease,opacity .2s ease,transform .2s ease;z-index:2;pointer-events:auto;font-size:inherit;visibility:hidden;opacity:0;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}.reveal .controls .controls-arrow:after,.reveal .controls .controls-arrow:before{content:"";position:absolute;top:0;left:0;width:2.6em;height:.5em;border-radius:.25em;background-color:currentColor;transition:all .15s ease,background-color .8s ease;transform-origin:.2em 50%;will-change:transform}.reveal .controls .controls-arrow{position:relative;width:3.6em;height:3.6em}.reveal .controls .controls-arrow:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal .controls .controls-arrow:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}.reveal .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(40deg)}.reveal .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-40deg)}.reveal .controls .controls-arrow:active:before{transform:translateX(.5em) translateY(1.55em) rotate(36deg)}.reveal .controls .controls-arrow:active:after{transform:translateX(.5em) translateY(1.55em) rotate(-36deg)}.reveal .controls .navigate-left{right:6.4em;bottom:3.2em;transform:translateX(-10px)}.reveal .controls .navigate-left.highlight{animation:bounce-left 2s 50 both ease-out}.reveal .controls .navigate-right{right:0;bottom:3.2em;transform:translateX(10px)}.reveal .controls .navigate-right .controls-arrow{transform:rotate(180deg)}.reveal .controls .navigate-right.highlight{animation:bounce-right 2s 50 both ease-out}.reveal .controls .navigate-up{right:3.2em;bottom:6.4em;transform:translateY(-10px)}.reveal .controls .navigate-up .controls-arrow{transform:rotate(90deg)}.reveal .controls .navigate-down{right:3.2em;bottom:-1.4em;padding-bottom:1.4em;transform:translateY(10px)}.reveal .controls .navigate-down .controls-arrow{transform:rotate(-90deg)}.reveal .controls .navigate-down.highlight{animation:bounce-down 2s 50 both ease-out}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled{opacity:.3}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled:hover{opacity:1}.reveal .controls[data-controls-back-arrows=hidden] .navigate-up.enabled{opacity:0;visibility:hidden}.reveal .controls .enabled{visibility:visible;opacity:.9;cursor:pointer;transform:none}.reveal .controls .enabled.fragmented{opacity:.5}.reveal .controls .enabled.fragmented:hover,.reveal .controls .enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled{opacity:.3}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=hidden] .navigate-left.enabled{opacity:0;visibility:hidden}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled{opacity:.3}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled:hover{opacity:1}.reveal.rtl .controls[data-controls-back-arrows=hidden] .navigate-right.enabled{opacity:0;visibility:hidden}.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-down,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-up{display:none}.reveal:not(.has-vertical-slides) .controls .navigate-left,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-left{bottom:1.4em;right:5.5em}.reveal:not(.has-vertical-slides) .controls .navigate-right,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-right{bottom:1.4em;right:.5em}.reveal:not(.has-horizontal-slides) .controls .navigate-up{right:1.4em;bottom:5em}.reveal:not(.has-horizontal-slides) .controls .navigate-down{right:1.4em;bottom:.5em}.reveal.has-dark-background .controls{color:#fff}.reveal.has-light-background .controls{color:#000}.reveal.no-hover .controls .controls-arrow:active:before,.reveal.no-hover .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal.no-hover .controls .controls-arrow:active:after,.reveal.no-hover .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}@media screen and (min-width:500px){.reveal-viewport{--r-controls-spacing:0.8em}.reveal .controls[data-controls-layout=edges]{top:0;right:0;bottom:0;left:0}.reveal .controls[data-controls-layout=edges] .navigate-down,.reveal .controls[data-controls-layout=edges] .navigate-left,.reveal .controls[data-controls-layout=edges] .navigate-right,.reveal .controls[data-controls-layout=edges] .navigate-up{bottom:auto;right:auto}.reveal .controls[data-controls-layout=edges] .navigate-left{top:50%;left:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-right{top:50%;right:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-up{top:var(--r-controls-spacing);left:50%;margin-left:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-down{bottom:calc(var(--r-controls-spacing) - 1.4em + .3em);left:50%;margin-left:-1.8em}}.reveal .progress{position:absolute;display:none;height:3px;width:100%;bottom:0;left:0;z-index:10;background-color:rgba(0,0,0,.2);color:#fff}.reveal .progress:after{content:"";display:block;position:absolute;height:10px;width:100%;top:-10px}.reveal .progress span{display:block;height:100%;width:100%;background-color:currentColor;transition:transform .8s cubic-bezier(.26,.86,.44,.985);transform-origin:0 0;transform:scaleX(0)}.reveal .slide-number{position:absolute;display:block;right:8px;bottom:8px;z-index:31;font-family:Helvetica,sans-serif;font-size:12px;line-height:1;color:#fff;background-color:rgba(0,0,0,.4);padding:5px}.reveal .slide-number a{color:currentColor}.reveal .slide-number-delimiter{margin:0 3px}.reveal{position:relative;width:100%;height:100%;overflow:hidden;touch-action:pinch-zoom}.reveal.embedded{touch-action:pan-y}.reveal.embedded.is-vertical-slide{touch-action:none}.reveal .slides{position:absolute;width:100%;height:100%;top:0;right:0;bottom:0;left:0;margin:auto;pointer-events:none;overflow:visible;z-index:1;text-align:center;perspective:600px;perspective-origin:50% 40%}.reveal .slides>section{perspective:600px}.reveal .slides>section,.reveal .slides>section>section{display:none;position:absolute;width:100%;pointer-events:auto;z-index:10;transform-style:flat;transition:transform-origin .8s cubic-bezier(.26,.86,.44,.985),transform .8s cubic-bezier(.26,.86,.44,.985),visibility .8s cubic-bezier(.26,.86,.44,.985),opacity .8s cubic-bezier(.26,.86,.44,.985)}.reveal[data-transition-speed=fast] .slides section{transition-duration:.4s}.reveal[data-transition-speed=slow] .slides section{transition-duration:1.2s}.reveal .slides section[data-transition-speed=fast]{transition-duration:.4s}.reveal .slides section[data-transition-speed=slow]{transition-duration:1.2s}.reveal .slides>section.stack{padding-top:0;padding-bottom:0;pointer-events:none;height:100%}.reveal .slides>section.present,.reveal .slides>section>section.present{display:block;z-index:11;opacity:1}.reveal .slides>section:empty,.reveal .slides>section>section:empty,.reveal .slides>section>section[data-background-interactive],.reveal .slides>section[data-background-interactive]{pointer-events:none}.reveal.center,.reveal.center .slides,.reveal.center .slides section{min-height:0!important}.reveal .slides>section:not(.present),.reveal .slides>section>section:not(.present){pointer-events:none}.reveal.overview .slides>section,.reveal.overview .slides>section>section{pointer-events:auto}.reveal .slides>section.future,.reveal .slides>section.future>section,.reveal .slides>section.past,.reveal .slides>section.past>section,.reveal .slides>section>section.future,.reveal .slides>section>section.past{opacity:0}.reveal .slides>section[data-transition=slide].past,.reveal .slides>section[data-transition~=slide-out].past,.reveal.slide .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=slide].future,.reveal .slides>section[data-transition~=slide-in].future,.reveal.slide .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=slide].past,.reveal .slides>section>section[data-transition~=slide-out].past,.reveal.slide .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=slide].future,.reveal .slides>section>section[data-transition~=slide-in].future,.reveal.slide .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides>section[data-transition=linear].past,.reveal .slides>section[data-transition~=linear-out].past,.reveal.linear .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=linear].future,.reveal .slides>section[data-transition~=linear-in].future,.reveal.linear .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=linear].past,.reveal .slides>section>section[data-transition~=linear-out].past,.reveal.linear .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=linear].future,.reveal .slides>section>section[data-transition~=linear-in].future,.reveal.linear .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides section[data-transition=default].stack,.reveal.default .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=default].past,.reveal .slides>section[data-transition~=default-out].past,.reveal.default .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=default].future,.reveal .slides>section[data-transition~=default-in].future,.reveal.default .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=default].past,.reveal .slides>section>section[data-transition~=default-out].past,.reveal.default .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=default].future,.reveal .slides>section>section[data-transition~=default-in].future,.reveal.default .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=convex].stack,.reveal.convex .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=convex].past,.reveal .slides>section[data-transition~=convex-out].past,.reveal.convex .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=convex].future,.reveal .slides>section[data-transition~=convex-in].future,.reveal.convex .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=convex].past,.reveal .slides>section>section[data-transition~=convex-out].past,.reveal.convex .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=convex].future,.reveal .slides>section>section[data-transition~=convex-in].future,.reveal.convex .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=concave].stack,.reveal.concave .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=concave].past,.reveal .slides>section[data-transition~=concave-out].past,.reveal.concave .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=concave].future,.reveal .slides>section[data-transition~=concave-in].future,.reveal.concave .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=concave].past,.reveal .slides>section>section[data-transition~=concave-out].past,.reveal.concave .slides>section>section:not([data-transition]).past{transform:translate3d(0,-80%,0) rotateX(-70deg) translate3d(0,-80%,0)}.reveal .slides>section>section[data-transition=concave].future,.reveal .slides>section>section[data-transition~=concave-in].future,.reveal.concave .slides>section>section:not([data-transition]).future{transform:translate3d(0,80%,0) rotateX(70deg) translate3d(0,80%,0)}.reveal .slides section[data-transition=zoom],.reveal.zoom .slides section:not([data-transition]){transition-timing-function:ease}.reveal .slides>section[data-transition=zoom].past,.reveal .slides>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section:not([data-transition]).past{visibility:hidden;transform:scale(16)}.reveal .slides>section[data-transition=zoom].future,.reveal .slides>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section:not([data-transition]).future{visibility:hidden;transform:scale(.2)}.reveal .slides>section>section[data-transition=zoom].past,.reveal .slides>section>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section>section:not([data-transition]).past{transform:scale(16)}.reveal .slides>section>section[data-transition=zoom].future,.reveal .slides>section>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section>section:not([data-transition]).future{transform:scale(.2)}.reveal.cube .slides{perspective:1300px}.reveal.cube .slides section{padding:30px;min-height:700px;backface-visibility:hidden;box-sizing:border-box;transform-style:preserve-3d}.reveal.center.cube .slides section{min-height:0}.reveal.cube .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);border-radius:4px;transform:translateZ(-20px)}.reveal.cube .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);transform:translateZ(-90px) rotateX(65deg)}.reveal.cube .slides>section.stack{padding:0;background:0 0}.reveal.cube .slides>section.past{transform-origin:100% 0;transform:translate3d(-100%,0,0) rotateY(-90deg)}.reveal.cube .slides>section.future{transform-origin:0 0;transform:translate3d(100%,0,0) rotateY(90deg)}.reveal.cube .slides>section>section.past{transform-origin:0 100%;transform:translate3d(0,-100%,0) rotateX(90deg)}.reveal.cube .slides>section>section.future{transform-origin:0 0;transform:translate3d(0,100%,0) rotateX(-90deg)}.reveal.page .slides{perspective-origin:0 50%;perspective:3000px}.reveal.page .slides section{padding:30px;min-height:700px;box-sizing:border-box;transform-style:preserve-3d}.reveal.page .slides section.past{z-index:12}.reveal.page .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);transform:translateZ(-20px)}.reveal.page .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);-webkit-transform:translateZ(-90px) rotateX(65deg)}.reveal.page .slides>section.stack{padding:0;background:0 0}.reveal.page .slides>section.past{transform-origin:0 0;transform:translate3d(-40%,0,0) rotateY(-80deg)}.reveal.page .slides>section.future{transform-origin:100% 0;transform:translate3d(0,0,0)}.reveal.page .slides>section>section.past{transform-origin:0 0;transform:translate3d(0,-40%,0) rotateX(80deg)}.reveal.page .slides>section>section.future{transform-origin:0 100%;transform:translate3d(0,0,0)}.reveal .slides section[data-transition=fade],.reveal.fade .slides section:not([data-transition]),.reveal.fade .slides>section>section:not([data-transition]){transform:none;transition:opacity .5s}.reveal.fade.overview .slides section,.reveal.fade.overview .slides>section>section{transition:none}.reveal .slides section[data-transition=none],.reveal.none .slides section:not([data-transition]){transform:none;transition:none}.reveal .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;visibility:hidden;opacity:0;z-index:100;transition:all 1s ease}.reveal .pause-overlay .resume-button{position:absolute;bottom:20px;right:20px;color:#ccc;border-radius:2px;padding:6px 14px;border:2px solid #ccc;font-size:16px;background:0 0;cursor:pointer}.reveal .pause-overlay .resume-button:hover{color:#fff;border-color:#fff}.reveal.paused .pause-overlay{visibility:visible;opacity:1}.reveal .no-transition,.reveal .no-transition *,.reveal .slides.disable-slide-transitions section{transition:none!important}.reveal .slides.disable-slide-transitions section{transform:none!important}.reveal .backgrounds{position:absolute;width:100%;height:100%;top:0;left:0;perspective:600px}.reveal .slide-background{display:none;position:absolute;width:100%;height:100%;opacity:0;visibility:hidden;overflow:hidden;background-color:rgba(0,0,0,0);transition:all .8s cubic-bezier(.26,.86,.44,.985)}.reveal .slide-background-content{position:absolute;width:100%;height:100%;background-position:50% 50%;background-repeat:no-repeat;background-size:cover}.reveal .slide-background.stack{display:block}.reveal .slide-background.present{opacity:1;visibility:visible;z-index:2}.print-pdf .reveal .slide-background{opacity:1!important;visibility:visible!important}.reveal .slide-background video{position:absolute;width:100%;height:100%;max-width:none;max-height:none;top:0;left:0;object-fit:cover}.reveal .slide-background[data-background-size=contain] video{object-fit:contain}.reveal>.backgrounds .slide-background[data-background-transition=none],.reveal[data-background-transition=none]>.backgrounds .slide-background:not([data-background-transition]){transition:none}.reveal>.backgrounds .slide-background[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background:not([data-background-transition]){opacity:1}.reveal>.backgrounds .slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.past:not([data-background-transition]){transform:translate(-100%,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.future:not([data-background-transition]){transform:translate(100%,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){transform:translate(0,-100%)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){transform:translate(0,100%)}.reveal>.backgrounds .slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(-90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(-90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background:not([data-background-transition]){transition-timing-function:ease}.reveal>.backgrounds .slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal[data-transition-speed=fast]>.backgrounds .slide-background{transition-duration:.4s}.reveal[data-transition-speed=slow]>.backgrounds .slide-background{transition-duration:1.2s}.reveal [data-auto-animate-target^=unmatched]{will-change:opacity}.reveal section[data-auto-animate]:not(.stack):not([data-auto-animate=running]) [data-auto-animate-target^=unmatched]{opacity:0}.reveal.overview{perspective-origin:50% 50%;perspective:700px}.reveal.overview .slides{-moz-transform-style:preserve-3d}.reveal.overview .slides section{height:100%;top:0!important;opacity:1!important;overflow:hidden;visibility:visible!important;cursor:pointer;box-sizing:border-box}.reveal.overview .slides section.present,.reveal.overview .slides section:hover{outline:10px solid rgba(150,150,150,.4);outline-offset:10px}.reveal.overview .slides section .fragment{opacity:1;transition:none}.reveal.overview .slides section:after,.reveal.overview .slides section:before{display:none!important}.reveal.overview .slides>section.stack{padding:0;top:0!important;background:0 0;outline:0;overflow:visible}.reveal.overview .backgrounds{perspective:inherit;-moz-transform-style:preserve-3d}.reveal.overview .backgrounds .slide-background{opacity:1;visibility:visible;outline:10px solid rgba(150,150,150,.1);outline-offset:10px}.reveal.overview .backgrounds .slide-background.stack{overflow:visible}.reveal.overview .slides section,.reveal.overview-deactivating .slides section{transition:none}.reveal.overview .backgrounds .slide-background,.reveal.overview-deactivating .backgrounds .slide-background{transition:none}.reveal.rtl .slides,.reveal.rtl .slides h1,.reveal.rtl .slides h2,.reveal.rtl .slides h3,.reveal.rtl .slides h4,.reveal.rtl .slides h5,.reveal.rtl .slides h6{direction:rtl;font-family:sans-serif}.reveal.rtl code,.reveal.rtl pre{direction:ltr}.reveal.rtl ol,.reveal.rtl ul{text-align:right}.reveal.rtl .progress span{transform-origin:100% 0}.reveal.has-parallax-background .backgrounds{transition:all .8s ease}.reveal.has-parallax-background[data-transition-speed=fast] .backgrounds{transition-duration:.4s}.reveal.has-parallax-background[data-transition-speed=slow] .backgrounds{transition-duration:1.2s}.reveal>.overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;background:rgba(0,0,0,.95);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .3s ease}.reveal>.overlay .spinner{position:absolute;display:block;top:50%;left:50%;width:32px;height:32px;margin:-16px 0 0 -16px;z-index:10;background-image:url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);visibility:visible;opacity:.6;transition:all .3s ease}.reveal>.overlay header{position:absolute;left:0;top:0;width:100%;padding:5px;z-index:2;box-sizing:border-box}.reveal>.overlay header a{display:inline-block;width:40px;height:40px;line-height:36px;padding:0 10px;float:right;opacity:.6;box-sizing:border-box}.reveal>.overlay header a:hover{opacity:1}.reveal>.overlay header a .icon{display:inline-block;width:20px;height:20px;background-position:50% 50%;background-size:100%;background-repeat:no-repeat}.reveal>.overlay header a.close .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC)}.reveal>.overlay header a.external .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==)}.reveal>.overlay .viewport{position:absolute;display:flex;top:50px;right:0;bottom:0;left:0}.reveal>.overlay.overlay-preview .viewport iframe{width:100%;height:100%;max-width:100%;max-height:100%;border:0;opacity:0;visibility:hidden;transition:all .3s ease}.reveal>.overlay.overlay-preview.loaded .viewport iframe{opacity:1;visibility:visible}.reveal>.overlay.overlay-preview.loaded .viewport-inner{position:absolute;z-index:-1;left:0;top:45%;width:100%;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-preview .x-frame-error{opacity:0;transition:opacity .3s ease .3s}.reveal>.overlay.overlay-preview.loaded .x-frame-error{opacity:1}.reveal>.overlay.overlay-preview.loaded .spinner{opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.overlay.overlay-help .viewport{overflow:auto;color:#fff}.reveal>.overlay.overlay-help .viewport .viewport-inner{width:600px;margin:auto;padding:20px 20px 80px 20px;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-help .viewport .viewport-inner .title{font-size:20px}.reveal>.overlay.overlay-help .viewport .viewport-inner table{border:1px solid #fff;border-collapse:collapse;font-size:16px}.reveal>.overlay.overlay-help .viewport .viewport-inner table td,.reveal>.overlay.overlay-help .viewport .viewport-inner table th{width:200px;padding:14px;border:1px solid #fff;vertical-align:middle}.reveal>.overlay.overlay-help .viewport .viewport-inner table th{padding-top:20px;padding-bottom:20px}.reveal .playback{position:absolute;left:15px;bottom:20px;z-index:30;cursor:pointer;transition:all .4s ease;-webkit-tap-highlight-color:transparent}.reveal.overview .playback{opacity:0;visibility:hidden}.reveal .hljs{min-height:100%}.reveal .hljs table{margin:initial}.reveal .hljs-ln-code,.reveal .hljs-ln-numbers{padding:0;border:0}.reveal .hljs-ln-numbers{opacity:.6;padding-right:.75em;text-align:right;vertical-align:top}.reveal .hljs.has-highlights tr:not(.highlight-line){opacity:.4}.reveal .hljs.has-highlights.fragment{transition:all .2s ease}.reveal .hljs:not(:first-child).fragment{position:absolute;top:0;left:0;width:100%;box-sizing:border-box}.reveal pre[data-auto-animate-target]{overflow:hidden}.reveal pre[data-auto-animate-target] code{height:100%}.reveal .roll{display:inline-block;line-height:1.2;overflow:hidden;vertical-align:top;perspective:400px;perspective-origin:50% 50%}.reveal .roll:hover{background:0 0;text-shadow:none}.reveal .roll span{display:block;position:relative;padding:0 2px;pointer-events:none;transition:all .4s ease;transform-origin:50% 0;transform-style:preserve-3d;backface-visibility:hidden}.reveal .roll:hover span{background:rgba(0,0,0,.5);transform:translate3d(0,0,-45px) rotateX(90deg)}.reveal .roll span:after{content:attr(data-title);display:block;position:absolute;left:0;top:0;padding:0 2px;backface-visibility:hidden;transform-origin:50% 0;transform:translate3d(0,110%,0) rotateX(-90deg)}.reveal aside.notes{display:none}.reveal .speaker-notes{display:none;position:absolute;width:33.3333333333%;height:100%;top:0;left:100%;padding:14px 18px 14px 18px;z-index:1;font-size:18px;line-height:1.4;border:1px solid rgba(0,0,0,.05);color:#222;background-color:#f5f5f5;overflow:auto;box-sizing:border-box;text-align:left;font-family:Helvetica,sans-serif;-webkit-overflow-scrolling:touch}.reveal .speaker-notes .notes-placeholder{color:#ccc;font-style:italic}.reveal .speaker-notes:focus{outline:0}.reveal .speaker-notes:before{content:"Speaker notes";display:block;margin-bottom:10px;opacity:.5}.reveal.show-notes{max-width:75%;overflow:visible}.reveal.show-notes .speaker-notes{display:block}@media screen and (min-width:1600px){.reveal .speaker-notes{font-size:20px}}@media screen and (max-width:1024px){.reveal.show-notes{border-left:0;max-width:none;max-height:70%;max-height:70vh;overflow:visible}.reveal.show-notes .speaker-notes{top:100%;left:0;width:100%;height:30vh;border:0}}@media screen and (max-width:600px){.reveal.show-notes{max-height:60%;max-height:60vh}.reveal.show-notes .speaker-notes{top:100%;height:40vh}.reveal .speaker-notes{font-size:14px}}.reveal .jump-to-slide{position:absolute;top:15px;left:15px;z-index:30;font-size:32px;-webkit-tap-highlight-color:transparent}.reveal .jump-to-slide-input{background:0 0;padding:8px;font-size:inherit;color:currentColor;border:0}.reveal .jump-to-slide-input::placeholder{color:currentColor;opacity:.5}.reveal.has-dark-background .jump-to-slide-input{color:#fff}.reveal.has-light-background .jump-to-slide-input{color:#222}.reveal .jump-to-slide-input:focus{outline:0}.zoomed .reveal *,.zoomed .reveal :after,.zoomed .reveal :before{backface-visibility:visible!important}.zoomed .reveal .controls,.zoomed .reveal .progress{opacity:0}.zoomed .reveal .roll span{background:0 0}.zoomed .reveal .roll span:after{visibility:hidden}.reveal-viewport.loading-scroll-mode{visibility:hidden}.reveal-viewport.reveal-scroll{margin:0 auto;overflow:auto;overflow-x:hidden;overflow-y:auto;z-index:1;--r-scrollbar-width:7px;--r-scrollbar-trigger-size:5px;--r-controls-spacing:8px}@media screen and (max-width:500px){.reveal-viewport.reveal-scroll{--r-scrollbar-width:3px;--r-scrollbar-trigger-size:3px}}.reveal-viewport.reveal-scroll .backgrounds,.reveal-viewport.reveal-scroll .controls,.reveal-viewport.reveal-scroll .playback,.reveal-viewport.reveal-scroll .progress,.reveal-viewport.reveal-scroll .slide-number,.reveal-viewport.reveal-scroll .speaker-notes{display:none!important}.reveal-viewport.reveal-scroll .overlay,.reveal-viewport.reveal-scroll .pause-overlay{position:fixed}.reveal-viewport.reveal-scroll .reveal{overflow:visible;touch-action:manipulation}.reveal-viewport.reveal-scroll .slides{position:static;pointer-events:initial;left:auto;top:auto;width:100%!important;margin:0;padding:0;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}.reveal-viewport.reveal-scroll .scroll-page{position:relative;width:100%;height:calc(var(--page-height) + var(--page-scroll-padding));z-index:1;overflow:visible}.reveal-viewport.reveal-scroll .scroll-page-sticky{position:sticky;height:var(--page-height);top:0}.reveal-viewport.reveal-scroll .scroll-page-content{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.reveal-viewport.reveal-scroll .scroll-page section{visibility:visible!important;display:block!important;position:absolute!important;width:var(--slide-width)!important;height:var(--slide-height)!important;top:50%!important;left:50%!important;opacity:1!important;transform:scale(var(--slide-scale)) translate(-50%,-50%)!important;transform-style:flat!important;transform-origin:0 0!important}.reveal-viewport.reveal-scroll .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important;visibility:visible;opacity:1;touch-action:manipulation}.reveal-viewport.reveal-scroll[data-scrollbar=auto]::-webkit-scrollbar,.reveal-viewport.reveal-scroll[data-scrollbar=true]::-webkit-scrollbar{display:none}.reveal-viewport.reveal-scroll[data-scrollbar=auto],.reveal-viewport.reveal-scroll[data-scrollbar=true]{scrollbar-width:none}.reveal-viewport.has-dark-background,.reveal.has-dark-background{--r-overlay-element-bg-color:240,240,240;--r-overlay-element-fg-color:0,0,0}.reveal-viewport.has-light-background,.reveal.has-light-background{--r-overlay-element-bg-color:0,0,0;--r-overlay-element-fg-color:240,240,240}.reveal-viewport.reveal-scroll .scrollbar{position:sticky;top:50%;z-index:20;opacity:0;transition:all .3s ease}.reveal-viewport.reveal-scroll .scrollbar.visible,.reveal-viewport.reveal-scroll .scrollbar:hover{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-inner{position:absolute;width:var(--r-scrollbar-width);height:calc(var(--viewport-height) - var(--r-controls-spacing) * 2);right:var(--r-controls-spacing);top:0;transform:translateY(-50%);border-radius:var(--r-scrollbar-width);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-playhead{position:absolute;width:var(--r-scrollbar-width);height:var(--r-scrollbar-width);top:0;left:0;border-radius:var(--r-scrollbar-width);background-color:rgba(var(--r-overlay-element-bg-color),1);z-index:11;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide{position:absolute;width:100%;background-color:rgba(var(--r-overlay-element-bg-color),.2);box-shadow:0 0 0 1px rgba(var(--r-overlay-element-fg-color),.1);border-radius:var(--r-scrollbar-width);transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:after{content:"";position:absolute;width:200%;height:100%;top:0;left:-50%;background:rgba(0,0,0,0);z-index:-1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:hover{background-color:rgba(var(--r-overlay-element-bg-color),.4)}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-trigger{position:absolute;width:100%;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active.has-triggers{background-color:rgba(var(--r-overlay-element-bg-color),.4);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger:after{content:"";position:absolute;width:var(--r-scrollbar-trigger-size);height:var(--r-scrollbar-trigger-size);border-radius:20px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:rgba(var(--r-overlay-element-bg-color),1);transition:transform .2s ease,opacity .2s ease;opacity:.4}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active:after,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active~.scrollbar-trigger:after{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger~.scrollbar-trigger.active:after{transform:translate(calc(var(--r-scrollbar-width) * -2),0);background-color:rgba(var(--r-overlay-element-bg-color),1)}html.reveal-print *{-webkit-print-color-adjust:exact}html.reveal-print{width:100%;height:100%;overflow:visible}html.reveal-print body{margin:0 auto!important;border:0;padding:0;float:none!important;overflow:visible}html.reveal-print .nestedarrow,html.reveal-print .reveal .controls,html.reveal-print .reveal .playback,html.reveal-print .reveal .progress,html.reveal-print .reveal.overview,html.reveal-print .state-background{display:none!important}html.reveal-print .reveal pre code{overflow:hidden!important}html.reveal-print .reveal{width:auto!important;height:auto!important;overflow:hidden!important}html.reveal-print .reveal .slides{position:static;width:100%!important;height:auto!important;zoom:1!important;pointer-events:initial;left:auto;top:auto;margin:0!important;padding:0!important;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}html.reveal-print .reveal .slides .pdf-page{position:relative;overflow:hidden;z-index:1;page-break-after:always}html.reveal-print .reveal .slides .pdf-page:last-of-type{page-break-after:avoid}html.reveal-print .reveal .slides section{visibility:visible!important;display:block!important;position:absolute!important;margin:0!important;padding:0!important;box-sizing:border-box!important;min-height:1px;opacity:1!important;transform-style:flat!important;transform:none!important}html.reveal-print .reveal section.stack{position:relative!important;margin:0!important;padding:0!important;page-break-after:avoid!important;height:auto!important;min-height:auto!important}html.reveal-print .reveal img{box-shadow:none}html.reveal-print .reveal .backgrounds{display:none}html.reveal-print .reveal .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important}html.reveal-print .reveal.show-notes{max-width:none;max-height:none}html.reveal-print .reveal .speaker-notes-pdf{display:block;width:100%;height:auto;max-height:none;top:auto;right:auto;bottom:auto;left:auto;z-index:100}html.reveal-print .reveal .speaker-notes-pdf[data-layout=separate-page]{position:relative;color:inherit;background-color:transparent;padding:20px;page-break-after:always;border:0}html.reveal-print .reveal .slide-number-pdf{display:block;position:absolute;font-size:14px;visibility:visible}html.reveal-print .aria-status{display:none}@media print{html:not(.print-pdf){overflow:visible;width:auto;height:auto}html:not(.print-pdf) body{margin:0;padding:0;overflow:visible}html:not(.print-pdf) .reveal{background:#fff;font-size:20pt}html:not(.print-pdf) .reveal .backgrounds,html:not(.print-pdf) .reveal .controls,html:not(.print-pdf) .reveal .progress,html:not(.print-pdf) .reveal .slide-number,html:not(.print-pdf) .reveal .state-background{display:none!important}html:not(.print-pdf) .reveal li,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal td{font-size:20pt!important;color:#000}html:not(.print-pdf) .reveal h1,html:not(.print-pdf) .reveal h2,html:not(.print-pdf) .reveal h3,html:not(.print-pdf) .reveal h4,html:not(.print-pdf) .reveal h5,html:not(.print-pdf) .reveal h6{color:#000!important;height:auto;line-height:normal;text-align:left;letter-spacing:normal}html:not(.print-pdf) .reveal h1{font-size:28pt!important}html:not(.print-pdf) .reveal h2{font-size:24pt!important}html:not(.print-pdf) .reveal h3{font-size:22pt!important}html:not(.print-pdf) .reveal h4{font-size:22pt!important;font-variant:small-caps}html:not(.print-pdf) .reveal h5{font-size:21pt!important}html:not(.print-pdf) .reveal h6{font-size:20pt!important;font-style:italic}html:not(.print-pdf) .reveal a:link,html:not(.print-pdf) .reveal a:visited{color:#000!important;font-weight:700;text-decoration:underline}html:not(.print-pdf) .reveal div,html:not(.print-pdf) .reveal ol,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal ul{visibility:visible;position:static;width:auto;height:auto;display:block;overflow:visible;margin:0;text-align:left!important}html:not(.print-pdf) .reveal pre,html:not(.print-pdf) .reveal table{margin-left:0;margin-right:0}html:not(.print-pdf) .reveal pre code{padding:20px}html:not(.print-pdf) .reveal blockquote{margin:20px 0}html:not(.print-pdf) .reveal .slides{position:static!important;width:auto!important;height:auto!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:0!important;zoom:1!important;transform:none!important;overflow:visible!important;display:block!important;text-align:left!important;perspective:none;perspective-origin:50% 50%}html:not(.print-pdf) .reveal .slides section{visibility:visible!important;position:static!important;width:auto!important;height:auto!important;display:block!important;overflow:visible!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:60px 20px!important;z-index:auto!important;opacity:1!important;page-break-after:always!important;transform-style:flat!important;transform:none!important;transition:none!important}html:not(.print-pdf) .reveal .slides section.stack{padding:0!important}html:not(.print-pdf) .reveal .slides section:last-of-type{page-break-after:avoid!important}html:not(.print-pdf) .reveal .slides section .fragment{opacity:1!important;visibility:visible!important;transform:none!important}html:not(.print-pdf) .reveal .r-fit-text{white-space:normal!important}html:not(.print-pdf) .reveal section img{display:block;margin:15px 0;background:#fff;border:1px solid #666;box-shadow:none}html:not(.print-pdf) .reveal section small{font-size:.8em}html:not(.print-pdf) .reveal .hljs{max-height:100%;white-space:pre-wrap;word-wrap:break-word;word-break:break-word;font-size:15pt}html:not(.print-pdf) .reveal .hljs .hljs-ln-numbers{white-space:nowrap}html:not(.print-pdf) .reveal .hljs td{font-size:inherit!important;color:inherit!important}}
+</style>
+
+<style>
+/* Layout: aula proyectada. Papel claro, tinta oscura, el rojo Uninorte/Sparta como único acento;
+   azul = Jugador 1, rojo = Jugador 2 en todas las matrices. Tema único y claro (proyector). */
+:root {
+  --papel: #faf8f6;
+  --tarjeta: #ffffff;
+  --tinta: #1f1a19;
+  --gris: #6d6360;
+  --linea: #e6dfdb;
+  --rojo: #c62828;
+  --rojo-suave: #fbe9e7;
+  --azul: #1d5fa8;
+  --azul-suave: #e7f0fa;
+  --nash: #ffe08a;
+  --apagado: #c9c1bd;
+  --kraft: #d9b98c;
+  --kraft-oscuro: #b8925f;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-texto: "Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; background: var(--papel); color: var(--tinta); }
+body { margin: 0; }
+
+.reveal { font-family: var(--f-texto); font-size: 28px; color: var(--tinta); background: var(--papel); }
+.reveal .slides { text-align: left; }
+.reveal .slides section { height: 100%; box-sizing: border-box; padding: 6px 8px; }
+.reveal h1, .reveal h2, .reveal h3 { font-family: var(--f-display); color: var(--tinta); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.reveal h1 { font-size: 76px; font-weight: 800; line-height: 1.02; }
+.reveal h2 { font-size: 50px; font-weight: 800; line-height: 1.08; margin-bottom: 22px; }
+.reveal h3 { font-size: 30px; font-weight: 600; margin-bottom: 8px; }
+.reveal p { margin: 0 0 14px; line-height: 1.4; }
+.reveal ul { margin: 0; padding-left: 1.1em; }
+.reveal li { margin-bottom: 10px; line-height: 1.35; }
+.reveal li::marker { color: var(--rojo); }
+.reveal strong { font-weight: 700; }
+.reveal a { color: var(--rojo); text-decoration: underline; text-underline-offset: 3px; }
+.reveal .controls { color: var(--rojo); }
+.reveal .progress { color: var(--rojo); height: 5px; }
+.reveal .slide-number { background: transparent; color: var(--gris); font-family: var(--f-num); font-size: 14px; }
+
+.ceja { font-family: var(--f-num); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rojo); margin-bottom: 12px; font-weight: 600; }
+.sub { color: var(--gris); font-size: 26px; }
+.peq { font-size: 21px; color: var(--gris); }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.j1 { color: var(--azul); }
+.j2 { color: var(--rojo); }
+.fila { display: flex; gap: 40px; align-items: flex-start; }
+.fila > * { min-width: 0; }
+.col { flex: 1; }
+.centro-v { align-items: center; }
+
+/* Portada */
+.portada { display: grid; grid-template-columns: 1.25fr 1fr; gap: 50px; align-items: center; height: 100%; }
+.portada .autor { margin-top: 34px; font-size: 22px; color: var(--gris); line-height: 1.5; }
+.portada .autor b { color: var(--tinta); }
+
+/* Matrices de pagos */
+.matriz { border-collapse: collapse; font-size: 26px; margin: 0 auto; }
+.matriz th { font-family: var(--f-texto); font-weight: 700; font-size: 20px; padding: 8px 14px; color: var(--gris); }
+.matriz .jug { font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+.matriz td { border: 2px solid var(--tinta); width: 150px; height: 82px; text-align: center; font-family: var(--f-num); font-weight: 600; background: var(--tarjeta); transition: background .3s; }
+.matriz td.nash { background: var(--nash); }
+.matriz td.apagada { color: var(--apagado); }
+.matriz .lado { writing-mode: vertical-rl; transform: rotate(180deg); }
+
+/* Tarjetas de situaciones */
+.rejilla { display: grid; gap: 18px; }
+.rejilla.tres { grid-template-columns: repeat(3, 1fr); }
+.rejilla.dos { grid-template-columns: repeat(2, 1fr); }
+.caso { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.caso h3 { font-size: 25px; margin: 0; }
+.caso p { font-size: 20px; margin: 0; color: var(--tinta); line-height: 1.35; }
+.etiqueta { align-self: flex-start; font-family: var(--f-num); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; background: var(--rojo-suave); color: var(--rojo); }
+.etiqueta.az { background: var(--azul-suave); color: var(--azul); }
+.fuente { font-size: 15px; color: var(--gris); }
+
+/* Ingredientes */
+.ingred { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.ingred > div { padding: 18px 20px 0 0; }
+.ingred b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.ingred span { font-size: 21px; color: var(--gris); line-height: 1.35; display: block; }
+.ingred i { font-style: normal; font-family: var(--f-num); color: var(--rojo); font-size: 17px; }
+
+.definicion { border-left: 5px solid var(--rojo); padding: 6px 0 6px 22px; font-size: 27px; line-height: 1.4; margin: 0 0 30px; max-width: 30em; }
+
+/* Botones e insumos */
+.reveal button { font-family: var(--f-texto); font-size: 19px; font-weight: 600; padding: 9px 16px; border: 2px solid var(--tinta); background: var(--tarjeta); color: var(--tinta); border-radius: 7px; cursor: pointer; }
+.reveal button:hover { background: var(--rojo-suave); }
+.reveal button:focus-visible, .reveal input:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+.reveal button.on { background: var(--tinta); color: var(--papel); }
+.reveal button.primario { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.reveal input[type=number], .reveal input.celda { font-family: var(--f-num); font-weight: 600; font-size: 24px; width: 64px; text-align: center; border: 1.5px solid transparent; border-radius: 5px; background: transparent; color: inherit; padding: 2px; }
+.reveal input.celda:hover { border-color: var(--apagado); }
+.reveal input.celda.mr { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; font-weight: 700; }
+
+/* Sorteo con papel y bolsa */
+.bolsa { width: 330px; max-width: 100%; height: auto; display: block; }
+.bolsa .cuerpo { fill: var(--kraft); stroke: var(--kraft-oscuro); stroke-width: 3; }
+.bolsa .pliegue { fill: var(--kraft-oscuro); }
+.bolsa .boca { fill: var(--tinta); opacity: .85; }
+.bolsa .papel rect { fill: #fff; stroke: var(--tinta); stroke-width: 2; }
+.bolsa .papel text { font-family: var(--f-display); font-weight: 800; font-size: 30px; text-anchor: middle; dominant-baseline: central; }
+.bolsa .papel { animation: caer 3.6s ease-in infinite; transform-box: fill-box; transform-origin: center; }
+.bolsa .papel.p2 { animation-delay: 1.2s; }
+.bolsa .papel.p3 { animation-delay: 2.4s; }
+@keyframes caer { 0%, 15% { transform: translateY(0) rotate(0); opacity: 1; } 70% { transform: translateY(150px) rotate(25deg); opacity: 1; } 80%, 100% { transform: translateY(170px) rotate(30deg); opacity: 0; } }
+html.print-pdf .bolsa .papel { animation: none; }
+.foto-sorteo { max-width: 360px; max-height: 300px; border-radius: 8px; border: 2px solid var(--tinta); }
+.pasos { list-style: none; padding: 0 !important; counter-reset: paso; margin-top: 20px !important; }
+.pasos li { counter-increment: paso; display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: baseline; font-size: 23px; margin-bottom: 8px; }
+.pasos li::before { content: counter(paso); font-family: var(--f-num); font-weight: 600; color: var(--papel); background: var(--rojo); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 17px; }
+.pasos li::marker { content: ""; }
+.contador { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.contador .tipo { border: 2px solid var(--tinta); border-radius: 8px; padding: 10px 12px; background: var(--tarjeta); display: flex; flex-direction: column; gap: 4px; }
+.contador .tipo b { font-family: var(--f-display); font-size: 26px; }
+.contador .tipo .cuenta { font-family: var(--f-num); font-size: 40px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.contador .tipo span { font-size: 16px; color: var(--gris); }
+.contador button { margin-top: 4px; }
+.reloj { font-family: var(--f-num); font-size: 58px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.reglas { list-style: none; padding: 0 !important; }
+.reglas li { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--linea); margin: 0; }
+.reglas li::marker { content: ""; }
+
+/* Panel explicativo de la matriz */
+.panel { font-size: 21px; line-height: 1.4; }
+.panel h3 { font-size: 23px; margin: 10px 0 4px; }
+.panel p { margin: 0 0 6px; }
+
+/* Barras */
+.barras { display: flex; flex-direction: column; gap: 10px; }
+.barra { display: grid; grid-template-columns: 210px 1fr 80px; gap: 12px; align-items: center; font-size: 21px; }
+.barra .pista { height: 30px; background: var(--linea); border-radius: 4px; overflow: hidden; }
+.barra .relleno { height: 100%; background: var(--tinta); border-radius: 4px; transition: width .5s; }
+.barra .relleno.r { background: var(--rojo); }
+.barra .relleno.a { background: var(--azul); }
+.barra .v { font-family: var(--f-num); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.dato { font-family: var(--f-num); font-size: 44px; font-weight: 600; line-height: 1; }
+
+/* Torneo */
+.opciones { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 19px; }
+.opciones label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.reveal input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--rojo); }
+.reveal input[type=range] { accent-color: var(--rojo); width: 200px; }
+
+/* Penalti */
+.arco { display: flex; gap: 14px; }
+.arco button { flex: 1; font-size: 24px; padding: 18px; }
+.tiros { display: flex; flex-wrap: wrap; gap: 6px; min-height: 34px; }
+.tiro { font-family: var(--f-num); font-size: 15px; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+.tiro.gol { background: var(--azul-suave); color: var(--azul); }
+.tiro.atajada { background: var(--rojo-suave); color: var(--rojo); }
+
+/* Árbol */
+.arbol line { stroke: var(--tinta); stroke-width: 3; transition: stroke .3s, opacity .3s; }
+.arbol line.elegida { stroke: var(--rojo); stroke-width: 6; }
+.arbol line.descartada { opacity: .2; }
+.arbol circle { fill: var(--tinta); }
+.arbol text { font-family: var(--f-texto); font-size: 20px; fill: var(--tinta); }
+.arbol text.nodo { font-weight: 700; font-size: 21px; }
+.arbol text.pago { font-family: var(--f-num); font-weight: 600; font-size: 22px; }
+.arbol .descartada-t { opacity: .3; }
+
+/* Tipos de juego */
+.contrastes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 40px; }
+.contraste { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.contraste .par { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.contraste b { font-family: var(--f-display); font-size: 25px; display: block; }
+.contraste span { font-size: 19px; color: var(--gris); line-height: 1.35; display: block; }
+.contraste .hoy { margin-top: 8px; font-size: 16px; font-family: var(--f-num); color: var(--rojo); }
+
+.refs { font-size: 18px; line-height: 1.4; columns: 2; column-gap: 40px; }
+.refs p { break-inside: avoid; margin-bottom: 10px; }
+.nueva { font-family: var(--f-num); font-size: 12px; color: var(--rojo); font-weight: 600; letter-spacing: .05em; }
+
+/* Lo que va solo en vivo o solo en el PDF */
+.solo-pdf { display: none; }
+html.print-pdf .solo-clase { display: none !important; }
+html.print-pdf .solo-pdf { display: block !important; }
+@media print { .solo-clase { display: none !important; } .solo-pdf { display: block !important; } }
+.solo-pdf.recuadro { border: 1.5px dashed var(--apagado); border-radius: 8px; padding: 14px 18px; font-size: 20px; color: var(--gris); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+
+<style>
+/* Agregados de la clase 2 */
+.reveal .fragment.custom.marcar.visible { background: var(--nash); }
+.matriz.compacta td { height: 56px; width: 130px; font-size: 22px; }
+.matriz.compacta th { font-size: 18px; padding: 6px 10px; }
+.matriz .vacia { border: none; background: none; }
+.panel { max-height: 470px; overflow-y: auto; }
+
+.sorteo { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.sorteo-num { font-family: var(--f-display); font-weight: 800; font-size: 150px; line-height: 1; color: var(--rojo); min-width: 3ch; text-align: center; font-variant-numeric: tabular-nums; }
+.sorteo-num.nombre { font-size: 64px; min-height: 150px; display: grid; place-items: center; max-width: 520px; text-wrap: balance; }
+.sorteo-num.girando { color: var(--apagado); }
+
+.observa { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.observa > div { padding: 16px 18px 0 0; }
+.observa b { display: block; font-family: var(--f-display); font-size: 28px; margin-bottom: 6px; }
+.observa span { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.versus > div { border-top: 3px solid var(--tinta); padding-top: 14px; }
+.versus h3 { font-size: 32px; }
+.cita { font-style: italic; color: var(--gris); font-size: 20px; border-left: 3px solid var(--linea); padding-left: 14px; margin-top: 10px; }
+
+.tabla-def { border-collapse: collapse; width: 100%; font-size: 21px; }
+.tabla-def th { text-align: left; font-family: var(--f-num); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 8px 12px 8px 0; border-bottom: 2px solid var(--tinta); }
+.tabla-def td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--linea); vertical-align: top; line-height: 1.35; }
+.tabla-def td:first-child { font-weight: 700; white-space: nowrap; }
+
+.video-caja { width: 100%; max-width: 760px; aspect-ratio: 16 / 9; background: var(--tinta); border-radius: 10px; display: grid; place-items: center; overflow: hidden; }
+.video-caja iframe { width: 100%; height: 100%; border: 0; }
+.video-caja .play { display: flex; flex-direction: column; align-items: center; gap: 14px; color: var(--papel); }
+.reveal .video-caja button { background: var(--rojo); border-color: var(--rojo); color: #fff; font-size: 22px; padding: 14px 24px; }
+
+.foto-nash { max-height: 420px; max-width: 100%; border-radius: 8px; filter: grayscale(1); }
+.hechos { list-style: none; padding: 0 !important; }
+.hechos li { display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 23px; }
+.hechos li::marker { content: ""; }
+.hechos .anio { font-family: var(--f-num); font-weight: 600; color: var(--rojo); font-size: 20px; }
+
+.perfiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.perfiles span { font-family: var(--f-num); font-size: 19px; border: 1.5px solid var(--linea); border-radius: 6px; padding: 8px 10px; text-align: center; background: var(--tarjeta); }
+
+.capitulo { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.capitulo h1 { font-size: 96px; }
+.agenda { list-style: none; padding: 0 !important; counter-reset: ag; }
+.agenda li { counter-increment: ag; display: grid; grid-template-columns: 60px 1fr; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 30px; }
+.agenda li::before { content: counter(ag, decimal-leading-zero); font-family: var(--f-num); color: var(--rojo); font-size: 20px; font-weight: 600; }
+.agenda li::marker { content: ""; }
+.agenda a { color: var(--tinta); text-decoration: none; font-family: var(--f-display); font-weight: 600; }
+.agenda a:hover { color: var(--rojo); }
+.agenda small { display: block; font-family: var(--f-texto); font-size: 19px; color: var(--gris); font-weight: 400; }
+</style>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 · PORTADA -->
+<section>
+  <div class="portada">
+    <div>
+      <div class="ceja">Microeconomía II · Universidad del Norte · Clase 2</div>
+      <h1>Equilibrio de Nash</h1>
+      <p class="sub" style="margin-top:18px">Cuando lo mejor para mí depende de lo que usted haga</p>
+      <div class="autor"><b>Carlos A. Yanes Guerra</b><br>Departamento de Economía · Barranquilla, 2026</div>
+    </div>
+    <table class="matriz" aria-label="Matriz del juego Parque o Cine con dos equilibrios">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Jugador 2</th></tr>
+      <tr><th></th><th></th><th>Parque</th><th>Cine</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Jugador 1</span></th><th>Parque</th>
+        <td class="nash"><span class="j1">2</span> , <span class="j2">3</span></td>
+        <td><span class="j1">0</span> , <span class="j2">0</span></td></tr>
+      <tr><th>Cine</th>
+        <td><span class="j1">0</span> , <span class="j2">0</span></td>
+        <td class="nash"><span class="j1">3</span> , <span class="j2">2</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 2 · AGENDA -->
+<section>
+  <div class="ceja">Hoy</div>
+  <h2>La ruta de la clase</h2>
+  <ol class="agenda">
+    <li><a href="#/escena">Ustedes en escena<small>Dilema del prisionero y mano invisible, actuados por ustedes</small></a></li>
+    <li><a href="#/debil">Dominancia débil<small>Nunca peor, a veces mejor</small></a></li>
+    <li><a href="#/nash">Equilibrio de Nash<small>El concepto, el personaje y la película</small></a></li>
+    <li><a href="#/preguntemos">Ahora preguntemos<small>María y Andrés: estrategias, perfiles y equilibrio</small></a></li>
+    <li><a href="#/secuencial">Juegos secuenciales<small>Dos empresas, un árbol y la inducción hacia atrás</small></a></li>
+  </ol>
+</section>
+
+<!-- 3 · SORTEO -->
+<section id="escena">
+  <div class="ceja">Ustedes en escena</div>
+  <h2>¿Quién pasa al frente?</h2>
+  <div class="fila solo-clase">
+    <div class="col">
+      <p>La clase pasada les pedí representar uno de dos juegos:</p>
+      <ul>
+        <li><strong>El dilema del prisionero</strong>: el interés propio lleva a un resultado malo para todos.</li>
+        <li><strong>La mano invisible</strong>: el interés propio lleva a un resultado bueno para todos.</li>
+      </ul>
+      <p class="peq" style="margin-top:18px">La persona sorteada pasa con su grupo y representa su juego. El salón adivina cuál de los dos es.</p>
+      <div style="display:flex;gap:16px;align-items:center;margin-top:10px">
+        <div class="reloj" id="reloj">5:00</div>
+        <div class="botones"><button id="btnReloj">Iniciar tiempo</button><button id="btnRelojR">Reiniciar</button></div>
+      </div>
+    </div>
+    <div class="sorteo" style="flex:0 0 470px">
+      <div class="sorteo-num" id="sNum" aria-live="polite">?</div>
+      <div class="peq" id="sEtiqueta">Número de lista</div>
+      <div class="botones"><button class="primario" id="sBtn">Sortear</button><button id="sReset">Empezar de nuevo</button></div>
+      <div class="tiros" id="sHist" aria-label="Ya salieron"></div>
+    </div>
+  </div>
+  <div class="solo-pdf recuadro">En clase se sortearon estudiantes para representar el dilema del prisionero o la mano invisible. El salón debía identificar cuál de los dos juegos estaba viendo.</div>
+  <aside class="notes">Sortear, dar el tiempo y, al terminar, preguntar al salón: ¿dilema o mano invisible? Usar la siguiente diapositiva como guía de observación mientras actúan. Quien ya salió no se repite.</aside>
+</section>
+
+<!-- 4 · GUÍA DE OBSERVACIÓN -->
+<section>
+  <div class="ceja">Mientras sus compañeros actúan</div>
+  <h2>Mírelo como un economista</h2>
+  <p class="sub" style="margin-top:-8px;margin-bottom:26px">Anote en su cuaderno estas cuatro cosas de la escena que está viendo.</p>
+  <div class="observa">
+    <div><b>Jugadores</b><span>¿Quiénes deciden? ¿Son personas, empresas, países?</span></div>
+    <div><b>Estrategias</b><span>¿Qué opciones tiene cada uno? ¿Deciden a la vez o uno después del otro?</span></div>
+    <div><b>Pagos</b><span>¿Qué gana o pierde cada uno en cada resultado?</span></div>
+    <div><b>Resultado</b><span>¿Alguien quería cambiar su decisión? ¿Quedaron todos bien o todos mal?</span></div>
+  </div>
+  <p style="margin-top:34px;font-size:30px" class="fragment">Pregunta final: <strong>¿es un dilema o es la mano invisible?</strong></p>
+</section>
+
+<!-- 5 · DILEMA VS MANO INVISIBLE -->
+<section>
+  <div class="ceja">La diferencia que importa</div>
+  <h2>El mismo egoísmo, dos resultados</h2>
+  <div class="versus">
+    <div>
+      <h3>Mano invisible</h3>
+      <p>Adam Smith, 1776. Cada uno busca su propio beneficio y, en un mercado con competencia, eso termina sirviendo a los demás.</p>
+      <p class="cita">El panadero no le vende pan por bondad, sino porque le conviene. Igual usted cena.</p>
+      <p class="peq">Funciona cuando los precios coordinan y mi decisión no le impone costos directos a nadie.</p>
+    </div>
+    <div>
+      <h3>Dilema del prisionero</h3>
+      <p>Cada uno busca su propio beneficio y todos terminan peor. Así pasó con A o B en la clase 1.</p>
+      <p class="cita">Elegir A era lo mejor para cada uno. Si todos elegían B, cada uno ganaba el doble.</p>
+      <p class="peq">Ocurre cuando lo que yo gano le cuesta al otro y nadie puede comprometerse a cooperar.</p>
+    </div>
+  </div>
+  <p class="fragment definicion" style="margin-top:26px;font-size:24px">Un resultado es <strong>eficiente en el sentido de Pareto</strong> si no se puede mejorar a nadie sin empeorar a otro. (A, A) era equilibrio, pero <strong>no</strong> era eficiente: (B, B) mejoraba a los dos.</p>
+</section>
+
+<!-- 6 · DECISIÓN VS JUEGOS -->
+<section>
+  <div class="ceja">Dos maneras de pensar</div>
+  <h2>Teoría de la decisión y teoría de juegos</h2>
+  <div class="versus">
+    <div>
+      <h3>Optimizar</h3>
+      <ul>
+        <li>Las personas tienen objetivos y enfrentan restricciones.</li>
+        <li>Eligen lo mejor dado su presupuesto, su tiempo y los precios.</li>
+        <li>El resto del mundo es un dato: no reacciona a lo que usted haga.</li>
+      </ul>
+      <p class="peq" style="margin-top:12px">Ejemplo: cuánto estudiar para el parcial con 24 horas al día.</p>
+    </div>
+    <div>
+      <h3>Equilibrio</h3>
+      <ul>
+        <li>Varias personas compiten por recursos escasos.</li>
+        <li>Cada una ajusta su comportamiento a lo que hacen las demás.</li>
+        <li>El resultado es estable cuando nadie quiere cambiar.</li>
+      </ul>
+      <p class="peq" style="margin-top:12px">Ejemplo: cuánto estudiar cuando el parcial tiene curva.</p>
+    </div>
+  </div>
+  <p class="fragment" style="margin-top:24px">En un juego, <strong>los otros también están optimizando</strong>, y lo saben.</p>
+</section>
+
+<!-- 7 · DÉBILMENTE DOMINANTE -->
+<section id="debil">
+  <div class="ceja">Dominancia débil</div>
+  <h2>Estrategia débilmente dominante</h2>
+  <p>Una estrategia que <strong>nunca</strong> da menos que otra, sin importar lo que haga el contrario, y en al menos un caso da <strong>más</strong>.</p>
+  <p style="font-size:30px">\[ u_i(s_i, s_{-i}) \;\geq\; u_i(s_i', s_{-i}) \quad \forall\, s_{-i}, \qquad \text{con } > \text{ para algún } s_{-i} \]</p>
+  <table class="tabla-def fragment" style="margin-top:8px">
+    <tr><th>Tipo</th><th>Comparada con la otra estrategia</th><th>Desigualdad</th></tr>
+    <tr><td>Estrictamente dominante</td><td>Siempre da más</td><td class="num">&gt; en todos los casos</td></tr>
+    <tr><td>Débilmente dominante</td><td>Nunca da menos y a veces da más</td><td class="num">≥ en todos, &gt; en alguno</td></tr>
+  </table>
+  <p class="peq fragment" style="margin-top:16px">Si le da lo mismo pizza o hamburguesa cuando hay hambre, pero prefiere pizza cuando no la hay, la pizza domina débilmente.</p>
+</section>
+
+<!-- 8 · CASO APPS -->
+<section>
+  <div class="ceja">Caso 1 · Apps de educación</div>
+  <h2>¿Calidad o publicidad?</h2>
+  <div class="fila centro-v">
+    <div class="col">
+      <p>Dos firmas compiten en el mercado de apps de educación.</p>
+      <ul>
+        <li><strong class="j1">Firma A</strong> elige calidad alta (H) o calidad baja (L).</li>
+        <li><strong class="j2">Firma B</strong> elige hacer publicidad o no hacerla.</li>
+      </ul>
+      <p class="fragment" style="margin-top:18px"><strong>Muestre</strong> que uno de los jugadores tiene una estrategia débilmente dominante. ¿Dónde termina el juego?</p>
+    </div>
+    <table class="matriz">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Firma B</th></tr>
+      <tr><th></th><th></th><th>Hacer pub.</th><th>No pub.</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Firma A</span></th><th>H</th>
+        <td><span class="j1">3</span> , <span class="j2">2</span></td><td><span class="j1">4</span> , <span class="j2">3</span></td></tr>
+      <tr><th>L</th>
+        <td><span class="j1">3</span> , <span class="j2">3</span></td><td><span class="j1">2</span> , <span class="j2">1</span></td></tr>
+    </table>
+  </div>
+  <aside class="notes">Dar 2 minutos en parejas antes de pasar a la solución.</aside>
+</section>
+
+<!-- 9 · SOLUCIÓN APPS -->
+<section>
+  <div class="ceja">Caso 1 · Solución</div>
+  <h2>H domina débilmente a L</h2>
+  <div class="fila">
+    <div class="col">
+      <div class="fila" style="gap:16px">
+        <div class="col caso fragment"><span class="etiqueta az">Si B hace publicidad</span><p style="font-size:23px">H da <b class="num j1">3</b>, L da <b class="num j1">3</b> → empate</p></div>
+        <div class="col caso fragment"><span class="etiqueta az">Si B no hace publicidad</span><p style="font-size:23px">H da <b class="num j1">4</b>, L da <b class="num j1">2</b> → mejor H</p></div>
+      </div>
+      <p class="fragment" style="margin-top:18px">\( u_A(H, s_B) \geq u_A(L, s_B) \) para todo \( s_B \). Si A es racional, elige <strong>H</strong>. Sabiendo eso, B compara <b class="num j2">2</b> contra <b class="num j2">3</b> y no hace publicidad.</p>
+      <p class="fragment" style="font-size:30px">Resultado: <strong>(H, No pub.)</strong> con pagos <span class="num">(4, 3)</span></p>
+    </div>
+  </div>
+  <div class="caso fragment" style="margin-top:14px;border-color:var(--rojo)">
+    <span class="etiqueta">Pregunta trampa</span>
+    <p style="font-size:22px">¿Es el único equilibrio? Revise <strong>(L, Hacer pub.)</strong>: dada la publicidad de B, A queda indiferente entre H y L, y dado L, B prefiere hacer publicidad (3 &gt; 1). Nadie gana cambiando solo: <strong>también es equilibrio de Nash</strong>. Al eliminar estrategias débilmente dominadas se pueden perder equilibrios.</p>
+  </div>
+  <aside class="notes">La pregunta trampa sirve de puente a Nash. Se puede comprobar en la matriz interactiva más adelante (botón "Apps").</aside>
+</section>
+
+<!-- 10 · ¿LE SUENA NASH? -->
+<section id="nash" data-background-image="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExazBudTZma2Z6cmY4MWIwcnZyMWtleDBvNjVtenN3bWp1aHV6aTZhcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GNBXzw552PSNy/giphy.gif" data-background-opacity="0.25">
+  <div class="capitulo">
+    <div class="ceja">Un concepto poderoso</div>
+    <h1>¿Le suena Nash?</h1>
+  </div>
+</section>
+
+<!-- 11 · VIDEO -->
+<section>
+  <div class="ceja">Una mente brillante (2001)</div>
+  <h2>La escena que todos recuerdan</h2>
+  <div class="fila">
+    <div class="video-caja solo-clase" id="videoCaja">
+      <div class="play">
+        <button id="btnVideo">▶ Reproducir aquí</button>
+        <a id="linkVideo" href="#" target="_blank" rel="noopener" style="color:var(--papel)">o abrir en YouTube</a>
+      </div>
+    </div>
+    <div class="col">
+      <p>Mientras la ven, piensen: lo que propone Nash en la escena, <strong>¿es realmente un equilibrio?</strong></p>
+      <p class="solo-pdf">Video: <span id="linkVideoPdf"></span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · ¿LA PELÍCULA ACIERTA? -->
+<section>
+  <div class="ceja">Pensemos como Nash de verdad</div>
+  <h2>¿La película tiene razón?</h2>
+  <p>En la escena del bar, Nash propone que nadie se acerque a la persona más llamativa del grupo y que cada uno vaya por otra. Así nadie se bloquea con nadie.</p>
+  <ul style="margin-top:14px">
+    <li class="fragment">Suponga que todos siguen el plan. Usted está entre ellos.</li>
+    <li class="fragment">Si usted cambia <strong>solo</strong> y va por la persona más llamativa, nadie compite con usted. Gana más.</li>
+    <li class="fragment">Como alguien quiere cambiar solo, el plan de la película <strong>no es un equilibrio de Nash</strong>.</li>
+    <li class="fragment">Un equilibrio sería que <strong>exactamente uno</strong> vaya por ella y los demás no.</li>
+  </ul>
+  <aside class="notes">Si el video que usa es otra escena, salte esta diapositiva. La idea: el resultado propuesto puede ser bueno para el grupo, pero no es estable.</aside>
+</section>
+
+<!-- 13 · EL VERDADERO NASH -->
+<section>
+  <div class="ceja">El personaje real</div>
+  <h2>John Forbes Nash Jr. (1928–2015)</h2>
+  <div class="fila">
+    <div class="col">
+      <ul class="hechos">
+        <li><span class="anio">1928</span><span>Nace en Bluefield, Virginia Occidental, EE. UU.</span></li>
+        <li><span class="anio">1950</span><span>Doctorado en Princeton. Su tesis de 28 páginas sobre juegos no cooperativos define el equilibrio que lleva su nombre.</span></li>
+        <li><span class="anio">1959</span><span>Le diagnostican esquizofrenia. Pasa décadas lejos de la vida académica.</span></li>
+        <li><span class="anio">1994</span><span>Premio Nobel de Economía, junto con John Harsanyi y Reinhard Selten.</span></li>
+        <li><span class="anio">2001</span><span>Su vida inspira <em>Una mente brillante</em>, basada en la biografía de Sylvia Nasar.</span></li>
+        <li><span class="anio">2015</span><span>Recibe el Premio Abel de matemáticas y muere días después en un accidente de tránsito.</span></li>
+      </ul>
+    </div>
+    <div id="fotoNash" style="flex:0 0 320px;display:flex;justify-content:center"></div>
+  </div>
+</section>
+
+<!-- 14 · DEFINICIÓN -->
+<section>
+  <div class="ceja">La definición</div>
+  <h2>Equilibrio de Nash</h2>
+  <p class="definicion">Un perfil de estrategias en el que <strong>cada jugador hace lo mejor que puede, dado lo que hacen los demás</strong>. Nadie gana cambiando solo.</p>
+  <p>Formalmente, \( s^* = (s_1^*, \dots, s_n^*) \) es un equilibrio de Nash si para cada jugador \( i \):</p>
+  <p style="font-size:32px">\[ u_i(s_i^*, s_{-i}^*) \;\geq\; u_i(s_i, s_{-i}^*) \qquad \forall\, s_i \in S_i \]</p>
+  <table class="tabla-def fragment">
+    <tr><th>Concepto</th><th>Qué exige</th></tr>
+    <tr><td>Dominancia</td><td>Ser lo mejor <strong>sin importar</strong> lo que haga el otro</td></tr>
+    <tr><td>Nash</td><td>Ser lo mejor <strong>dado lo que el otro efectivamente hace</strong>. Cada estrategia es mejor respuesta a la otra</td></tr>
+  </table>
+</section>
+
+<!-- 15 · PARQUE O CINE -->
+<section>
+  <div class="ceja">Ejemplo · Batalla de los sexos</div>
+  <h2>¿Parque o cine?</h2>
+  <div class="fila centro-v">
+    <table class="matriz">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Jugador 2</th></tr>
+      <tr><th></th><th></th><th>Parque</th><th>Cine</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Jugador 1</span></th><th>Parque</th>
+        <td class="fragment custom marcar" data-fragment-index="1"><span class="j1">2</span> , <span class="j2">3</span></td>
+        <td><span class="j1">0</span> , <span class="j2">0</span></td></tr>
+      <tr><th>Cine</th>
+        <td><span class="j1">0</span> , <span class="j2">0</span></td>
+        <td class="fragment custom marcar" data-fragment-index="2"><span class="j1">3</span> , <span class="j2">2</span></td></tr>
+    </table>
+    <div class="col">
+      <p>Una pareja quiere salir junta. Uno prefiere el cine, el otro el parque, pero lo peor es terminar cada uno por su lado.</p>
+      <p class="fragment" data-fragment-index="1">\( EN_1 = (\text{Parque}, \text{Parque}) \), con pagos \( (2, 3) \)</p>
+      <p class="fragment" data-fragment-index="2">\( EN_2 = (\text{Cine}, \text{Cine}) \), con pagos \( (3, 2) \)</p>
+      <p class="fragment peq" data-fragment-index="3">Ninguno tiene estrategia dominante. Con dos equilibrios, la teoría no dice cuál ocurre: hace falta coordinarse, por costumbre, por comunicación o por un <strong>punto focal</strong> (Schelling, 1960).</p>
+    </div>
+  </div>
+  <aside class="notes">Un equilibrio se escribe con estrategias, no con pagos. También hay un equilibrio en estrategias mixtas: el Jugador 1 va al parque con probabilidad 2/5 y el Jugador 2 con 3/5. Se ve en la matriz interactiva.</aside>
+</section>
+
+<!-- 16 · MATRIZ INTERACTIVA -->
+<section>
+  <div class="ceja">Pruébelo usted</div>
+  <h2>Busque los equilibrios</h2>
+  <div class="matriz-app" id="mx1" data-juegos="apps,parque,maria" data-inicial="parque"></div>
+  <aside class="notes">Que el salón prediga antes de presionar. Con "Apps" se ven los dos equilibrios del caso 1. Cualquier número se puede cambiar haciendo clic sobre él.</aside>
+</section>
+
+<!-- 17 · CAPÍTULO -->
+<section id="preguntemos">
+  <div class="capitulo">
+    <div class="ceja">Microeconomía II · Uninorte</div>
+    <h1>Ahora preguntemos</h1>
+  </div>
+</section>
+
+<!-- 18 · MARÍA Y ANDRÉS: ESPACIOS -->
+<section>
+  <div class="ceja">Caso 2 · María y Andrés</div>
+  <h2>Estrategias y perfiles</h2>
+  <div class="versus">
+    <div>
+      <p><strong class="j1">María</strong> tiene tres acciones:</p>
+      <p>\[ S_M = \{\text{Izquierda}, \text{Mitad}, \text{Derecha}\} \]</p>
+      <p><strong class="j2">Andrés</strong> tiene dos:</p>
+      <p>\[ S_A = \{\text{Arriba}, \text{Abajo}\} \]</p>
+    </div>
+    <div>
+      <p class="fragment">Si María juega Mitad y Andrés Abajo, el <strong>perfil</strong> es \( s = (\text{Mitad}, \text{Abajo}) \).</p>
+      <p class="fragment">El espacio de perfiles es \( S = S_M \times S_A \), con \( 3 \times 2 = 6 \) perfiles:</p>
+      <div class="perfiles fragment">
+        <span>(Izq, Arriba)</span><span>(Mitad, Arriba)</span><span>(Der, Arriba)</span>
+        <span>(Izq, Abajo)</span><span>(Mitad, Abajo)</span><span>(Der, Abajo)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · MARÍA Y ANDRÉS: MATRIZ -->
+<section>
+  <div class="ceja">Caso 2 · María y Andrés</div>
+  <h2>¿Dónde está el equilibrio?</h2>
+  <div class="matriz-app" id="mx2" data-juegos="maria" data-inicial="maria"></div>
+  <aside class="notes">Pedir que subrayen mejores respuestas en el cuaderno antes de presionar los botones. Respuesta: único equilibrio en puras (Mitad, Arriba) con pagos (3, 6). Además, Izquierda domina débilmente a Derecha para María, y Arriba domina débilmente a Abajo para Andrés.</aside>
+</section>
+
+<!-- 20 · CASO EMPRESAS -->
+<section id="secuencial">
+  <div class="ceja">Caso 3 · Juego secuencial</div>
+  <h2>Lanzar o no lanzar</h2>
+  <div class="fila">
+    <div class="col">
+      <p>La <strong class="j1">Empresa A</strong> decide primero si lanza un producto nuevo. Si lo lanza, la <strong class="j2">Empresa B</strong> lo ve y decide si invierte en innovación. Si B invierte, A decide si sostiene la publicidad o la cancela.</p>
+    </div>
+    <div class="col">
+      <table class="tabla-def">
+        <tr><th>Camino</th><th>Pagos (A, B)</th></tr>
+        <tr><td>Lanza · B invierte · Publicidad</td><td class="num">(12, 10)</td></tr>
+        <tr><td>Lanza · B invierte · Sin publicidad</td><td class="num">(8, 14)</td></tr>
+        <tr><td>Lanza · B no invierte</td><td class="num">(15, 5)</td></tr>
+        <tr><td>No lanza</td><td class="num">(6, 8)</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="fragment" style="margin-top:20px">¿Quién mueve cuándo? ¿Qué sabe cada uno al decidir? Dibujemos el árbol.</p>
+</section>
+
+<!-- 21 · ÁRBOL -->
+<section>
+  <div class="ceja">Forma extensiva · Inducción hacia atrás</div>
+  <h2>Resuelva desde el final</h2>
+  <div class="fila">
+    <div style="flex:0 0 700px">
+      <svg class="arbol" viewBox="0 0 820 480" width="100%" role="img" aria-label="Árbol del juego entre la Empresa A y la Empresa B">
+        <line id="kNL" x1="260" y1="50" x2="100" y2="190"/>
+        <line id="kL" x1="260" y1="50" x2="440" y2="190"/>
+        <line id="kNI" x1="440" y1="190" x2="300" y2="330"/>
+        <line id="kI" x1="440" y1="190" x2="600" y2="330"/>
+        <line id="kP" x1="600" y1="330" x2="500" y2="440"/>
+        <line id="kNP" x1="600" y1="330" x2="720" y2="440"/>
+        <circle cx="260" cy="50" r="10"/><circle cx="440" cy="190" r="10"/><circle cx="600" cy="330" r="10"/>
+        <text class="nodo" x="280" y="40">Empresa A</text>
+        <text class="nodo" x="458" y="182">Empresa B</text>
+        <text class="nodo" x="618" y="322">Empresa A</text>
+        <text x="168" y="110" text-anchor="end" id="lNL">No lanza</text>
+        <text x="362" y="110" id="lL">Lanza</text>
+        <text x="358" y="262" text-anchor="end" id="lNI">No invierte</text>
+        <text x="532" y="250" id="lI">Invierte</text>
+        <text x="540" y="392" text-anchor="end" id="lP">Publicidad</text>
+        <text x="672" y="392" id="lNP">Sin publicidad</text>
+        <text class="pago" x="100" y="225" text-anchor="middle" id="vNL"><tspan class="j1">6</tspan> , <tspan class="j2">8</tspan></text>
+        <text class="pago" x="300" y="365" text-anchor="middle" id="vNI"><tspan class="j1">15</tspan> , <tspan class="j2">5</tspan></text>
+        <text class="pago" x="500" y="472" text-anchor="middle" id="vP"><tspan class="j1">12</tspan> , <tspan class="j2">10</tspan></text>
+        <text class="pago" x="720" y="472" text-anchor="middle" id="vNP"><tspan class="j1">8</tspan> , <tspan class="j2">14</tspan></text>
+      </svg>
+    </div>
+    <div class="col">
+      <div class="botones solo-clase"><button class="primario" id="btnArbol2">Paso 1: la última decisión</button></div>
+      <div id="lecturaArbol2" style="margin-top:14px;font-size:22px"></div>
+    </div>
+  </div>
+  <aside class="notes">Tres pasos. Al final: A juega (Lanzar, Publicidad) y B juega Invertir. Pagos (12, 10).</aside>
+</section>
+
+<!-- 22 · FORMA NORMAL DEL SECUENCIAL -->
+<section>
+  <div class="ceja">Del árbol a la matriz</div>
+  <h2>Estrategias completas y forma normal</h2>
+  <div class="fila">
+    <div style="flex:0 0 430px">
+      <p>Una estrategia es un <strong>plan completo</strong>: dice qué hacer en cada nodo propio, aunque no se llegue a él.</p>
+      <p>\[ S_A = \{L{\cdot}P,\; L{\cdot}NP,\; NL{\cdot}P,\; NL{\cdot}NP\} \]</p>
+      <p>\[ S_B = \{\text{Invertir}, \text{No invertir}\} \]</p>
+      <p class="peq">L = lanza, NL = no lanza, P = publicidad, NP = sin publicidad.</p>
+      <p class="peq">Aquí el único equilibrio de Nash coincide con la inducción hacia atrás. <strong>No siempre pasa</strong>: recuerde la app de domicilios de la clase 1 y su amenaza no creíble.</p>
+    </div>
+    <div class="col">
+      <div class="matriz-app" id="mx3" data-juegos="empresas" data-inicial="empresas" data-compacta="1"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 23 · PARA LLEVAR -->
+<section>
+  <div class="ceja">Para llevar</div>
+  <h2>Cuatro ideas de hoy</h2>
+  <ul style="font-size:29px">
+    <li class="fragment">Una estrategia débilmente dominante nunca da menos y a veces da más. Eliminar las dominadas puede borrar equilibrios.</li>
+    <li class="fragment">En un equilibrio de Nash nadie gana cambiando solo. Puede haber uno, varios o ninguno en estrategias puras.</li>
+    <li class="fragment">Que algo sea equilibrio no significa que sea bueno para todos: el dilema del prisionero no es eficiente, la mano invisible sí puede serlo.</li>
+    <li class="fragment">En juegos secuenciales se piensa hacia atrás, desde la última decisión.</li>
+  </ul>
+</section>
+
+<!-- 24 · REFERENCIAS -->
+<section>
+  <div class="ceja">Referencias</div>
+  <h2>Para leer más</h2>
+  <div class="refs">
+    <p>Osborne, M. J. y Rubinstein, A. (1994). <em>A Course in Game Theory</em>. MIT Press.</p>
+    <p>Dixit, A. K., Skeath, S. y Reiley, D. H. (2020). <em>Games of Strategy</em> (5.ª ed.). W. W. Norton.</p>
+    <p>Watson, J. (2013). <em>Strategy: An Introduction to Game Theory</em> (3.ª ed.). W. W. Norton.</p>
+    <p>Gibbons, R. (1992). <em>A Primer in Game Theory</em>. Harvester Wheatsheaf.</p>
+    <p>Binmore, K. (2007). <em>Playing for Real</em>. Oxford University Press.</p>
+    <p>Straub, P. G. (2022). <em>Theoretical Foundations of Game Theory</em>. Springer.</p>
+    <p>Safner, R. (2021). <em>Lecture Notes on Game Theory</em>. Hood College.</p>
+    <p><span class="nueva">NUEVA</span><br>Nash, J. F. (1950). Equilibrium Points in n-Person Games. <em>Proceedings of the National Academy of Sciences</em>, 36(1), 48–49.</p>
+    <p><span class="nueva">NUEVA</span><br>Smith, A. (1776). <em>La riqueza de las naciones</em>.</p>
+    <p><span class="nueva">NUEVA</span><br>Schelling, T. C. (1960). <em>The Strategy of Conflict</em>. Harvard University Press.</p>
+    <p><span class="nueva">NUEVA</span><br>Nasar, S. (1998). <em>A Beautiful Mind</em>. Simon &amp; Schuster.</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] }, svg: { fontCache: "global" } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const IMPRESION = /print-pdf/i.test(location.search);
+
+Reveal.initialize({
+  width: 1280, height: 720, margin: 0.05,
+  center: false, hash: true, transition: "fade", transitionSpeed: "fast",
+  slideNumber: "c/t", controls: true, progress: true,
+  pdfSeparateFragments: false,
+  plugins: typeof RevealNotes !== "undefined" ? [RevealNotes] : []
+});
+
+/* ---------- Reloj ---------- */
+(function () {
+  const total = Math.round(CONFIG.minutosPresentacion * 60);
+  let quedan = total, timer = null;
+  const pinta = () => { const m = Math.floor(quedan / 60), s = quedan % 60;
+    $("reloj").textContent = quedan > 0 ? m + ":" + String(s).padStart(2, "0") : "¡Tiempo!"; };
+  pinta();
+  $("btnReloj").onclick = () => {
+    if (timer) { clearInterval(timer); timer = null; $("btnReloj").textContent = "Continuar"; return; }
+    $("btnReloj").textContent = "Pausar";
+    timer = setInterval(() => { quedan = Math.max(0, quedan - 1); pinta();
+      if (!quedan) { clearInterval(timer); timer = null; $("btnReloj").textContent = "Iniciar tiempo"; } }, 1000);
+  };
+  $("btnRelojR").onclick = () => { clearInterval(timer); timer = null; quedan = total; pinta(); $("btnReloj").textContent = "Iniciar tiempo"; };
+})();
+
+/* ---------- Sorteo ---------- */
+(function () {
+  const usaNombres = Array.isArray(CONFIG.nombres) && CONFIG.nombres.length > 0;
+  const todos = usaNombres ? CONFIG.nombres.slice() : Array.from({ length: CONFIG.totalEstudiantes }, (_, i) => String(i + 1));
+  let quedan = todos.slice(), girando = false;
+  const num = $("sNum");
+  if (usaNombres) { num.classList.add("nombre"); $("sEtiqueta").textContent = "Estudiante"; }
+  function sortear() {
+    if (girando) return;
+    if (!quedan.length) { num.textContent = "—"; $("sEtiqueta").textContent = "Ya salieron todos"; return; }
+    girando = true; num.classList.add("girando");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let vueltas = reduce ? 1 : 18;
+    const paso = () => {
+      num.textContent = todos[Math.floor(Math.random() * todos.length)];
+      if (--vueltas > 0) { setTimeout(paso, 40 + (18 - vueltas) * 6); return; }
+      const k = Math.floor(Math.random() * quedan.length);
+      const elegido = quedan.splice(k, 1)[0];
+      num.textContent = elegido; num.classList.remove("girando"); girando = false;
+      const chip = document.createElement("span"); chip.className = "tiro atajada"; chip.textContent = elegido;
+      $("sHist").appendChild(chip);
+    };
+    paso();
+  }
+  $("sBtn").onclick = sortear;
+  $("sReset").onclick = () => { quedan = todos.slice(); num.textContent = "?"; $("sHist").innerHTML = ""; $("sEtiqueta").textContent = usaNombres ? "Estudiante" : "Número de lista"; };
+})();
+
+/* ---------- Video y foto ---------- */
+(function () {
+  const url = "https://youtu.be/" + CONFIG.video;
+  $("linkVideo").href = url; $("linkVideoPdf").textContent = url;
+  $("btnVideo").onclick = () => {
+    const f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + CONFIG.video + "?autoplay=1&rel=0";
+    f.allow = "autoplay; encrypted-media; picture-in-picture"; f.allowFullscreen = true; f.title = "Escena de Una mente brillante";
+    $("videoCaja").replaceChildren(f);
+  };
+  if (CONFIG.imagenNash) {
+    const img = new Image(); img.className = "foto-nash"; img.alt = "John F. Nash";
+    img.onload = () => $("fotoNash").appendChild(img);
+    img.src = CONFIG.imagenNash;
+  }
+})();
+
+/* ---------- Matrices interactivas (cualquier tamaño) ---------- */
+const JUEGOS = {
+  apps:     { nombre: "Apps", n1: "Firma A", n2: "Firma B", f: ["H", "L"], c: ["Hacer pub.", "No pub."],
+              a: [[3, 4], [3, 2]], b: [[2, 3], [3, 1]] },
+  parque:   { nombre: "Parque o cine", n1: "Jugador 1", n2: "Jugador 2", f: ["Parque", "Cine"], c: ["Parque", "Cine"],
+              a: [[2, 0], [0, 3]], b: [[3, 0], [0, 2]] },
+  maria:    { nombre: "María y Andrés", n1: "María", n2: "Andrés", f: ["Izquierda", "Mitad", "Derecha"], c: ["Arriba", "Abajo"],
+              a: [[2, 7], [3, 3], [2, 6]], b: [[4, 1], [6, 6], [8, 3]] },
+  empresas: { nombre: "Empresas", n1: "Empresa A", n2: "Empresa B", f: ["L·P", "L·NP", "NL·P", "NL·NP"], c: ["Invertir", "No invertir"],
+              a: [[12, 15], [8, 15], [6, 6], [6, 6]], b: [[10, 5], [14, 5], [8, 8], [8, 8]] }
+};
+
+function analizar(g) {
+  const R = g.a.length, C = g.a[0].length;
+  const mr1 = g.a.map(r => r.map(() => false)), mr2 = g.a.map(r => r.map(() => false));
+  for (let j = 0; j < C; j++) { const m = Math.max(...g.a.map(r => r[j])); for (let i = 0; i < R; i++) mr1[i][j] = g.a[i][j] === m; }
+  for (let i = 0; i < R; i++) { const m = Math.max(...g.b[i]); for (let j = 0; j < C; j++) mr2[i][j] = g.b[i][j] === m; }
+  const nash = [];
+  for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) if (mr1[i][j] && mr2[i][j]) nash.push([i, j]);
+  const dom = [];
+  for (let i = 0; i < R; i++) for (let k = 0; k < R; k++) if (i !== k) {
+    const ge = g.a[i].every((v, j) => v >= g.a[k][j]), gt = g.a[i].map((v, j) => v > g.a[k][j]);
+    if (ge && gt.some(Boolean)) dom.push(`${g.n1}: <b>${g.f[i]}</b> domina ${gt.every(Boolean) ? "estrictamente" : "débilmente"} a ${g.f[k]}.`);
+  }
+  for (let j = 0; j < C; j++) for (let k = 0; k < C; k++) if (j !== k) {
+    const col = i => g.b[i][j], otra = i => g.b[i][k];
+    const ge = g.b.every((_, i) => col(i) >= otra(i)), gt = g.b.map((_, i) => col(i) > otra(i));
+    if (ge && gt.some(Boolean)) dom.push(`${g.n2}: <b>${g.c[j]}</b> domina ${gt.every(Boolean) ? "estrictamente" : "débilmente"} a ${g.c[k]}.`);
+  }
+  let mixta = null;
+  if (R === 2 && C === 2) {
+    const dq = g.a[0][0] - g.a[0][1] - g.a[1][0] + g.a[1][1];
+    const dp = g.b[0][0] - g.b[1][0] - g.b[0][1] + g.b[1][1];
+    if (dq && dp) {
+      const q = (g.a[1][1] - g.a[0][1]) / dq, p = (g.b[1][1] - g.b[1][0]) / dp;
+      if (p > 0 && p < 1 && q > 0 && q < 1) mixta = { p, q };
+    }
+  }
+  return { mr1, mr2, nash, dom, mixta };
+}
+
+function fraccion(x) {
+  for (let d = 1; d <= 12; d++) { const n = Math.round(x * d); if (Math.abs(n / d - x) < 1e-9) return n + "/" + d; }
+  return Math.round(x * 100) + " %";
+}
+
+function crearMatriz(raiz) {
+  const id = raiz.id, claves = raiz.dataset.juegos.split(","), compacta = !!raiz.dataset.compacta;
+  const ver = { mr1: IMPRESION, mr2: IMPRESION, nash: IMPRESION };
+  let g;
+  raiz.innerHTML = `
+    <div class="botones solo-clase" style="margin-bottom:14px">
+      ${claves.length > 1 ? claves.map(k => `<button data-k="${k}">${JUEGOS[k].nombre}</button>`).join("") + '<span style="width:14px"></span>' : ""}
+      <button data-v="mr1">Mejor respuesta <span data-n="1"></span></button>
+      <button data-v="mr2">Mejor respuesta <span data-n="2"></span></button>
+      <button data-v="nash">Equilibrio de Nash</button>
+    </div>
+    <div class="fila"><div class="tabla"></div><div class="col panel"></div></div>`;
+  const tabla = raiz.querySelector(".tabla"), panel = raiz.querySelector(".panel");
+
+  function cargar(k) {
+    g = JSON.parse(JSON.stringify(JUEGOS[k]));
+    const R = g.a.length, C = g.a[0].length;
+    let h = `<table class="matriz${compacta || R > 2 ? " compacta" : ""}"><tr><th></th><th></th><th colspan="${C}" class="jug j2">${g.n2}</th></tr><tr><th></th><th></th>`;
+    g.c.forEach(c => h += `<th>${c}</th>`);
+    h += "</tr>";
+    for (let i = 0; i < R; i++) {
+      h += "<tr>";
+      if (i === 0) h += `<th rowspan="${R}" class="jug j1"><span class="lado">${g.n1}</span></th>`;
+      h += `<th>${g.f[i]}</th>`;
+      for (let j = 0; j < C; j++) h += `<td id="${id}t${i}${j}"><input class="celda j1" id="${id}a${i}${j}" value="${g.a[i][j]}" aria-label="Pago de ${g.n1} en ${g.f[i]}, ${g.c[j]}"> , <input class="celda j2" id="${id}b${i}${j}" value="${g.b[i][j]}" aria-label="Pago de ${g.n2} en ${g.f[i]}, ${g.c[j]}"></td>`;
+      h += "</tr>";
+    }
+    tabla.innerHTML = h + "</table>";
+    tabla.querySelectorAll("input").forEach(el => el.addEventListener("input", pintar));
+    raiz.querySelector('[data-n="1"]').textContent = g.n1;
+    raiz.querySelector('[data-n="2"]').textContent = g.n2;
+    raiz.querySelectorAll("[data-k]").forEach(b => b.classList.toggle("on", b.dataset.k === k));
+    if (!IMPRESION) ver.mr1 = ver.mr2 = ver.nash = false;
+    pintar();
+  }
+  function leer() {
+    const n = el => parseFloat(String(el.value).replace(",", ".")) || 0;
+    g.a.forEach((r, i) => r.forEach((_, j) => { g.a[i][j] = n($(id + "a" + i + j)); g.b[i][j] = n($(id + "b" + i + j)); }));
+  }
+  function pintar() {
+    leer(); const r = analizar(g), R = g.a.length, C = g.a[0].length;
+    for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) {
+      $(id + "a" + i + j).classList.toggle("mr", ver.mr1 && r.mr1[i][j]);
+      $(id + "b" + i + j).classList.toggle("mr", ver.mr2 && r.mr2[i][j]);
+      $(id + "t" + i + j).classList.toggle("nash", ver.nash && r.nash.some(([x, y]) => x === i && y === j));
+    }
+    raiz.querySelectorAll("[data-v]").forEach(b => b.classList.toggle("on", ver[b.dataset.v]));
+    let h = "";
+    if (!ver.mr1 && !ver.mr2 && !ver.nash) h = `<h3>¿Qué haría usted?</h3><p>Prediga el equilibrio antes de presionar los botones.</p><p class="peq">Haga clic en cualquier número para cambiarlo.</p>`;
+    if (ver.mr1) {
+      h += `<h3 class="j1">${g.n1} elige la mejor fila</h3>`;
+      for (let j = 0; j < C; j++) h += `<p>Si ${g.n2} juega ${g.c[j]} → ${g.f.filter((_, i) => r.mr1[i][j]).map(x => "<b>" + x + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.mr2) {
+      h += `<h3 class="j2">${g.n2} elige la mejor columna</h3>`;
+      for (let i = 0; i < R; i++) h += `<p>Si ${g.n1} juega ${g.f[i]} → ${g.c.filter((_, j) => r.mr2[i][j]).map(x => "<b>" + x + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.nash) {
+      h += `<h3>Equilibrio de Nash</h3>`;
+      h += r.nash.length
+        ? `<p>${r.nash.map(([i, j]) => `<b>(${g.f[i]}, ${g.c[j]})</b> con pagos (${g.a[i][j]}, ${g.b[i][j]})`).join("; ")}.</p>`
+        : `<p>No hay equilibrio en estrategias puras.</p>`;
+      r.dom.forEach(t => h += `<p class="peq">${t}</p>`);
+      if (r.mixta) h += `<p class="peq">En estrategias mixtas: ${g.n1} juega ${g.f[0]} con ${fraccion(r.mixta.p)} y ${g.n2} juega ${g.c[0]} con ${fraccion(r.mixta.q)}.</p>`;
+    }
+    h += `<p class="fuente" style="margin-top:8px">Subrayado: mejor respuesta · Amarillo: equilibrio de Nash</p>`;
+    panel.innerHTML = h;
+  }
+  raiz.querySelectorAll("[data-k]").forEach(b => b.onclick = () => cargar(b.dataset.k));
+  raiz.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { ver[b.dataset.v] = !ver[b.dataset.v]; pintar(); });
+  cargar(raiz.dataset.inicial || claves[0]);
+}
+document.querySelectorAll(".matriz-app").forEach(crearMatriz);
+
+/* ---------- Árbol: inducción hacia atrás ---------- */
+(function () {
+  let paso = 0;
+  const marca = (ids, cls) => ids.forEach(i => $(i).classList.add(cls));
+  const textos = [
+    `<p><b>Paso 1.</b> Última decisión, de la <span class="j1">Empresa A</span>: publicidad da <b class="num j1">12</b> y sin publicidad <b class="num j1">8</b>. Elige <b>publicidad</b>.</p>`,
+    `<p><b>Paso 2.</b> La <span class="j2">Empresa B</span> anticipa eso: invertir le deja <b class="num j2">10</b>; no invertir, <b class="num j2">5</b>. Elige <b>invertir</b>.</p>`,
+    `<p><b>Paso 3.</b> La <span class="j1">Empresa A</span> compara lanzar (<b class="num j1">12</b>) con no lanzar (<b class="num j1">6</b>). <b>Lanza</b>.</p><p style="font-size:24px;margin-top:10px">Equilibrio: A juega <b>(Lanzar, Publicidad)</b>, B juega <b>Invertir</b>. Pagos <b class="num">(12, 10)</b>.</p>`
+  ];
+  const botones = ["Paso 2: la decisión de B", "Paso 3: la primera decisión", "Reiniciar"];
+  function aplicar(n) {
+    if (n >= 1) { marca(["kP"], "elegida"); marca(["kNP"], "descartada"); marca(["lNP", "vNP"], "descartada-t"); }
+    if (n >= 2) { marca(["kI"], "elegida"); marca(["kNI"], "descartada"); marca(["lNI", "vNI"], "descartada-t"); }
+    if (n >= 3) { marca(["kL"], "elegida"); marca(["kNL"], "descartada"); marca(["lNL", "vNL"], "descartada-t"); }
+    $("lecturaArbol2").innerHTML = textos.slice(0, n).join("");
+  }
+  function reiniciar() {
+    ["kNL", "kL", "kNI", "kI", "kP", "kNP"].forEach(i => $(i).classList.remove("elegida", "descartada"));
+    ["lNL", "vNL", "lNI", "vNI", "lNP", "vNP"].forEach(i => $(i).classList.remove("descartada-t"));
+    $("lecturaArbol2").innerHTML = ""; paso = 0; $("btnArbol2").textContent = "Paso 1: la última decisión";
+  }
+  $("btnArbol2").onclick = () => {
+    if (paso === 3) { reiniciar(); return; }
+    paso++; aplicar(paso); $("btnArbol2").textContent = botones[paso - 1];
+  };
+  if (IMPRESION) aplicar(3);
+})();
+</script>
