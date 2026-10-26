@@ -1,0 +1,948 @@
+<title>Teoría de Juegos · Clase 3</title>
+<!--
+  ============================================================
+  CLASE 3 · COURNOT-NASH
+  - Flechas: avanzar / retroceder.   F: pantalla completa.
+  - S: vista del profesor con notas.  Esc: ver todas las diapositivas.
+  - Inicio (fn + ←): volver a la portada.
+  - PDF: agregue ?print-pdf al final de la dirección y guarde como PDF.
+    En el PDF los interactivos salen ya resueltos.
+
+  QUÉ EDITAR ANTES DE CLASE: solo el bloque CONFIG de abajo.
+  ============================================================
+-->
+<script>
+  const CONFIG = {
+    // Cuántos estudiantes hay en la lista (para sortear quién juega de firma).
+    totalEstudiantes: 23
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+/*!
+* reveal.js 5.1.0
+* https://revealjs.com
+* MIT licensed
+*
+* Copyright (C) 2011-2024 Hakim El Hattab, https://hakim.se
+*/
+.reveal .r-stretch,.reveal .stretch{max-width:none;max-height:none}.reveal pre.r-stretch code,.reveal pre.stretch code{height:100%;max-height:100%;box-sizing:border-box}.reveal .r-fit-text{display:inline-block;white-space:nowrap}.reveal .r-stack{display:grid;grid-template-rows:100%}.reveal .r-stack>*{grid-area:1/1;margin:auto}.reveal .r-hstack,.reveal .r-vstack{display:flex}.reveal .r-hstack img,.reveal .r-hstack video,.reveal .r-vstack img,.reveal .r-vstack video{min-width:0;min-height:0;object-fit:contain}.reveal .r-vstack{flex-direction:column;align-items:center;justify-content:center}.reveal .r-hstack{flex-direction:row;align-items:center;justify-content:center}.reveal .items-stretch{align-items:stretch}.reveal .items-start{align-items:flex-start}.reveal .items-center{align-items:center}.reveal .items-end{align-items:flex-end}.reveal .justify-between{justify-content:space-between}.reveal .justify-around{justify-content:space-around}.reveal .justify-start{justify-content:flex-start}.reveal .justify-center{justify-content:center}.reveal .justify-end{justify-content:flex-end}html.reveal-full-page{width:100%;height:100%;height:100vh;height:calc(var(--vh,1vh) * 100);height:100svh;overflow:hidden}.reveal-viewport{height:100%;overflow:hidden;position:relative;line-height:1;margin:0;background-color:#fff;color:#000;--r-controls-spacing:12px}.reveal-viewport:fullscreen{top:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important}.reveal .fragment{transition:all .2s ease}.reveal .fragment:not(.custom){opacity:0;visibility:hidden;will-change:opacity}.reveal .fragment.visible{opacity:1;visibility:inherit}.reveal .fragment.disabled{transition:none}.reveal .fragment.grow{opacity:1;visibility:inherit}.reveal .fragment.grow.visible{transform:scale(1.3)}.reveal .fragment.shrink{opacity:1;visibility:inherit}.reveal .fragment.shrink.visible{transform:scale(.7)}.reveal .fragment.zoom-in{transform:scale(.1)}.reveal .fragment.zoom-in.visible{transform:none}.reveal .fragment.fade-out{opacity:1;visibility:inherit}.reveal .fragment.fade-out.visible{opacity:0;visibility:hidden}.reveal .fragment.semi-fade-out{opacity:1;visibility:inherit}.reveal .fragment.semi-fade-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.strike{opacity:1;visibility:inherit}.reveal .fragment.strike.visible{text-decoration:line-through}.reveal .fragment.fade-up{transform:translate(0,40px)}.reveal .fragment.fade-up.visible{transform:translate(0,0)}.reveal .fragment.fade-down{transform:translate(0,-40px)}.reveal .fragment.fade-down.visible{transform:translate(0,0)}.reveal .fragment.fade-right{transform:translate(-40px,0)}.reveal .fragment.fade-right.visible{transform:translate(0,0)}.reveal .fragment.fade-left{transform:translate(40px,0)}.reveal .fragment.fade-left.visible{transform:translate(0,0)}.reveal .fragment.current-visible,.reveal .fragment.fade-in-then-out{opacity:0;visibility:hidden}.reveal .fragment.current-visible.current-fragment,.reveal .fragment.fade-in-then-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.fade-in-then-semi-out{opacity:0;visibility:hidden}.reveal .fragment.fade-in-then-semi-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.fade-in-then-semi-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.highlight-blue,.reveal .fragment.highlight-current-blue,.reveal .fragment.highlight-current-green,.reveal .fragment.highlight-current-red,.reveal .fragment.highlight-green,.reveal .fragment.highlight-red{opacity:1;visibility:inherit}.reveal .fragment.highlight-red.visible{color:#ff2c2d}.reveal .fragment.highlight-green.visible{color:#17ff2e}.reveal .fragment.highlight-blue.visible{color:#1b91ff}.reveal .fragment.highlight-current-red.current-fragment{color:#ff2c2d}.reveal .fragment.highlight-current-green.current-fragment{color:#17ff2e}.reveal .fragment.highlight-current-blue.current-fragment{color:#1b91ff}.reveal:after{content:"";font-style:italic}.reveal iframe{z-index:1}.reveal a{position:relative}@keyframes bounce-right{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(10px)}30%{transform:translateX(-5px)}}@keyframes bounce-left{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(-10px)}30%{transform:translateX(5px)}}@keyframes bounce-down{0%,10%,25%,40%,50%{transform:translateY(0)}20%{transform:translateY(10px)}30%{transform:translateY(-5px)}}.reveal .controls{display:none;position:absolute;top:auto;bottom:var(--r-controls-spacing);right:var(--r-controls-spacing);left:auto;z-index:11;color:#000;pointer-events:none;font-size:10px}.reveal .controls button{position:absolute;padding:0;background-color:transparent;border:0;outline:0;cursor:pointer;color:currentColor;transform:scale(.9999);transition:color .2s ease,opacity .2s ease,transform .2s ease;z-index:2;pointer-events:auto;font-size:inherit;visibility:hidden;opacity:0;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}.reveal .controls .controls-arrow:after,.reveal .controls .controls-arrow:before{content:"";position:absolute;top:0;left:0;width:2.6em;height:.5em;border-radius:.25em;background-color:currentColor;transition:all .15s ease,background-color .8s ease;transform-origin:.2em 50%;will-change:transform}.reveal .controls .controls-arrow{position:relative;width:3.6em;height:3.6em}.reveal .controls .controls-arrow:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal .controls .controls-arrow:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}.reveal .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(40deg)}.reveal .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-40deg)}.reveal .controls .controls-arrow:active:before{transform:translateX(.5em) translateY(1.55em) rotate(36deg)}.reveal .controls .controls-arrow:active:after{transform:translateX(.5em) translateY(1.55em) rotate(-36deg)}.reveal .controls .navigate-left{right:6.4em;bottom:3.2em;transform:translateX(-10px)}.reveal .controls .navigate-left.highlight{animation:bounce-left 2s 50 both ease-out}.reveal .controls .navigate-right{right:0;bottom:3.2em;transform:translateX(10px)}.reveal .controls .navigate-right .controls-arrow{transform:rotate(180deg)}.reveal .controls .navigate-right.highlight{animation:bounce-right 2s 50 both ease-out}.reveal .controls .navigate-up{right:3.2em;bottom:6.4em;transform:translateY(-10px)}.reveal .controls .navigate-up .controls-arrow{transform:rotate(90deg)}.reveal .controls .navigate-down{right:3.2em;bottom:-1.4em;padding-bottom:1.4em;transform:translateY(10px)}.reveal .controls .navigate-down .controls-arrow{transform:rotate(-90deg)}.reveal .controls .navigate-down.highlight{animation:bounce-down 2s 50 both ease-out}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled{opacity:.3}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled:hover{opacity:1}.reveal .controls[data-controls-back-arrows=hidden] .navigate-up.enabled{opacity:0;visibility:hidden}.reveal .controls .enabled{visibility:visible;opacity:.9;cursor:pointer;transform:none}.reveal .controls .enabled.fragmented{opacity:.5}.reveal .controls .enabled.fragmented:hover,.reveal .controls .enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled{opacity:.3}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=hidden] .navigate-left.enabled{opacity:0;visibility:hidden}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled{opacity:.3}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled:hover{opacity:1}.reveal.rtl .controls[data-controls-back-arrows=hidden] .navigate-right.enabled{opacity:0;visibility:hidden}.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-down,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-up{display:none}.reveal:not(.has-vertical-slides) .controls .navigate-left,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-left{bottom:1.4em;right:5.5em}.reveal:not(.has-vertical-slides) .controls .navigate-right,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-right{bottom:1.4em;right:.5em}.reveal:not(.has-horizontal-slides) .controls .navigate-up{right:1.4em;bottom:5em}.reveal:not(.has-horizontal-slides) .controls .navigate-down{right:1.4em;bottom:.5em}.reveal.has-dark-background .controls{color:#fff}.reveal.has-light-background .controls{color:#000}.reveal.no-hover .controls .controls-arrow:active:before,.reveal.no-hover .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal.no-hover .controls .controls-arrow:active:after,.reveal.no-hover .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}@media screen and (min-width:500px){.reveal-viewport{--r-controls-spacing:0.8em}.reveal .controls[data-controls-layout=edges]{top:0;right:0;bottom:0;left:0}.reveal .controls[data-controls-layout=edges] .navigate-down,.reveal .controls[data-controls-layout=edges] .navigate-left,.reveal .controls[data-controls-layout=edges] .navigate-right,.reveal .controls[data-controls-layout=edges] .navigate-up{bottom:auto;right:auto}.reveal .controls[data-controls-layout=edges] .navigate-left{top:50%;left:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-right{top:50%;right:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-up{top:var(--r-controls-spacing);left:50%;margin-left:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-down{bottom:calc(var(--r-controls-spacing) - 1.4em + .3em);left:50%;margin-left:-1.8em}}.reveal .progress{position:absolute;display:none;height:3px;width:100%;bottom:0;left:0;z-index:10;background-color:rgba(0,0,0,.2);color:#fff}.reveal .progress:after{content:"";display:block;position:absolute;height:10px;width:100%;top:-10px}.reveal .progress span{display:block;height:100%;width:100%;background-color:currentColor;transition:transform .8s cubic-bezier(.26,.86,.44,.985);transform-origin:0 0;transform:scaleX(0)}.reveal .slide-number{position:absolute;display:block;right:8px;bottom:8px;z-index:31;font-family:Helvetica,sans-serif;font-size:12px;line-height:1;color:#fff;background-color:rgba(0,0,0,.4);padding:5px}.reveal .slide-number a{color:currentColor}.reveal .slide-number-delimiter{margin:0 3px}.reveal{position:relative;width:100%;height:100%;overflow:hidden;touch-action:pinch-zoom}.reveal.embedded{touch-action:pan-y}.reveal.embedded.is-vertical-slide{touch-action:none}.reveal .slides{position:absolute;width:100%;height:100%;top:0;right:0;bottom:0;left:0;margin:auto;pointer-events:none;overflow:visible;z-index:1;text-align:center;perspective:600px;perspective-origin:50% 40%}.reveal .slides>section{perspective:600px}.reveal .slides>section,.reveal .slides>section>section{display:none;position:absolute;width:100%;pointer-events:auto;z-index:10;transform-style:flat;transition:transform-origin .8s cubic-bezier(.26,.86,.44,.985),transform .8s cubic-bezier(.26,.86,.44,.985),visibility .8s cubic-bezier(.26,.86,.44,.985),opacity .8s cubic-bezier(.26,.86,.44,.985)}.reveal[data-transition-speed=fast] .slides section{transition-duration:.4s}.reveal[data-transition-speed=slow] .slides section{transition-duration:1.2s}.reveal .slides section[data-transition-speed=fast]{transition-duration:.4s}.reveal .slides section[data-transition-speed=slow]{transition-duration:1.2s}.reveal .slides>section.stack{padding-top:0;padding-bottom:0;pointer-events:none;height:100%}.reveal .slides>section.present,.reveal .slides>section>section.present{display:block;z-index:11;opacity:1}.reveal .slides>section:empty,.reveal .slides>section>section:empty,.reveal .slides>section>section[data-background-interactive],.reveal .slides>section[data-background-interactive]{pointer-events:none}.reveal.center,.reveal.center .slides,.reveal.center .slides section{min-height:0!important}.reveal .slides>section:not(.present),.reveal .slides>section>section:not(.present){pointer-events:none}.reveal.overview .slides>section,.reveal.overview .slides>section>section{pointer-events:auto}.reveal .slides>section.future,.reveal .slides>section.future>section,.reveal .slides>section.past,.reveal .slides>section.past>section,.reveal .slides>section>section.future,.reveal .slides>section>section.past{opacity:0}.reveal .slides>section[data-transition=slide].past,.reveal .slides>section[data-transition~=slide-out].past,.reveal.slide .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=slide].future,.reveal .slides>section[data-transition~=slide-in].future,.reveal.slide .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=slide].past,.reveal .slides>section>section[data-transition~=slide-out].past,.reveal.slide .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=slide].future,.reveal .slides>section>section[data-transition~=slide-in].future,.reveal.slide .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides>section[data-transition=linear].past,.reveal .slides>section[data-transition~=linear-out].past,.reveal.linear .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=linear].future,.reveal .slides>section[data-transition~=linear-in].future,.reveal.linear .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=linear].past,.reveal .slides>section>section[data-transition~=linear-out].past,.reveal.linear .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=linear].future,.reveal .slides>section>section[data-transition~=linear-in].future,.reveal.linear .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides section[data-transition=default].stack,.reveal.default .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=default].past,.reveal .slides>section[data-transition~=default-out].past,.reveal.default .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=default].future,.reveal .slides>section[data-transition~=default-in].future,.reveal.default .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=default].past,.reveal .slides>section>section[data-transition~=default-out].past,.reveal.default .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=default].future,.reveal .slides>section>section[data-transition~=default-in].future,.reveal.default .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=convex].stack,.reveal.convex .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=convex].past,.reveal .slides>section[data-transition~=convex-out].past,.reveal.convex .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=convex].future,.reveal .slides>section[data-transition~=convex-in].future,.reveal.convex .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=convex].past,.reveal .slides>section>section[data-transition~=convex-out].past,.reveal.convex .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=convex].future,.reveal .slides>section>section[data-transition~=convex-in].future,.reveal.convex .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=concave].stack,.reveal.concave .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=concave].past,.reveal .slides>section[data-transition~=concave-out].past,.reveal.concave .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=concave].future,.reveal .slides>section[data-transition~=concave-in].future,.reveal.concave .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=concave].past,.reveal .slides>section>section[data-transition~=concave-out].past,.reveal.concave .slides>section>section:not([data-transition]).past{transform:translate3d(0,-80%,0) rotateX(-70deg) translate3d(0,-80%,0)}.reveal .slides>section>section[data-transition=concave].future,.reveal .slides>section>section[data-transition~=concave-in].future,.reveal.concave .slides>section>section:not([data-transition]).future{transform:translate3d(0,80%,0) rotateX(70deg) translate3d(0,80%,0)}.reveal .slides section[data-transition=zoom],.reveal.zoom .slides section:not([data-transition]){transition-timing-function:ease}.reveal .slides>section[data-transition=zoom].past,.reveal .slides>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section:not([data-transition]).past{visibility:hidden;transform:scale(16)}.reveal .slides>section[data-transition=zoom].future,.reveal .slides>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section:not([data-transition]).future{visibility:hidden;transform:scale(.2)}.reveal .slides>section>section[data-transition=zoom].past,.reveal .slides>section>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section>section:not([data-transition]).past{transform:scale(16)}.reveal .slides>section>section[data-transition=zoom].future,.reveal .slides>section>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section>section:not([data-transition]).future{transform:scale(.2)}.reveal.cube .slides{perspective:1300px}.reveal.cube .slides section{padding:30px;min-height:700px;backface-visibility:hidden;box-sizing:border-box;transform-style:preserve-3d}.reveal.center.cube .slides section{min-height:0}.reveal.cube .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);border-radius:4px;transform:translateZ(-20px)}.reveal.cube .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);transform:translateZ(-90px) rotateX(65deg)}.reveal.cube .slides>section.stack{padding:0;background:0 0}.reveal.cube .slides>section.past{transform-origin:100% 0;transform:translate3d(-100%,0,0) rotateY(-90deg)}.reveal.cube .slides>section.future{transform-origin:0 0;transform:translate3d(100%,0,0) rotateY(90deg)}.reveal.cube .slides>section>section.past{transform-origin:0 100%;transform:translate3d(0,-100%,0) rotateX(90deg)}.reveal.cube .slides>section>section.future{transform-origin:0 0;transform:translate3d(0,100%,0) rotateX(-90deg)}.reveal.page .slides{perspective-origin:0 50%;perspective:3000px}.reveal.page .slides section{padding:30px;min-height:700px;box-sizing:border-box;transform-style:preserve-3d}.reveal.page .slides section.past{z-index:12}.reveal.page .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);transform:translateZ(-20px)}.reveal.page .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);-webkit-transform:translateZ(-90px) rotateX(65deg)}.reveal.page .slides>section.stack{padding:0;background:0 0}.reveal.page .slides>section.past{transform-origin:0 0;transform:translate3d(-40%,0,0) rotateY(-80deg)}.reveal.page .slides>section.future{transform-origin:100% 0;transform:translate3d(0,0,0)}.reveal.page .slides>section>section.past{transform-origin:0 0;transform:translate3d(0,-40%,0) rotateX(80deg)}.reveal.page .slides>section>section.future{transform-origin:0 100%;transform:translate3d(0,0,0)}.reveal .slides section[data-transition=fade],.reveal.fade .slides section:not([data-transition]),.reveal.fade .slides>section>section:not([data-transition]){transform:none;transition:opacity .5s}.reveal.fade.overview .slides section,.reveal.fade.overview .slides>section>section{transition:none}.reveal .slides section[data-transition=none],.reveal.none .slides section:not([data-transition]){transform:none;transition:none}.reveal .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;visibility:hidden;opacity:0;z-index:100;transition:all 1s ease}.reveal .pause-overlay .resume-button{position:absolute;bottom:20px;right:20px;color:#ccc;border-radius:2px;padding:6px 14px;border:2px solid #ccc;font-size:16px;background:0 0;cursor:pointer}.reveal .pause-overlay .resume-button:hover{color:#fff;border-color:#fff}.reveal.paused .pause-overlay{visibility:visible;opacity:1}.reveal .no-transition,.reveal .no-transition *,.reveal .slides.disable-slide-transitions section{transition:none!important}.reveal .slides.disable-slide-transitions section{transform:none!important}.reveal .backgrounds{position:absolute;width:100%;height:100%;top:0;left:0;perspective:600px}.reveal .slide-background{display:none;position:absolute;width:100%;height:100%;opacity:0;visibility:hidden;overflow:hidden;background-color:rgba(0,0,0,0);transition:all .8s cubic-bezier(.26,.86,.44,.985)}.reveal .slide-background-content{position:absolute;width:100%;height:100%;background-position:50% 50%;background-repeat:no-repeat;background-size:cover}.reveal .slide-background.stack{display:block}.reveal .slide-background.present{opacity:1;visibility:visible;z-index:2}.print-pdf .reveal .slide-background{opacity:1!important;visibility:visible!important}.reveal .slide-background video{position:absolute;width:100%;height:100%;max-width:none;max-height:none;top:0;left:0;object-fit:cover}.reveal .slide-background[data-background-size=contain] video{object-fit:contain}.reveal>.backgrounds .slide-background[data-background-transition=none],.reveal[data-background-transition=none]>.backgrounds .slide-background:not([data-background-transition]){transition:none}.reveal>.backgrounds .slide-background[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background:not([data-background-transition]){opacity:1}.reveal>.backgrounds .slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.past:not([data-background-transition]){transform:translate(-100%,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.future:not([data-background-transition]){transform:translate(100%,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){transform:translate(0,-100%)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){transform:translate(0,100%)}.reveal>.backgrounds .slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(-90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(-90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background:not([data-background-transition]){transition-timing-function:ease}.reveal>.backgrounds .slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal[data-transition-speed=fast]>.backgrounds .slide-background{transition-duration:.4s}.reveal[data-transition-speed=slow]>.backgrounds .slide-background{transition-duration:1.2s}.reveal [data-auto-animate-target^=unmatched]{will-change:opacity}.reveal section[data-auto-animate]:not(.stack):not([data-auto-animate=running]) [data-auto-animate-target^=unmatched]{opacity:0}.reveal.overview{perspective-origin:50% 50%;perspective:700px}.reveal.overview .slides{-moz-transform-style:preserve-3d}.reveal.overview .slides section{height:100%;top:0!important;opacity:1!important;overflow:hidden;visibility:visible!important;cursor:pointer;box-sizing:border-box}.reveal.overview .slides section.present,.reveal.overview .slides section:hover{outline:10px solid rgba(150,150,150,.4);outline-offset:10px}.reveal.overview .slides section .fragment{opacity:1;transition:none}.reveal.overview .slides section:after,.reveal.overview .slides section:before{display:none!important}.reveal.overview .slides>section.stack{padding:0;top:0!important;background:0 0;outline:0;overflow:visible}.reveal.overview .backgrounds{perspective:inherit;-moz-transform-style:preserve-3d}.reveal.overview .backgrounds .slide-background{opacity:1;visibility:visible;outline:10px solid rgba(150,150,150,.1);outline-offset:10px}.reveal.overview .backgrounds .slide-background.stack{overflow:visible}.reveal.overview .slides section,.reveal.overview-deactivating .slides section{transition:none}.reveal.overview .backgrounds .slide-background,.reveal.overview-deactivating .backgrounds .slide-background{transition:none}.reveal.rtl .slides,.reveal.rtl .slides h1,.reveal.rtl .slides h2,.reveal.rtl .slides h3,.reveal.rtl .slides h4,.reveal.rtl .slides h5,.reveal.rtl .slides h6{direction:rtl;font-family:sans-serif}.reveal.rtl code,.reveal.rtl pre{direction:ltr}.reveal.rtl ol,.reveal.rtl ul{text-align:right}.reveal.rtl .progress span{transform-origin:100% 0}.reveal.has-parallax-background .backgrounds{transition:all .8s ease}.reveal.has-parallax-background[data-transition-speed=fast] .backgrounds{transition-duration:.4s}.reveal.has-parallax-background[data-transition-speed=slow] .backgrounds{transition-duration:1.2s}.reveal>.overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;background:rgba(0,0,0,.95);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .3s ease}.reveal>.overlay .spinner{position:absolute;display:block;top:50%;left:50%;width:32px;height:32px;margin:-16px 0 0 -16px;z-index:10;background-image:url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);visibility:visible;opacity:.6;transition:all .3s ease}.reveal>.overlay header{position:absolute;left:0;top:0;width:100%;padding:5px;z-index:2;box-sizing:border-box}.reveal>.overlay header a{display:inline-block;width:40px;height:40px;line-height:36px;padding:0 10px;float:right;opacity:.6;box-sizing:border-box}.reveal>.overlay header a:hover{opacity:1}.reveal>.overlay header a .icon{display:inline-block;width:20px;height:20px;background-position:50% 50%;background-size:100%;background-repeat:no-repeat}.reveal>.overlay header a.close .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC)}.reveal>.overlay header a.external .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==)}.reveal>.overlay .viewport{position:absolute;display:flex;top:50px;right:0;bottom:0;left:0}.reveal>.overlay.overlay-preview .viewport iframe{width:100%;height:100%;max-width:100%;max-height:100%;border:0;opacity:0;visibility:hidden;transition:all .3s ease}.reveal>.overlay.overlay-preview.loaded .viewport iframe{opacity:1;visibility:visible}.reveal>.overlay.overlay-preview.loaded .viewport-inner{position:absolute;z-index:-1;left:0;top:45%;width:100%;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-preview .x-frame-error{opacity:0;transition:opacity .3s ease .3s}.reveal>.overlay.overlay-preview.loaded .x-frame-error{opacity:1}.reveal>.overlay.overlay-preview.loaded .spinner{opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.overlay.overlay-help .viewport{overflow:auto;color:#fff}.reveal>.overlay.overlay-help .viewport .viewport-inner{width:600px;margin:auto;padding:20px 20px 80px 20px;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-help .viewport .viewport-inner .title{font-size:20px}.reveal>.overlay.overlay-help .viewport .viewport-inner table{border:1px solid #fff;border-collapse:collapse;font-size:16px}.reveal>.overlay.overlay-help .viewport .viewport-inner table td,.reveal>.overlay.overlay-help .viewport .viewport-inner table th{width:200px;padding:14px;border:1px solid #fff;vertical-align:middle}.reveal>.overlay.overlay-help .viewport .viewport-inner table th{padding-top:20px;padding-bottom:20px}.reveal .playback{position:absolute;left:15px;bottom:20px;z-index:30;cursor:pointer;transition:all .4s ease;-webkit-tap-highlight-color:transparent}.reveal.overview .playback{opacity:0;visibility:hidden}.reveal .hljs{min-height:100%}.reveal .hljs table{margin:initial}.reveal .hljs-ln-code,.reveal .hljs-ln-numbers{padding:0;border:0}.reveal .hljs-ln-numbers{opacity:.6;padding-right:.75em;text-align:right;vertical-align:top}.reveal .hljs.has-highlights tr:not(.highlight-line){opacity:.4}.reveal .hljs.has-highlights.fragment{transition:all .2s ease}.reveal .hljs:not(:first-child).fragment{position:absolute;top:0;left:0;width:100%;box-sizing:border-box}.reveal pre[data-auto-animate-target]{overflow:hidden}.reveal pre[data-auto-animate-target] code{height:100%}.reveal .roll{display:inline-block;line-height:1.2;overflow:hidden;vertical-align:top;perspective:400px;perspective-origin:50% 50%}.reveal .roll:hover{background:0 0;text-shadow:none}.reveal .roll span{display:block;position:relative;padding:0 2px;pointer-events:none;transition:all .4s ease;transform-origin:50% 0;transform-style:preserve-3d;backface-visibility:hidden}.reveal .roll:hover span{background:rgba(0,0,0,.5);transform:translate3d(0,0,-45px) rotateX(90deg)}.reveal .roll span:after{content:attr(data-title);display:block;position:absolute;left:0;top:0;padding:0 2px;backface-visibility:hidden;transform-origin:50% 0;transform:translate3d(0,110%,0) rotateX(-90deg)}.reveal aside.notes{display:none}.reveal .speaker-notes{display:none;position:absolute;width:33.3333333333%;height:100%;top:0;left:100%;padding:14px 18px 14px 18px;z-index:1;font-size:18px;line-height:1.4;border:1px solid rgba(0,0,0,.05);color:#222;background-color:#f5f5f5;overflow:auto;box-sizing:border-box;text-align:left;font-family:Helvetica,sans-serif;-webkit-overflow-scrolling:touch}.reveal .speaker-notes .notes-placeholder{color:#ccc;font-style:italic}.reveal .speaker-notes:focus{outline:0}.reveal .speaker-notes:before{content:"Speaker notes";display:block;margin-bottom:10px;opacity:.5}.reveal.show-notes{max-width:75%;overflow:visible}.reveal.show-notes .speaker-notes{display:block}@media screen and (min-width:1600px){.reveal .speaker-notes{font-size:20px}}@media screen and (max-width:1024px){.reveal.show-notes{border-left:0;max-width:none;max-height:70%;max-height:70vh;overflow:visible}.reveal.show-notes .speaker-notes{top:100%;left:0;width:100%;height:30vh;border:0}}@media screen and (max-width:600px){.reveal.show-notes{max-height:60%;max-height:60vh}.reveal.show-notes .speaker-notes{top:100%;height:40vh}.reveal .speaker-notes{font-size:14px}}.reveal .jump-to-slide{position:absolute;top:15px;left:15px;z-index:30;font-size:32px;-webkit-tap-highlight-color:transparent}.reveal .jump-to-slide-input{background:0 0;padding:8px;font-size:inherit;color:currentColor;border:0}.reveal .jump-to-slide-input::placeholder{color:currentColor;opacity:.5}.reveal.has-dark-background .jump-to-slide-input{color:#fff}.reveal.has-light-background .jump-to-slide-input{color:#222}.reveal .jump-to-slide-input:focus{outline:0}.zoomed .reveal *,.zoomed .reveal :after,.zoomed .reveal :before{backface-visibility:visible!important}.zoomed .reveal .controls,.zoomed .reveal .progress{opacity:0}.zoomed .reveal .roll span{background:0 0}.zoomed .reveal .roll span:after{visibility:hidden}.reveal-viewport.loading-scroll-mode{visibility:hidden}.reveal-viewport.reveal-scroll{margin:0 auto;overflow:auto;overflow-x:hidden;overflow-y:auto;z-index:1;--r-scrollbar-width:7px;--r-scrollbar-trigger-size:5px;--r-controls-spacing:8px}@media screen and (max-width:500px){.reveal-viewport.reveal-scroll{--r-scrollbar-width:3px;--r-scrollbar-trigger-size:3px}}.reveal-viewport.reveal-scroll .backgrounds,.reveal-viewport.reveal-scroll .controls,.reveal-viewport.reveal-scroll .playback,.reveal-viewport.reveal-scroll .progress,.reveal-viewport.reveal-scroll .slide-number,.reveal-viewport.reveal-scroll .speaker-notes{display:none!important}.reveal-viewport.reveal-scroll .overlay,.reveal-viewport.reveal-scroll .pause-overlay{position:fixed}.reveal-viewport.reveal-scroll .reveal{overflow:visible;touch-action:manipulation}.reveal-viewport.reveal-scroll .slides{position:static;pointer-events:initial;left:auto;top:auto;width:100%!important;margin:0;padding:0;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}.reveal-viewport.reveal-scroll .scroll-page{position:relative;width:100%;height:calc(var(--page-height) + var(--page-scroll-padding));z-index:1;overflow:visible}.reveal-viewport.reveal-scroll .scroll-page-sticky{position:sticky;height:var(--page-height);top:0}.reveal-viewport.reveal-scroll .scroll-page-content{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.reveal-viewport.reveal-scroll .scroll-page section{visibility:visible!important;display:block!important;position:absolute!important;width:var(--slide-width)!important;height:var(--slide-height)!important;top:50%!important;left:50%!important;opacity:1!important;transform:scale(var(--slide-scale)) translate(-50%,-50%)!important;transform-style:flat!important;transform-origin:0 0!important}.reveal-viewport.reveal-scroll .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important;visibility:visible;opacity:1;touch-action:manipulation}.reveal-viewport.reveal-scroll[data-scrollbar=auto]::-webkit-scrollbar,.reveal-viewport.reveal-scroll[data-scrollbar=true]::-webkit-scrollbar{display:none}.reveal-viewport.reveal-scroll[data-scrollbar=auto],.reveal-viewport.reveal-scroll[data-scrollbar=true]{scrollbar-width:none}.reveal-viewport.has-dark-background,.reveal.has-dark-background{--r-overlay-element-bg-color:240,240,240;--r-overlay-element-fg-color:0,0,0}.reveal-viewport.has-light-background,.reveal.has-light-background{--r-overlay-element-bg-color:0,0,0;--r-overlay-element-fg-color:240,240,240}.reveal-viewport.reveal-scroll .scrollbar{position:sticky;top:50%;z-index:20;opacity:0;transition:all .3s ease}.reveal-viewport.reveal-scroll .scrollbar.visible,.reveal-viewport.reveal-scroll .scrollbar:hover{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-inner{position:absolute;width:var(--r-scrollbar-width);height:calc(var(--viewport-height) - var(--r-controls-spacing) * 2);right:var(--r-controls-spacing);top:0;transform:translateY(-50%);border-radius:var(--r-scrollbar-width);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-playhead{position:absolute;width:var(--r-scrollbar-width);height:var(--r-scrollbar-width);top:0;left:0;border-radius:var(--r-scrollbar-width);background-color:rgba(var(--r-overlay-element-bg-color),1);z-index:11;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide{position:absolute;width:100%;background-color:rgba(var(--r-overlay-element-bg-color),.2);box-shadow:0 0 0 1px rgba(var(--r-overlay-element-fg-color),.1);border-radius:var(--r-scrollbar-width);transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:after{content:"";position:absolute;width:200%;height:100%;top:0;left:-50%;background:rgba(0,0,0,0);z-index:-1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:hover{background-color:rgba(var(--r-overlay-element-bg-color),.4)}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-trigger{position:absolute;width:100%;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active.has-triggers{background-color:rgba(var(--r-overlay-element-bg-color),.4);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger:after{content:"";position:absolute;width:var(--r-scrollbar-trigger-size);height:var(--r-scrollbar-trigger-size);border-radius:20px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:rgba(var(--r-overlay-element-bg-color),1);transition:transform .2s ease,opacity .2s ease;opacity:.4}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active:after,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active~.scrollbar-trigger:after{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger~.scrollbar-trigger.active:after{transform:translate(calc(var(--r-scrollbar-width) * -2),0);background-color:rgba(var(--r-overlay-element-bg-color),1)}html.reveal-print *{-webkit-print-color-adjust:exact}html.reveal-print{width:100%;height:100%;overflow:visible}html.reveal-print body{margin:0 auto!important;border:0;padding:0;float:none!important;overflow:visible}html.reveal-print .nestedarrow,html.reveal-print .reveal .controls,html.reveal-print .reveal .playback,html.reveal-print .reveal .progress,html.reveal-print .reveal.overview,html.reveal-print .state-background{display:none!important}html.reveal-print .reveal pre code{overflow:hidden!important}html.reveal-print .reveal{width:auto!important;height:auto!important;overflow:hidden!important}html.reveal-print .reveal .slides{position:static;width:100%!important;height:auto!important;zoom:1!important;pointer-events:initial;left:auto;top:auto;margin:0!important;padding:0!important;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}html.reveal-print .reveal .slides .pdf-page{position:relative;overflow:hidden;z-index:1;page-break-after:always}html.reveal-print .reveal .slides .pdf-page:last-of-type{page-break-after:avoid}html.reveal-print .reveal .slides section{visibility:visible!important;display:block!important;position:absolute!important;margin:0!important;padding:0!important;box-sizing:border-box!important;min-height:1px;opacity:1!important;transform-style:flat!important;transform:none!important}html.reveal-print .reveal section.stack{position:relative!important;margin:0!important;padding:0!important;page-break-after:avoid!important;height:auto!important;min-height:auto!important}html.reveal-print .reveal img{box-shadow:none}html.reveal-print .reveal .backgrounds{display:none}html.reveal-print .reveal .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important}html.reveal-print .reveal.show-notes{max-width:none;max-height:none}html.reveal-print .reveal .speaker-notes-pdf{display:block;width:100%;height:auto;max-height:none;top:auto;right:auto;bottom:auto;left:auto;z-index:100}html.reveal-print .reveal .speaker-notes-pdf[data-layout=separate-page]{position:relative;color:inherit;background-color:transparent;padding:20px;page-break-after:always;border:0}html.reveal-print .reveal .slide-number-pdf{display:block;position:absolute;font-size:14px;visibility:visible}html.reveal-print .aria-status{display:none}@media print{html:not(.print-pdf){overflow:visible;width:auto;height:auto}html:not(.print-pdf) body{margin:0;padding:0;overflow:visible}html:not(.print-pdf) .reveal{background:#fff;font-size:20pt}html:not(.print-pdf) .reveal .backgrounds,html:not(.print-pdf) .reveal .controls,html:not(.print-pdf) .reveal .progress,html:not(.print-pdf) .reveal .slide-number,html:not(.print-pdf) .reveal .state-background{display:none!important}html:not(.print-pdf) .reveal li,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal td{font-size:20pt!important;color:#000}html:not(.print-pdf) .reveal h1,html:not(.print-pdf) .reveal h2,html:not(.print-pdf) .reveal h3,html:not(.print-pdf) .reveal h4,html:not(.print-pdf) .reveal h5,html:not(.print-pdf) .reveal h6{color:#000!important;height:auto;line-height:normal;text-align:left;letter-spacing:normal}html:not(.print-pdf) .reveal h1{font-size:28pt!important}html:not(.print-pdf) .reveal h2{font-size:24pt!important}html:not(.print-pdf) .reveal h3{font-size:22pt!important}html:not(.print-pdf) .reveal h4{font-size:22pt!important;font-variant:small-caps}html:not(.print-pdf) .reveal h5{font-size:21pt!important}html:not(.print-pdf) .reveal h6{font-size:20pt!important;font-style:italic}html:not(.print-pdf) .reveal a:link,html:not(.print-pdf) .reveal a:visited{color:#000!important;font-weight:700;text-decoration:underline}html:not(.print-pdf) .reveal div,html:not(.print-pdf) .reveal ol,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal ul{visibility:visible;position:static;width:auto;height:auto;display:block;overflow:visible;margin:0;text-align:left!important}html:not(.print-pdf) .reveal pre,html:not(.print-pdf) .reveal table{margin-left:0;margin-right:0}html:not(.print-pdf) .reveal pre code{padding:20px}html:not(.print-pdf) .reveal blockquote{margin:20px 0}html:not(.print-pdf) .reveal .slides{position:static!important;width:auto!important;height:auto!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:0!important;zoom:1!important;transform:none!important;overflow:visible!important;display:block!important;text-align:left!important;perspective:none;perspective-origin:50% 50%}html:not(.print-pdf) .reveal .slides section{visibility:visible!important;position:static!important;width:auto!important;height:auto!important;display:block!important;overflow:visible!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:60px 20px!important;z-index:auto!important;opacity:1!important;page-break-after:always!important;transform-style:flat!important;transform:none!important;transition:none!important}html:not(.print-pdf) .reveal .slides section.stack{padding:0!important}html:not(.print-pdf) .reveal .slides section:last-of-type{page-break-after:avoid!important}html:not(.print-pdf) .reveal .slides section .fragment{opacity:1!important;visibility:visible!important;transform:none!important}html:not(.print-pdf) .reveal .r-fit-text{white-space:normal!important}html:not(.print-pdf) .reveal section img{display:block;margin:15px 0;background:#fff;border:1px solid #666;box-shadow:none}html:not(.print-pdf) .reveal section small{font-size:.8em}html:not(.print-pdf) .reveal .hljs{max-height:100%;white-space:pre-wrap;word-wrap:break-word;word-break:break-word;font-size:15pt}html:not(.print-pdf) .reveal .hljs .hljs-ln-numbers{white-space:nowrap}html:not(.print-pdf) .reveal .hljs td{font-size:inherit!important;color:inherit!important}}
+</style>
+<style>
+/* Layout: aula proyectada. Papel claro, tinta oscura, el rojo Uninorte/Sparta como único acento;
+   azul = Jugador 1, rojo = Jugador 2 en todas las matrices. Tema único y claro (proyector). */
+:root {
+  --papel: #faf8f6;
+  --tarjeta: #ffffff;
+  --tinta: #1f1a19;
+  --gris: #6d6360;
+  --linea: #e6dfdb;
+  --rojo: #c62828;
+  --rojo-suave: #fbe9e7;
+  --azul: #1d5fa8;
+  --azul-suave: #e7f0fa;
+  --nash: #ffe08a;
+  --apagado: #c9c1bd;
+  --kraft: #d9b98c;
+  --kraft-oscuro: #b8925f;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-texto: "Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; background: var(--papel); color: var(--tinta); }
+body { margin: 0; }
+
+.reveal { font-family: var(--f-texto); font-size: 28px; color: var(--tinta); background: var(--papel); }
+.reveal .slides { text-align: left; }
+.reveal .slides section { height: 100%; box-sizing: border-box; padding: 6px 8px; }
+.reveal h1, .reveal h2, .reveal h3 { font-family: var(--f-display); color: var(--tinta); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.reveal h1 { font-size: 76px; font-weight: 800; line-height: 1.02; }
+.reveal h2 { font-size: 50px; font-weight: 800; line-height: 1.08; margin-bottom: 22px; }
+.reveal h3 { font-size: 30px; font-weight: 600; margin-bottom: 8px; }
+.reveal p { margin: 0 0 14px; line-height: 1.4; }
+.reveal ul { margin: 0; padding-left: 1.1em; }
+.reveal li { margin-bottom: 10px; line-height: 1.35; }
+.reveal li::marker { color: var(--rojo); }
+.reveal strong { font-weight: 700; }
+.reveal a { color: var(--rojo); text-decoration: underline; text-underline-offset: 3px; }
+.reveal .controls { color: var(--rojo); }
+.reveal .progress { color: var(--rojo); height: 5px; }
+.reveal .slide-number { background: transparent; color: var(--gris); font-family: var(--f-num); font-size: 14px; }
+
+.ceja { font-family: var(--f-num); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rojo); margin-bottom: 12px; font-weight: 600; }
+.sub { color: var(--gris); font-size: 26px; }
+.peq { font-size: 21px; color: var(--gris); }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.j1 { color: var(--azul); }
+.j2 { color: var(--rojo); }
+.fila { display: flex; gap: 40px; align-items: flex-start; }
+.fila > * { min-width: 0; }
+.col { flex: 1; }
+.centro-v { align-items: center; }
+
+/* Portada */
+.portada { display: grid; grid-template-columns: 1.25fr 1fr; gap: 50px; align-items: center; height: 100%; }
+.portada .autor { margin-top: 34px; font-size: 22px; color: var(--gris); line-height: 1.5; }
+.portada .autor b { color: var(--tinta); }
+
+/* Matrices de pagos */
+.matriz { border-collapse: collapse; font-size: 26px; margin: 0 auto; }
+.matriz th { font-family: var(--f-texto); font-weight: 700; font-size: 20px; padding: 8px 14px; color: var(--gris); }
+.matriz .jug { font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+.matriz td { border: 2px solid var(--tinta); width: 150px; height: 82px; text-align: center; font-family: var(--f-num); font-weight: 600; background: var(--tarjeta); transition: background .3s; }
+.matriz td.nash { background: var(--nash); }
+.matriz td.apagada { color: var(--apagado); }
+.matriz .lado { writing-mode: vertical-rl; transform: rotate(180deg); }
+
+/* Tarjetas de situaciones */
+.rejilla { display: grid; gap: 18px; }
+.rejilla.tres { grid-template-columns: repeat(3, 1fr); }
+.rejilla.dos { grid-template-columns: repeat(2, 1fr); }
+.caso { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.caso h3 { font-size: 25px; margin: 0; }
+.caso p { font-size: 20px; margin: 0; color: var(--tinta); line-height: 1.35; }
+.etiqueta { align-self: flex-start; font-family: var(--f-num); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; background: var(--rojo-suave); color: var(--rojo); }
+.etiqueta.az { background: var(--azul-suave); color: var(--azul); }
+.fuente { font-size: 15px; color: var(--gris); }
+
+/* Ingredientes */
+.ingred { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.ingred > div { padding: 18px 20px 0 0; }
+.ingred b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.ingred span { font-size: 21px; color: var(--gris); line-height: 1.35; display: block; }
+.ingred i { font-style: normal; font-family: var(--f-num); color: var(--rojo); font-size: 17px; }
+
+.definicion { border-left: 5px solid var(--rojo); padding: 6px 0 6px 22px; font-size: 27px; line-height: 1.4; margin: 0 0 30px; max-width: 30em; }
+
+/* Botones e insumos */
+.reveal button { font-family: var(--f-texto); font-size: 19px; font-weight: 600; padding: 9px 16px; border: 2px solid var(--tinta); background: var(--tarjeta); color: var(--tinta); border-radius: 7px; cursor: pointer; }
+.reveal button:hover { background: var(--rojo-suave); }
+.reveal button:focus-visible, .reveal input:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+.reveal button.on { background: var(--tinta); color: var(--papel); }
+.reveal button.primario { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.reveal input[type=number], .reveal input.celda { font-family: var(--f-num); font-weight: 600; font-size: 24px; width: 64px; text-align: center; border: 1.5px solid transparent; border-radius: 5px; background: transparent; color: inherit; padding: 2px; }
+.reveal input.celda:hover { border-color: var(--apagado); }
+.reveal input.celda.mr { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; font-weight: 700; }
+
+/* Sorteo con papel y bolsa */
+.bolsa { width: 330px; max-width: 100%; height: auto; display: block; }
+.bolsa .cuerpo { fill: var(--kraft); stroke: var(--kraft-oscuro); stroke-width: 3; }
+.bolsa .pliegue { fill: var(--kraft-oscuro); }
+.bolsa .boca { fill: var(--tinta); opacity: .85; }
+.bolsa .papel rect { fill: #fff; stroke: var(--tinta); stroke-width: 2; }
+.bolsa .papel text { font-family: var(--f-display); font-weight: 800; font-size: 30px; text-anchor: middle; dominant-baseline: central; }
+.bolsa .papel { animation: caer 3.6s ease-in infinite; transform-box: fill-box; transform-origin: center; }
+.bolsa .papel.p2 { animation-delay: 1.2s; }
+.bolsa .papel.p3 { animation-delay: 2.4s; }
+@keyframes caer { 0%, 15% { transform: translateY(0) rotate(0); opacity: 1; } 70% { transform: translateY(150px) rotate(25deg); opacity: 1; } 80%, 100% { transform: translateY(170px) rotate(30deg); opacity: 0; } }
+html.print-pdf .bolsa .papel { animation: none; }
+.foto-sorteo { max-width: 360px; max-height: 300px; border-radius: 8px; border: 2px solid var(--tinta); }
+.pasos { list-style: none; padding: 0 !important; counter-reset: paso; margin-top: 20px !important; }
+.pasos li { counter-increment: paso; display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: baseline; font-size: 23px; margin-bottom: 8px; }
+.pasos li::before { content: counter(paso); font-family: var(--f-num); font-weight: 600; color: var(--papel); background: var(--rojo); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 17px; }
+.pasos li::marker { content: ""; }
+.contador { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.contador .tipo { border: 2px solid var(--tinta); border-radius: 8px; padding: 10px 12px; background: var(--tarjeta); display: flex; flex-direction: column; gap: 4px; }
+.contador .tipo b { font-family: var(--f-display); font-size: 26px; }
+.contador .tipo .cuenta { font-family: var(--f-num); font-size: 40px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.contador .tipo span { font-size: 16px; color: var(--gris); }
+.contador button { margin-top: 4px; }
+.reloj { font-family: var(--f-num); font-size: 58px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.reglas { list-style: none; padding: 0 !important; }
+.reglas li { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--linea); margin: 0; }
+.reglas li::marker { content: ""; }
+
+/* Panel explicativo de la matriz */
+.panel { font-size: 21px; line-height: 1.4; }
+.panel h3 { font-size: 23px; margin: 10px 0 4px; }
+.panel p { margin: 0 0 6px; }
+
+/* Barras */
+.barras { display: flex; flex-direction: column; gap: 10px; }
+.barra { display: grid; grid-template-columns: 210px 1fr 80px; gap: 12px; align-items: center; font-size: 21px; }
+.barra .pista { height: 30px; background: var(--linea); border-radius: 4px; overflow: hidden; }
+.barra .relleno { height: 100%; background: var(--tinta); border-radius: 4px; transition: width .5s; }
+.barra .relleno.r { background: var(--rojo); }
+.barra .relleno.a { background: var(--azul); }
+.barra .v { font-family: var(--f-num); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.dato { font-family: var(--f-num); font-size: 44px; font-weight: 600; line-height: 1; }
+
+/* Torneo */
+.opciones { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 19px; }
+.opciones label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.reveal input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--rojo); }
+.reveal input[type=range] { accent-color: var(--rojo); width: 200px; }
+
+/* Penalti */
+.arco { display: flex; gap: 14px; }
+.arco button { flex: 1; font-size: 24px; padding: 18px; }
+.tiros { display: flex; flex-wrap: wrap; gap: 6px; min-height: 34px; }
+.tiro { font-family: var(--f-num); font-size: 15px; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+.tiro.gol { background: var(--azul-suave); color: var(--azul); }
+.tiro.atajada { background: var(--rojo-suave); color: var(--rojo); }
+
+/* Árbol */
+.arbol line { stroke: var(--tinta); stroke-width: 3; transition: stroke .3s, opacity .3s; }
+.arbol line.elegida { stroke: var(--rojo); stroke-width: 6; }
+.arbol line.descartada { opacity: .2; }
+.arbol circle { fill: var(--tinta); }
+.arbol text { font-family: var(--f-texto); font-size: 20px; fill: var(--tinta); }
+.arbol text.nodo { font-weight: 700; font-size: 21px; }
+.arbol text.pago { font-family: var(--f-num); font-weight: 600; font-size: 22px; }
+.arbol .descartada-t { opacity: .3; }
+
+/* Tipos de juego */
+.contrastes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 40px; }
+.contraste { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.contraste .par { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.contraste b { font-family: var(--f-display); font-size: 25px; display: block; }
+.contraste span { font-size: 19px; color: var(--gris); line-height: 1.35; display: block; }
+.contraste .hoy { margin-top: 8px; font-size: 16px; font-family: var(--f-num); color: var(--rojo); }
+
+.refs { font-size: 18px; line-height: 1.4; columns: 2; column-gap: 40px; }
+.refs p { break-inside: avoid; margin-bottom: 10px; }
+.nueva { font-family: var(--f-num); font-size: 12px; color: var(--rojo); font-weight: 600; letter-spacing: .05em; }
+
+/* Lo que va solo en vivo o solo en el PDF */
+.solo-pdf { display: none; }
+html.print-pdf .solo-clase { display: none !important; }
+html.print-pdf .solo-pdf { display: block !important; }
+@media print { .solo-clase { display: none !important; } .solo-pdf { display: block !important; } }
+.solo-pdf.recuadro { border: 1.5px dashed var(--apagado); border-radius: 8px; padding: 14px 18px; font-size: 20px; color: var(--gris); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+<style>
+/* Agregados de la clase 2 */
+.reveal .fragment.custom.marcar.visible { background: var(--nash); }
+.matriz.compacta td { height: 56px; width: 130px; font-size: 22px; }
+.matriz.compacta th { font-size: 18px; padding: 6px 10px; }
+.matriz .vacia { border: none; background: none; }
+.panel { max-height: 470px; overflow-y: auto; }
+
+.sorteo { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.sorteo-num { font-family: var(--f-display); font-weight: 800; font-size: 150px; line-height: 1; color: var(--rojo); min-width: 3ch; text-align: center; font-variant-numeric: tabular-nums; }
+.sorteo-num.nombre { font-size: 64px; min-height: 150px; display: grid; place-items: center; max-width: 520px; text-wrap: balance; }
+.sorteo-num.girando { color: var(--apagado); }
+
+.observa { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.observa > div { padding: 16px 18px 0 0; }
+.observa b { display: block; font-family: var(--f-display); font-size: 28px; margin-bottom: 6px; }
+.observa span { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.versus > div { border-top: 3px solid var(--tinta); padding-top: 14px; }
+.versus h3 { font-size: 32px; }
+.cita { font-style: italic; color: var(--gris); font-size: 20px; border-left: 3px solid var(--linea); padding-left: 14px; margin-top: 10px; }
+
+.tabla-def { border-collapse: collapse; width: 100%; font-size: 21px; }
+.tabla-def th { text-align: left; font-family: var(--f-num); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 8px 12px 8px 0; border-bottom: 2px solid var(--tinta); }
+.tabla-def td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--linea); vertical-align: top; line-height: 1.35; }
+.tabla-def td:first-child { font-weight: 700; white-space: nowrap; }
+
+.video-caja { width: 100%; max-width: 760px; aspect-ratio: 16 / 9; background: var(--tinta); border-radius: 10px; display: grid; place-items: center; overflow: hidden; }
+.video-caja iframe { width: 100%; height: 100%; border: 0; }
+.video-caja .play { display: flex; flex-direction: column; align-items: center; gap: 14px; color: var(--papel); }
+.reveal .video-caja button { background: var(--rojo); border-color: var(--rojo); color: #fff; font-size: 22px; padding: 14px 24px; }
+
+.foto-nash { max-height: 420px; max-width: 100%; border-radius: 8px; filter: grayscale(1); }
+.hechos { list-style: none; padding: 0 !important; }
+.hechos li { display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 23px; }
+.hechos li::marker { content: ""; }
+.hechos .anio { font-family: var(--f-num); font-weight: 600; color: var(--rojo); font-size: 20px; }
+
+.perfiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.perfiles span { font-family: var(--f-num); font-size: 19px; border: 1.5px solid var(--linea); border-radius: 6px; padding: 8px 10px; text-align: center; background: var(--tarjeta); }
+
+.capitulo { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.capitulo h1 { font-size: 96px; }
+.agenda { list-style: none; padding: 0 !important; counter-reset: ag; }
+.agenda li { counter-increment: ag; display: grid; grid-template-columns: 60px 1fr; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 30px; }
+.agenda li::before { content: counter(ag, decimal-leading-zero); font-family: var(--f-num); color: var(--rojo); font-size: 20px; font-weight: 600; }
+.agenda li::marker { content: ""; }
+.agenda a { color: var(--tinta); text-decoration: none; font-family: var(--f-display); font-weight: 600; }
+.agenda a:hover { color: var(--rojo); }
+.agenda small { display: block; font-family: var(--f-texto); font-size: 19px; color: var(--gris); font-weight: 400; }
+
+</style>
+<style>
+/* Agregados de la clase 3 */
+.estructuras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.estructuras > div { padding: 16px 22px 0 0; }
+.estructuras b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.estructuras .quien { font-family: var(--f-num); font-size: 16px; color: var(--rojo); display: block; margin-bottom: 8px; }
+.estructuras span.d { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+.estructuras > div.foco b { color: var(--rojo); }
+
+.arbolito { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
+.arbolito .rama { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.arbolito .rama h3 { font-size: 28px; }
+.arbolito .sub2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+.arbolito .sub2 > div { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 12px 16px; }
+.arbolito .sub2 b { font-family: var(--f-num); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); display: block; margin-bottom: 6px; }
+.arbolito .sub2 span { display: block; font-family: var(--f-display); font-size: 24px; line-height: 1.3; }
+
+.grafico { width: 100%; height: auto; display: block; }
+.grafico .eje { stroke: var(--tinta); stroke-width: 2; }
+.grafico .rej { stroke: var(--linea); stroke-width: 1; }
+.grafico .r1 { stroke: var(--azul); stroke-width: 4; }
+.grafico .r2 { stroke: var(--rojo); stroke-width: 4; }
+.grafico .camino { stroke: var(--tinta); stroke-width: 2.5; stroke-dasharray: 6 5; fill: none; }
+.grafico .punto { fill: var(--tinta); }
+.grafico .eqp { fill: var(--nash); stroke: var(--tinta); stroke-width: 2.5; }
+.grafico text { font-family: var(--f-num); font-size: 15px; fill: var(--gris); }
+.grafico text.et { font-family: var(--f-texto); font-size: 19px; font-weight: 700; }
+.grafico .curva { stroke: var(--azul); stroke-width: 4; fill: none; }
+.grafico .area { fill: var(--azul-suave); }
+
+.controles { display: flex; flex-direction: column; gap: 14px; font-size: 20px; }
+.controles label { display: grid; grid-template-columns: 150px 1fr 60px; align-items: center; gap: 10px; }
+.controles .num { font-weight: 600; text-align: right; }
+.reveal .controles input[type=range] { width: 100%; }
+.cifras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 20px; margin-top: 6px; }
+.cifras div { border-top: 1.5px solid var(--linea); padding-top: 6px; }
+.cifras span { display: block; font-size: 15px; color: var(--gris); font-family: var(--f-num); letter-spacing: .04em; text-transform: uppercase; }
+.cifras b { font-family: var(--f-num); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.mate { font-size: 30px; }
+.mate.peq2 { font-size: 26px; }
+
+.ronda-entrada { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ronda-entrada .firma { border: 2px solid var(--tinta); border-radius: 10px; padding: 12px 16px; background: var(--tarjeta); }
+.ronda-entrada .firma h3 { font-size: 22px; margin: 0 0 6px; }
+.ronda-entrada .firma .est { font-family: var(--f-num); font-size: 15px; color: var(--gris); }
+.reveal .ronda-entrada input[type=number] { width: 110px; font-size: 34px; border: 1.5px solid var(--apagado); border-radius: 6px; background: var(--papel); }
+.historial { width: 100%; border-collapse: collapse; font-size: 18px; font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.historial th { text-align: right; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 4px 8px; border-bottom: 2px solid var(--tinta); font-family: var(--f-num); }
+.historial td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--linea); }
+.historial th:first-child, .historial td:first-child { text-align: left; }
+.historial tr.ultima td { background: var(--nash); }
+
+.comparar { width: 100%; border-collapse: collapse; font-size: 21px; }
+.comparar th { text-align: left; font-family: var(--f-num); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 6px 10px 6px 0; border-bottom: 2px solid var(--tinta); }
+.comparar td { padding: 9px 10px 9px 0; border-bottom: 1px solid var(--linea); vertical-align: middle; }
+.comparar td.n { font-family: var(--f-num); font-weight: 600; text-align: right; width: 70px; font-variant-numeric: tabular-nums; }
+.comparar .barrita { height: 18px; background: var(--linea); border-radius: 3px; overflow: hidden; min-width: 140px; }
+.comparar .barrita i { display: block; height: 100%; background: var(--tinta); }
+.comparar tr.cournot td { background: var(--nash); }
+.comparar .barrita i.cs { background: var(--azul); }
+.comparar .barrita i.pi { background: var(--rojo); }
+
+.matriz-app .celda { width: 84px !important; }
+.reveal .fragment.custom.marcar-fila.visible td { background: var(--nash); }
+</style>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 · PORTADA -->
+<section>
+  <div class="portada">
+    <div>
+      <div class="ceja">Microeconomía II · Universidad del Norte · Clase 3</div>
+      <h1>Cournot-Nash</h1>
+      <p class="sub" style="margin-top:18px">Cuando pocas empresas deciden cuánto producir mirándose de reojo</p>
+      <div class="autor"><b>Carlos A. Yanes Guerra</b><br>Departamento de Economía · Barranquilla, 2026</div>
+    </div>
+    <svg class="grafico" viewBox="0 0 420 380" role="img" aria-label="Dos curvas de reacción que se cruzan en el equilibrio">
+      <line class="eje" x1="50" y1="20" x2="50" y2="330"/><line class="eje" x1="50" y1="330" x2="400" y2="330"/>
+      <line class="r1" x1="50" y1="30" x2="215" y2="330"/>
+      <line class="r2" x1="50" y1="180" x2="380" y2="330"/>
+      <circle class="eqp" cx="160" cy="230" r="11"/>
+      <text x="58" y="20">q₂</text><text x="388" y="352">q₁</text>
+      <text class="et" x="224" y="300" style="fill:var(--azul)">R₁</text>
+      <text class="et" x="300" y="290" style="fill:var(--rojo)">R₂</text>
+    </svg>
+  </div>
+</section>
+
+<!-- 2 · AGENDA -->
+<section>
+  <div class="ceja">Hoy</div>
+  <h2>La ruta de la clase</h2>
+  <ol class="agenda">
+    <li><a href="#/mercados">Estructuras de mercado<small>De la competencia perfecta al oligopolio</small></a></li>
+    <li><a href="#/sintesis">Síntesis de modelos<small>Cournot, Stackelberg, Bertrand y liderazgo de precios</small></a></li>
+    <li><a href="#/reaccion">Funciones de reacción<small>Cada firma responde a lo que produce la otra</small></a></li>
+    <li><a href="#/ejemplo">Cournot-Nash paso a paso<small>El ejemplo con P = 30 − Q</small></a></li>
+    <li><a href="#/juego">Jueguen ustedes<small>Dos firmas del salón, varias rondas y el cártel que no se sostiene</small></a></li>
+  </ol>
+</section>
+
+<!-- 3 · GIF -->
+<section data-background-image="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2N5ODQyeXBsa3BvYjVjNDVlMjg2eWlsMXlkYThrY3Q4OXowaDl3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UhtYWgakzIwAJXZ1gK/giphy.gif" data-background-size="cover">
+</section>
+
+<!-- 4 · ESTRUCTURAS -->
+<section id="mercados">
+  <div class="ceja">Estructura de mercado</div>
+  <h2>¿Cuántos venden?</h2>
+  <div class="estructuras">
+    <div class="fragment"><span class="quien">Ya lo vimos</span><b>Competencia perfecta</b><span class="d">Muchos compradores y muchos vendedores. Nadie mueve el precio.</span></div>
+    <div class="fragment"><span class="quien">Ya lo vimos</span><b>Monopolio</b><span class="d">Muchos compradores y un único vendedor. El vendedor fija el precio.</span></div>
+    <div class="fragment foco"><span class="quien">Lo que viene</span><b>Oligopolio</b><span class="d">Muchos compradores y unos cuantos vendedores. Cada uno mira lo que hacen los demás.</span></div>
+  </div>
+  <p class="fragment" style="margin-top:30px">Piense en la telefonía móvil, el cemento o las aerolíneas en Colombia. ¿Cuántas empresas se reparten el mercado?</p>
+</section>
+
+<!-- 5 · OLIGOPOLIO -->
+<section>
+  <div class="ceja">Oligopolio</div>
+  <h2>Pocos, grandes y pendientes del otro</h2>
+  <div class="versus">
+    <div>
+      <ul>
+        <li>Los <strong>productores</strong> tienen poder de mercado.</li>
+        <li>Entre los <strong>demandantes</strong> se mantiene la competencia perfecta.</li>
+        <li>Hay <strong>interacción estratégica</strong> entre productores.</li>
+        <li>La herramienta de análisis es el <strong>equilibrio de Nash</strong>.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Unas pocas <strong>firmas</strong> producen la mayor parte del mercado.</li>
+        <li>El producto puede ser no diferenciado.</li>
+        <li>Hay <strong>barreras</strong> a la entrada de nuevas empresas.</li>
+        <li>La condición de óptimo es <strong>IMg = CMg</strong>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · CONCEPTOS -->
+<section>
+  <div class="ceja">Algunos conceptos adicionales</div>
+  <h2>¿Compiten o se ponen de acuerdo?</h2>
+  <div class="arbolito">
+    <div class="rama">
+      <h3>No cooperativos</h3>
+      <div class="sub2">
+        <div><b>Fijando cantidades</b><span>Cournot</span><span>Stackelberg</span></div>
+        <div><b>Fijando precios</b><span>Bertrand</span><span>Liderazgo de precios</span></div>
+      </div>
+    </div>
+    <div class="rama">
+      <h3>Cooperativos</h3>
+      <p><strong>Cártel.</strong> Las empresas se ponen de acuerdo y eligen juntas el nivel de producción que maximiza el beneficio de todas.</p>
+      <p class="peq fragment">Al final de la clase vamos a ver por qué esos acuerdos se rompen tan fácil.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · SÍNTESIS -->
+<section id="sintesis">
+  <div class="ceja">En síntesis</div>
+  <h2>Cuatro modelos, dos preguntas</h2>
+  <p class="sub" style="margin-top:-8px;margin-bottom:20px">¿Deciden a la vez o uno primero? ¿Eligen cantidades o precios?</p>
+  <div class="rejilla dos">
+    <div class="caso"><span class="etiqueta az">Simultáneo · Cantidades</span><h3>Cournot</h3><p>Las firmas deciden al mismo tiempo cuánto producir.</p></div>
+    <div class="caso"><span class="etiqueta">Simultáneo · Precios</span><h3>Bertrand</h3><p>Las firmas deciden al mismo tiempo qué precio cobrar.</p></div>
+    <div class="caso"><span class="etiqueta az">Secuencial · Cantidades</span><h3>Stackelberg</h3><p>Hay una empresa líder que produce primero y las demás la siguen.</p></div>
+    <div class="caso"><span class="etiqueta">Secuencial · Precios</span><h3>Liderazgo de precios</h3><p>La empresa líder define el precio y las demás firmas lo siguen.</p></div>
+  </div>
+</section>
+
+<!-- 8 · CAPÍTULO -->
+<section data-background-image="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXlibHMxcmdzbHVuMHY1eGZ1NGc0Yzg1OGxjZXYwZ2tydmdzZWtjbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eid1RDCN2GjY1hAmZ0/giphy.gif" data-background-opacity="0.3">
+  <div class="capitulo">
+    <div class="ceja">Ahora sí</div>
+    <h1>Vamos a la microeconomía</h1>
+  </div>
+</section>
+
+<!-- 9 · TABLA DE REACCIÓN -->
+<section id="reaccion">
+  <div class="ceja">Equilibrio de Cournot</div>
+  <h2>Si el otro produce tanto, yo produzco…</h2>
+  <div class="fila">
+    <div class="col">
+      <table class="tabla-def" style="max-width:520px">
+        <tr><th>Si la Firma 2 produce</th><th>A la Firma 1 le conviene producir</th></tr>
+        <tr><td class="num">0</td><td class="num">30</td></tr>
+        <tr class="fragment custom marcar-fila"><td class="num">20</td><td class="num">20</td></tr>
+        <tr><td class="num">40</td><td class="num">10</td></tr>
+        <tr><td class="num">60</td><td class="num">0</td></tr>
+      </table>
+      <p class="fuente" style="margin-top:8px">Producción de las firmas en duopolio. Demanda P = 60 − Q y costo marginal cero.</p>
+    </div>
+    <div class="col">
+      <ul>
+        <li>Cada fila es una <strong>mejor respuesta</strong>. La tabla completa es la <strong>función de reacción</strong> de la Firma 1.</li>
+        <li>Cada empresa maximiza su beneficio <strong>dado</strong> lo que produce la otra.</li>
+        <li class="fragment">En equilibrio, cada una acierta lo que hace la otra. Aquí pasa en <strong>(20, 20)</strong>, porque si la Firma 2 produce 20 a la Firma 1 le conviene producir 20, y viceversa.</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Esta tabla es la curva q1 = 30 − q2/2. Preguntar: ¿qué fila es también mejor respuesta de la Firma 2? La de (20, 20).</aside>
+</section>
+
+<!-- 10 · GRÁFICO INTERACTIVO -->
+<section>
+  <div class="ceja">Gráfico de reacción</div>
+  <h2>Dos curvas, un cruce</h2>
+  <div class="fila">
+    <div style="flex:0 0 560px">
+      <svg class="grafico" id="gReac" viewBox="0 0 560 500" role="img" aria-label="Curvas de reacción de las dos firmas"></svg>
+    </div>
+    <div class="col controles">
+      <p class="peq" style="margin:0">Demanda P = a − Q y costo marginal c igual para las dos firmas.</p>
+      <label class="solo-clase">Intercepto a <input type="range" id="ra" min="12" max="60" step="1" value="30"><span class="num" id="raV">30</span></label>
+      <label class="solo-clase">Costo marginal c <input type="range" id="rc" min="0" max="10" step="1" value="0"><span class="num" id="rcV">0</span></label>
+      <div class="cifras">
+        <div><span>Cada firma</span><b id="eqQ"></b></div>
+        <div><span>Total Q</span><b id="eqT"></b></div>
+        <div><span>Precio</span><b id="eqP"></b></div>
+        <div><span>Beneficio c/u</span><b id="eqPi"></b></div>
+      </div>
+      <div class="botones solo-clase"><button class="primario" id="btnPaso">Ajuste paso a paso</button><button id="btnPasoR">Reiniciar</button></div>
+      <p class="peq" id="lecturaPaso" style="margin:0"></p>
+    </div>
+  </div>
+  <aside class="notes">El ajuste paso a paso arranca con la Firma 1 como monopolista y la Firma 2 sin producir. Cada clic, una firma responde a la otra. Se ve cómo convergen al cruce.</aside>
+</section>
+
+<!-- 11 · EJEMPLO -->
+<section id="ejemplo">
+  <div class="ceja">Ejemplo de equilibrio</div>
+  <h2>Dos firmas, una demanda</h2>
+  <div class="fila centro-v">
+    <div class="col">
+      <p>Considere la siguiente <strong>función de demanda</strong></p>
+      <p class="mate">\[ P = 30 - Q \]</p>
+      <p>La cantidad total viene de las <strong>dos firmas</strong></p>
+      <p class="mate">\[ Q = q_1 + q_2 \]</p>
+      <p>Y el costo marginal es cero para ambas, \( CMg_1 = CMg_2 = 0 \).</p>
+    </div>
+    <div class="col caso">
+      <span class="etiqueta az">Para imaginarlo</span>
+      <p style="font-size:22px">Dos pozos de agua en un pueblo de La Guajira. Sacar el agua no cuesta casi nada, pero entre más agua ofrezcan entre los dos, más baja el precio del galón.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · INGRESO -->
+<section>
+  <div class="ceja">Paso 1</div>
+  <h2>Ingreso total e ingreso marginal de la Firma 1</h2>
+  <div class="versus">
+    <div>
+      <p>Tomamos el ingreso <strong>total</strong> de la firma 1</p>
+      <p class="mate peq2">\[ \begin{aligned} I_1 &= P\, q_1 \\ &= (30 - Q)\, q_1 \\ &= 30 q_1 - (q_1 + q_2)\, q_1 \\ &= 30 q_1 - q_1^2 - q_1 q_2 \end{aligned} \]</p>
+    </div>
+    <div class="fragment">
+      <p>Por el lado del <strong>ingreso marginal</strong></p>
+      <p class="mate">\[ IMg_1 = \frac{\partial I_1}{\partial q_1} = 30 - 2q_1 - q_2 \]</p>
+      <p class="peq">Fíjese que el ingreso marginal de la firma 1 depende de lo que produzca la firma 2. Ahí está la interacción estratégica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · CONDICIÓN ÓPTIMA -->
+<section>
+  <div class="ceja">Paso 2</div>
+  <h2>Condición de producción óptima</h2>
+  <div class="versus">
+    <div>
+      <p>Igualamos el <strong>ingreso marginal</strong> al <strong>costo marginal</strong></p>
+      <p class="mate">\[ 30 - 2q_1 - q_2 = 0 \]</p>
+    </div>
+    <div class="fragment">
+      <p>Y despejamos la producción de la firma 1</p>
+      <p class="mate peq2">\[ \begin{aligned} 2q_1 &= 30 - q_2 \\ q_1 &= \frac{30 - q_2}{2} \\ q_1 &= 15 - 0.5\, q_2 \end{aligned} \]</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · CURVAS DE REACCIÓN -->
+<section>
+  <div class="ceja">Paso 3</div>
+  <h2>Curvas de reacción de las firmas</h2>
+  <p>En el nivel de producción óptimo se cumple \( IMg = CMg \). Por tanto, la <strong>curva de reacción</strong> de la firma 1 es</p>
+  <p class="mate">\[ q_1 = 15 - 0.5\, q_2 \]</p>
+  <p class="fragment">De forma <strong>simétrica</strong>, la curva de reacción de la firma 2 es</p>
+  <p class="mate fragment">\[ q_2 = 15 - 0.5\, q_1 \]</p>
+  <p class="fragment" style="font-size:30px">Ahora solo queda <strong>enfrentar las dos funciones</strong>.</p>
+</section>
+
+<!-- 15 · EQUILIBRIO -->
+<section>
+  <div class="ceja">Paso 4</div>
+  <h2>Equilibrio de Cournot</h2>
+  <div class="versus">
+    <div>
+      <p>Reemplazamos la reacción de la firma 2 en la de la firma 1</p>
+      <p class="mate peq2">\[ \begin{aligned} q_1 &= 15 - 0.5\,(15 - 0.5 q_1) \\ q_1 &= 15 - 7.5 + 0.25 q_1 \\ 0.75\, q_1 &= 7.5 \\ q_1 &= 10 \end{aligned} \]</p>
+    </div>
+    <div>
+      <p class="fragment">Por la <strong>simetría</strong> del modelo</p>
+      <p class="mate fragment">\[ q_1 = q_2 = 10 \]</p>
+      <div class="cifras fragment" style="margin-top:14px">
+        <div><span>Mercado completo</span><b>Q = 20</b></div>
+        <div><span>Precio</span><b>P = 10</b></div>
+        <div><span>Beneficio firma 1</span><b>100</b></div>
+        <div><span>Beneficio firma 2</span><b>100</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · BENEFICIO INTERACTIVO -->
+<section>
+  <div class="ceja">Pruébelo usted</div>
+  <h2>Usted es la Firma 1</h2>
+  <div class="fila">
+    <div style="flex:0 0 560px">
+      <svg class="grafico" id="gPi" viewBox="0 0 560 440" role="img" aria-label="Beneficio de la Firma 1 según su producción"></svg>
+    </div>
+    <div class="col controles">
+      <p class="peq" style="margin:0">Mueva primero lo que produce la Firma 2. Luego busque la producción que le da más beneficio a usted.</p>
+      <label class="solo-clase">Firma 2 produce <input type="range" id="pq2" min="0" max="30" step="1" value="10"><span class="num" id="pq2V">10</span></label>
+      <label class="solo-clase">Usted produce <input type="range" id="pq1" min="0" max="30" step="1" value="4"><span class="num" id="pq1V">4</span></label>
+      <div class="cifras">
+        <div><span>Precio</span><b id="piP"></b></div>
+        <div><span>Su beneficio</span><b id="piV"></b></div>
+      </div>
+      <p id="piLectura" style="margin:0;font-size:22px"></p>
+    </div>
+  </div>
+  <aside class="notes">Pedir a un estudiante que busque el máximo moviendo el deslizador. Luego cambiar lo que produce la Firma 2 y ver que el máximo se mueve sobre la curva de reacción q1 = 15 − q2/2.</aside>
+</section>
+
+<!-- 17 · JUEGO EN VIVO -->
+<section id="juego">
+  <div class="ceja">Jueguen ustedes</div>
+  <h2>Dos firmas del salón</h2>
+  <div class="fila solo-clase">
+    <div style="flex:0 0 520px;display:flex;flex-direction:column;gap:14px">
+      <p class="peq" style="margin:0">Demanda P = 30 − Q, costo cero. Cada firma escribe en un papel cuánto produce, sin mostrarlo. Luego revelamos.</p>
+      <div class="ronda-entrada">
+        <div class="firma"><h3 class="j1">Firma 1</h3><div class="est" id="est1">Estudiante —</div><input type="number" id="jq1" min="0" max="30" value="12" aria-label="Producción de la Firma 1"></div>
+        <div class="firma"><h3 class="j2">Firma 2</h3><div class="est" id="est2">Estudiante —</div><input type="number" id="jq2" min="0" max="30" value="8" aria-label="Producción de la Firma 2"></div>
+      </div>
+      <div class="botones"><button class="primario" id="btnRonda">Jugar ronda</button><button id="btnSorteo2">Sortear firmas</button><button id="btnJuegoR">Empezar de nuevo</button></div>
+      <p id="juegoLectura" style="margin:0;font-size:21px"></p>
+    </div>
+    <div class="col">
+      <table class="historial">
+        <thead><tr><th>Ronda</th><th>q₁</th><th>q₂</th><th>Precio</th><th>π₁</th><th>π₂</th><th>Mejor q₁</th><th>Mejor q₂</th></tr></thead>
+        <tbody id="hist"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="solo-pdf recuadro">En clase, dos estudiantes jugaron de firmas durante varias rondas. Después de cada ronda vieron cuánto les convenía haber producido dada la cantidad del otro. Al ajustarse, las cantidades se acercaron al equilibrio de Cournot, 10 cada una.</div>
+  <aside class="notes">Sortear dos estudiantes. Después de cada ronda, leer en voz alta la columna "Mejor q". Pedirles que en la siguiente ronda respondan a lo que hizo el otro. En pocas rondas se acercan a 10.</aside>
+</section>
+
+<!-- 18 · COMPARACIÓN -->
+<section>
+  <div class="ceja">¿Cournot es bueno o malo?</div>
+  <h2>Tres mundos con la misma demanda</h2>
+  <table class="comparar">
+    <tr><th>Estructura</th><th>Q</th><th></th><th>P</th><th>Beneficio total</th><th></th><th>Excedente consumidor</th><th></th></tr>
+    <tr><td>Competencia perfecta</td><td class="n">30</td><td><div class="barrita"><i style="width:100%"></i></div></td><td class="n">0</td><td class="n">0</td><td><div class="barrita"><i class="pi" style="width:0%"></i></div></td><td class="n">450</td><td><div class="barrita"><i class="cs" style="width:100%"></i></div></td></tr>
+    <tr class="cournot"><td>Cournot</td><td class="n">20</td><td><div class="barrita"><i style="width:66.7%"></i></div></td><td class="n">10</td><td class="n">200</td><td><div class="barrita"><i class="pi" style="width:88.9%"></i></div></td><td class="n">200</td><td><div class="barrita"><i class="cs" style="width:44.4%"></i></div></td></tr>
+    <tr><td>Cártel o monopolio</td><td class="n">15</td><td><div class="barrita"><i style="width:50%"></i></div></td><td class="n">15</td><td class="n">225</td><td><div class="barrita"><i class="pi" style="width:100%"></i></div></td><td class="n">112,5</td><td><div class="barrita"><i class="cs" style="width:25%"></i></div></td></tr>
+  </table>
+  <p class="fragment" style="margin-top:22px">Cournot queda en el medio. Las firmas ganan menos que si se pusieran de acuerdo, y el consumidor gana menos que con competencia perfecta.</p>
+  <p class="fragment peq">Entonces, ¿por qué las dos firmas no se ponen de acuerdo para producir 7,5 cada una y ganar 112,5 en vez de 100?</p>
+  <aside class="notes">Excedente del consumidor con demanda lineal = Q²/2. Cártel: maximizan juntas (30 − Q)Q, Q = 15, P = 15.</aside>
+</section>
+
+<!-- 19 · CÁRTEL COMO DILEMA -->
+<section>
+  <div class="ceja">El cártel es un dilema del prisionero</div>
+  <h2>¿Respetar el acuerdo o producir más?</h2>
+  <div class="matriz-app" id="mxC" data-juegos="cartel" data-inicial="cartel"></div>
+  <aside class="notes">Si la otra respeta el acuerdo (7,5), a usted le conviene producir 10: gana 125 en vez de 112,5. Si la otra produce 10, también: 100 contra 93,75. Producir 10 es dominante. Es el mismo dilema de la clase 1, ahora con cantidades.</aside>
+</section>
+
+<!-- 20 · REFLEXIONES -->
+<section>
+  <div class="ceja">Reflexiones finales</div>
+  <h2>Para llevar</h2>
+  <ul style="font-size:29px">
+    <li class="fragment">En Cournot cada firma produce su mejor respuesta a lo que produce la otra. El equilibrio está donde se cruzan las curvas de reacción.</li>
+    <li class="fragment">El resultado queda entre la competencia perfecta y el monopolio. Por eso a los consumidores les conviene que haya más competidores.</li>
+    <li class="fragment">Los carteles se rompen solos, porque cada miembro gana produciendo más que lo acordado. Es el dilema del prisionero otra vez.</li>
+    <li class="fragment">En los mercados sobreviven los empresarios que <strong>innovan</strong> y <strong>reducen costos</strong>. Los mercados asignan bien los recursos, pero no lo son todo.</li>
+  </ul>
+</section>
+
+<!-- 21 · GIF FINAL -->
+<section data-background-image="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzU3NDByc2EyeTBoZDhueGdzbGtsc2txZXE1dzBlNjN0OHR1dDJqayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT0xelpBUyVmjxqGTC/giphy.gif" data-background-size="cover" data-background-opacity="0.6">
+</section>
+
+<!-- 22 · REFERENCIAS -->
+<section>
+  <div class="ceja">Referencias</div>
+  <h2>Para leer más</h2>
+  <div class="refs">
+    <p>Osborne, M. J. y Rubinstein, A. (1994). <em>A Course in Game Theory</em>. MIT Press.</p>
+    <p>Dixit, A. K., Skeath, S. y Reiley, D. H. (2020). <em>Games of Strategy</em> (5.ª ed.). W. W. Norton.</p>
+    <p>Watson, J. (2013). <em>Strategy: An Introduction to Game Theory</em> (3.ª ed.). W. W. Norton.</p>
+    <p>Gibbons, R. (1992). <em>A Primer in Game Theory</em>. Harvester Wheatsheaf.</p>
+    <p>Straub, P. G. (2022). <em>Theoretical Foundations of Game Theory</em>. Springer.</p>
+    <p>Binmore, K. (2007). <em>Playing for Real</em>. Oxford University Press.</p>
+    <p>Tucker, A. W. (1950). A Two-Person Dilemma. En Kuhn, H. W. y Tucker, A. W. (Eds.), <em>Contributions to the Theory of Games</em>, Vol. 1. Princeton University Press.</p>
+    <p>Safner, R. (2021). <em>Lecture Notes on Game Theory</em>. Hood College.</p>
+    <p><span class="nueva">NUEVA</span><br>Cournot, A. A. (1838). <em>Recherches sur les principes mathématiques de la théorie des richesses</em>. París, Hachette.</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] }, svg: { fontCache: "global" } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const IMPRESION = /print-pdf/i.test(location.search);
+const NS = "http://www.w3.org/2000/svg";
+const fmt = x => (Math.round(x * 100) / 100).toLocaleString("es-CO");
+
+Reveal.initialize({
+  width: 1280, height: 720, margin: 0.05,
+  center: false, hash: true, transition: "fade", transitionSpeed: "fast",
+  slideNumber: "c/t", controls: true, progress: true,
+  pdfSeparateFragments: false,
+  plugins: typeof RevealNotes !== "undefined" ? [RevealNotes] : []
+});
+
+function el(svg, tag, attrs, texto) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (texto !== undefined) e.textContent = texto;
+  svg.appendChild(e); return e;
+}
+
+/* ---------- Curvas de reacción con ajuste paso a paso ---------- */
+(function () {
+  const svg = $("gReac");
+  const X0 = 60, Y0 = 450, W = 470, H = 420;
+  let A = 30, pasos = [];
+  const sx = (q, M) => X0 + q / M * W, sy = (q, M) => Y0 - q / M * H;
+  function datos() {
+    const a = +$("ra").value, c = +$("rc").value;
+    A = Math.max(1, a - c);
+    const q = A / 3, Q = 2 * q, P = a - Q;
+    $("raV").textContent = a; $("rcV").textContent = c;
+    $("eqQ").textContent = fmt(q); $("eqT").textContent = fmt(Q);
+    $("eqP").textContent = fmt(P); $("eqPi").textContent = fmt((P - c) * q);
+  }
+  function dibujar() {
+    svg.innerHTML = "";
+    const M = A;
+    for (let k = 1; k <= 4; k++) {
+      const v = M * k / 4;
+      el(svg, "line", { class: "rej", x1: sx(v, M), y1: Y0, x2: sx(v, M), y2: Y0 - H });
+      el(svg, "line", { class: "rej", x1: X0, y1: sy(v, M), x2: X0 + W, y2: sy(v, M) });
+      el(svg, "text", { x: sx(v, M), y: Y0 + 22, "text-anchor": "middle" }, fmt(v));
+      el(svg, "text", { x: X0 - 8, y: sy(v, M) + 5, "text-anchor": "end" }, fmt(v));
+    }
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0 + W, y2: Y0 });
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0, y2: Y0 - H });
+    el(svg, "text", { x: X0 + W, y: Y0 + 44, "text-anchor": "end" }, "q₁ (Firma 1)");
+    el(svg, "text", { x: X0 + 8, y: Y0 - H + 4 }, "q₂ (Firma 2)");
+    // R1: q1 = (A - q2)/2  → de (A/2, 0) a (0, A)
+    el(svg, "line", { class: "r1", x1: sx(A / 2, M), y1: sy(0, M), x2: sx(0, M), y2: sy(A, M) });
+    // R2: q2 = (A - q1)/2  → de (0, A/2) a (A, 0)
+    el(svg, "line", { class: "r2", x1: sx(0, M), y1: sy(A / 2, M), x2: sx(A, M), y2: sy(0, M) });
+    el(svg, "text", { class: "et", x: sx(A / 2, M) + 10, y: sy(A * 0.06, M), style: "fill:var(--azul)" }, "Reacción Firma 1");
+    el(svg, "text", { class: "et", x: sx(A * 0.62, M), y: sy(A * 0.23, M), style: "fill:var(--rojo)" }, "Reacción Firma 2");
+    if (pasos.length > 1) {
+      el(svg, "polyline", { class: "camino", points: pasos.map(p => sx(p[0], M) + "," + sy(p[1], M)).join(" ") });
+    }
+    pasos.forEach(p => el(svg, "circle", { class: "punto", cx: sx(p[0], M), cy: sy(p[1], M), r: 5 }));
+    el(svg, "circle", { class: "eqp", cx: sx(A / 3, M), cy: sy(A / 3, M), r: 10 });
+    el(svg, "text", { x: sx(A / 3, M) + 14, y: sy(A / 3, M) - 12, style: "fill:var(--tinta);font-weight:600" }, "Equilibrio (" + fmt(A / 3) + ", " + fmt(A / 3) + ")");
+  }
+  function reiniciar() { pasos = []; $("lecturaPaso").textContent = "La Firma 1 arranca como si fuera monopolista y la Firma 2 todavía no produce."; dibujar(); }
+  function paso() {
+    if (!pasos.length) { pasos.push([A / 2, 0]); }
+    else {
+      const [q1, q2] = pasos[pasos.length - 1];
+      const turno2 = pasos.length % 2 === 1;
+      pasos.push(turno2 ? [q1, (A - q1) / 2] : [(A - q2) / 2, q2]);
+    }
+    const [q1, q2] = pasos[pasos.length - 1];
+    $("lecturaPaso").innerHTML = pasos.length === 1
+      ? `Ronda 1. La Firma 1 produce <b>${fmt(q1)}</b> y la Firma 2, nada.`
+      : `Ronda ${pasos.length}. ${pasos.length % 2 === 0 ? "La Firma 2 responde" : "La Firma 1 responde"} y quedan en (<b>${fmt(q1)}</b>, <b>${fmt(q2)}</b>).`;
+    dibujar();
+  }
+  ["ra", "rc"].forEach(id => $(id).addEventListener("input", () => { datos(); reiniciar(); }));
+  $("btnPaso").onclick = paso;
+  $("btnPasoR").onclick = reiniciar;
+  datos(); reiniciar();
+  if (IMPRESION) for (let i = 0; i < 8; i++) paso();
+})();
+
+/* ---------- Beneficio de la Firma 1 ---------- */
+(function () {
+  const svg = $("gPi");
+  const X0 = 70, Y0 = 390, W = 460, H = 350, QM = 30, PIM = 230;
+  const sx = q => X0 + q / QM * W, sy = v => Y0 - v / PIM * H;
+  const pi = (q1, q2) => Math.max(0, 30 - q1 - q2) * q1;
+  function pintar() {
+    const q2 = +$("pq2").value, q1 = +$("pq1").value;
+    $("pq2V").textContent = q2; $("pq1V").textContent = q1;
+    const mejor = Math.max(0, 15 - q2 / 2), piMax = pi(mejor, q2), piQ = pi(q1, q2);
+    $("piP").textContent = fmt(Math.max(0, 30 - q1 - q2));
+    $("piV").textContent = fmt(piQ);
+    const dif = Math.abs(q1 - mejor) < 0.51;
+    $("piLectura").innerHTML = dif
+      ? `<b>¡Ahí está!</b> Con la Firma 2 en ${q2}, su mejor producción es <b>${fmt(mejor)}</b>, sobre su curva de reacción.`
+      : `Le faltan <b>${fmt(piMax - piQ)}</b> de beneficio. ${q1 < mejor ? "Pruebe producir más." : "Pruebe producir menos."}`;
+    svg.innerHTML = "";
+    for (let v = 0; v <= 200; v += 50) {
+      el(svg, "line", { class: "rej", x1: X0, y1: sy(v), x2: X0 + W, y2: sy(v) });
+      el(svg, "text", { x: X0 - 10, y: sy(v) + 5, "text-anchor": "end" }, v);
+    }
+    for (let q = 0; q <= 30; q += 5) el(svg, "text", { x: sx(q), y: Y0 + 22, "text-anchor": "middle" }, q);
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0 + W, y2: Y0 });
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0, y2: Y0 - H });
+    el(svg, "text", { x: X0 + W, y: Y0 + 44, "text-anchor": "end" }, "Lo que usted produce, q₁");
+    el(svg, "text", { x: X0 + 8, y: Y0 - H + 4 }, "Su beneficio, π₁");
+    const pts = []; for (let q = 0; q <= 30; q += 0.5) pts.push(sx(q) + "," + sy(pi(q, q2)));
+    el(svg, "polygon", { class: "area", points: sx(0) + "," + sy(0) + " " + pts.join(" ") + " " + sx(30) + "," + sy(0) });
+    el(svg, "polyline", { class: "curva", points: pts.join(" ") });
+    el(svg, "line", { x1: sx(mejor), y1: Y0, x2: sx(mejor), y2: sy(piMax), stroke: "var(--tinta)", "stroke-dasharray": "4 4", "stroke-width": 1.5 });
+    el(svg, "circle", { class: "eqp", cx: sx(mejor), cy: sy(piMax), r: 9 });
+    el(svg, "text", { x: sx(mejor), y: sy(piMax) - 16, "text-anchor": "middle", style: "fill:var(--tinta);font-weight:600" }, "Máximo en " + fmt(mejor));
+    el(svg, "circle", { cx: sx(q1), cy: sy(piQ), r: 8, fill: "var(--rojo)" });
+  }
+  ["pq1", "pq2"].forEach(id => $(id).addEventListener("input", pintar));
+  if (IMPRESION) $("pq1").value = 10;
+  pintar();
+})();
+
+/* ---------- Juego en vivo ---------- */
+(function () {
+  let ronda = 0, quedan = Array.from({ length: CONFIG.totalEstudiantes }, (_, i) => i + 1);
+  const mejor = q => Math.max(0, 15 - q / 2);
+  function lectura(q1, q2) {
+    const m1 = mejor(q2), m2 = mejor(q1);
+    if (Math.abs(q1 - 10) < 0.5 && Math.abs(q2 - 10) < 0.5) return "Llegaron al <b>equilibrio de Cournot</b>. Ninguna gana cambiando sola.";
+    return `Dado lo que hizo la otra, a la Firma 1 le convenía producir <b>${fmt(m1)}</b> y a la Firma 2, <b>${fmt(m2)}</b>.`;
+  }
+  $("btnRonda").onclick = () => {
+    const q1 = Math.max(0, +$("jq1").value || 0), q2 = Math.max(0, +$("jq2").value || 0);
+    const P = Math.max(0, 30 - q1 - q2);
+    ronda++;
+    document.querySelectorAll("#hist tr").forEach(t => t.classList.remove("ultima"));
+    const tr = document.createElement("tr"); tr.className = "ultima";
+    tr.innerHTML = `<td>${ronda}</td><td>${fmt(q1)}</td><td>${fmt(q2)}</td><td>${fmt(P)}</td><td>${fmt(P * q1)}</td><td>${fmt(P * q2)}</td><td>${fmt(mejor(q2))}</td><td>${fmt(mejor(q1))}</td>`;
+    $("hist").appendChild(tr);
+    while ($("hist").children.length > 8) $("hist").removeChild($("hist").firstChild);
+    $("juegoLectura").innerHTML = lectura(q1, q2);
+  };
+  $("btnSorteo2").onclick = () => {
+    if (quedan.length < 2) quedan = Array.from({ length: CONFIG.totalEstudiantes }, (_, i) => i + 1);
+    const a = quedan.splice(Math.floor(Math.random() * quedan.length), 1)[0];
+    const b = quedan.splice(Math.floor(Math.random() * quedan.length), 1)[0];
+    $("est1").textContent = "Estudiante n.º " + a; $("est2").textContent = "Estudiante n.º " + b;
+  };
+  $("btnJuegoR").onclick = () => { ronda = 0; $("hist").innerHTML = ""; $("juegoLectura").textContent = ""; };
+})();
+
+/* ---------- Matriz del cártel (mismo motor de la clase 2) ---------- */
+const JUEGOS = {
+  cartel: { nombre: "Cártel", n1: "Firma 1", n2: "Firma 2", f: ["Respeta (7,5)", "Produce 10"], c: ["Respeta (7,5)", "Produce 10"],
+            a: [[112.5, 93.75], [125, 100]], b: [[112.5, 125], [93.75, 100]] }
+};
+function analizar(g) {
+  const R = g.a.length, C = g.a[0].length;
+  const mr1 = g.a.map(r => r.map(() => false)), mr2 = g.a.map(r => r.map(() => false));
+  for (let j = 0; j < C; j++) { const m = Math.max(...g.a.map(r => r[j])); for (let i = 0; i < R; i++) mr1[i][j] = g.a[i][j] === m; }
+  for (let i = 0; i < R; i++) { const m = Math.max(...g.b[i]); for (let j = 0; j < C; j++) mr2[i][j] = g.b[i][j] === m; }
+  const nash = [];
+  for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) if (mr1[i][j] && mr2[i][j]) nash.push([i, j]);
+  const dom = [];
+  for (let i = 0; i < R; i++) for (let k = 0; k < R; k++) if (i !== k) {
+    const ge = g.a[i].every((v, j) => v >= g.a[k][j]), gt = g.a[i].map((v, j) => v > g.a[k][j]);
+    if (ge && gt.some(Boolean)) dom.push(`Para ${g.n1}, <b>${g.f[i]}</b> domina ${gt.every(Boolean) ? "estrictamente" : "débilmente"} a ${g.f[k]}.`);
+  }
+  for (let j = 0; j < C; j++) for (let k = 0; k < C; k++) if (j !== k) {
+    const ge = g.b.every((_, i) => g.b[i][j] >= g.b[i][k]), gt = g.b.map((_, i) => g.b[i][j] > g.b[i][k]);
+    if (ge && gt.some(Boolean)) dom.push(`Para ${g.n2}, <b>${g.c[j]}</b> domina ${gt.every(Boolean) ? "estrictamente" : "débilmente"} a ${g.c[k]}.`);
+  }
+  return { mr1, mr2, nash, dom };
+}
+function crearMatriz(raiz) {
+  const id = raiz.id, claves = raiz.dataset.juegos.split(",");
+  const ver = { mr1: IMPRESION, mr2: IMPRESION, nash: IMPRESION };
+  let g;
+  raiz.innerHTML = `
+    <div class="botones solo-clase" style="margin-bottom:14px">
+      <button data-v="mr1">Mejor respuesta <span data-n="1"></span></button>
+      <button data-v="mr2">Mejor respuesta <span data-n="2"></span></button>
+      <button data-v="nash">Equilibrio de Nash</button>
+    </div>
+    <div class="fila"><div class="tabla"></div><div class="col panel"></div></div>`;
+  const tabla = raiz.querySelector(".tabla"), panel = raiz.querySelector(".panel");
+  function cargar(k) {
+    g = JSON.parse(JSON.stringify(JUEGOS[k]));
+    const R = g.a.length, C = g.a[0].length;
+    let h = `<table class="matriz"><tr><th></th><th></th><th colspan="${C}" class="jug j2">${g.n2}</th></tr><tr><th></th><th></th>`;
+    g.c.forEach(c => h += `<th>${c}</th>`);
+    h += "</tr>";
+    for (let i = 0; i < R; i++) {
+      h += "<tr>";
+      if (i === 0) h += `<th rowspan="${R}" class="jug j1"><span class="lado">${g.n1}</span></th>`;
+      h += `<th>${g.f[i]}</th>`;
+      for (let j = 0; j < C; j++) h += `<td id="${id}t${i}${j}" style="width:230px;white-space:nowrap"><input class="celda j1" id="${id}a${i}${j}" value="${fmt(g.a[i][j])}" aria-label="Pago de ${g.n1}"> , <input class="celda j2" id="${id}b${i}${j}" value="${fmt(g.b[i][j])}" aria-label="Pago de ${g.n2}"></td>`;
+      h += "</tr>";
+    }
+    tabla.innerHTML = h + "</table>";
+    tabla.querySelectorAll("input").forEach(e => e.addEventListener("input", pintar));
+    raiz.querySelector('[data-n="1"]').textContent = g.n1;
+    raiz.querySelector('[data-n="2"]').textContent = g.n2;
+    pintar();
+  }
+  function leer() {
+    const n = e => parseFloat(String(e.value).replace(/\./g, "").replace(",", ".")) || 0;
+    g.a.forEach((r, i) => r.forEach((_, j) => { g.a[i][j] = n($(id + "a" + i + j)); g.b[i][j] = n($(id + "b" + i + j)); }));
+  }
+  function pintar() {
+    leer(); const r = analizar(g), R = g.a.length, C = g.a[0].length;
+    for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) {
+      $(id + "a" + i + j).classList.toggle("mr", ver.mr1 && r.mr1[i][j]);
+      $(id + "b" + i + j).classList.toggle("mr", ver.mr2 && r.mr2[i][j]);
+      $(id + "t" + i + j).classList.toggle("nash", ver.nash && r.nash.some(([x, y]) => x === i && y === j));
+    }
+    raiz.querySelectorAll("[data-v]").forEach(b => b.classList.toggle("on", ver[b.dataset.v]));
+    let h = "";
+    if (!ver.mr1 && !ver.mr2 && !ver.nash) h = `<h3>¿Qué haría usted?</h3><p>Acordaron producir 7,5 cada una. Si la otra cumple, ¿usted cumple?</p><p class="peq">Los pagos salen de P = 30 − Q con costo cero.</p>`;
+    if (ver.mr1) {
+      h += `<h3 class="j1">${g.n1} elige la mejor fila</h3>`;
+      for (let j = 0; j < C; j++) h += `<p>Si ${g.n2} ${g.c[j].toLowerCase()} → ${g.f.filter((_, i) => r.mr1[i][j]).map(x => "<b>" + x.toLowerCase() + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.mr2) {
+      h += `<h3 class="j2">${g.n2} elige la mejor columna</h3>`;
+      for (let i = 0; i < R; i++) h += `<p>Si ${g.n1} ${g.f[i].toLowerCase()} → ${g.c.filter((_, j) => r.mr2[i][j]).map(x => "<b>" + x.toLowerCase() + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.nash) {
+      h += `<h3>Equilibrio de Nash</h3>`;
+      h += r.nash.length ? `<p>${r.nash.map(([i, j]) => `<b>(${g.f[i]}, ${g.c[j]})</b> con pagos (${fmt(g.a[i][j])}, ${fmt(g.b[i][j])})`).join("; ")}.</p>` : `<p>No hay equilibrio en estrategias puras.</p>`;
+      r.dom.forEach(t => h += `<p class="peq">${t}</p>`);
+      h += `<p class="peq">Las dos ganarían más cumpliendo, pero a cada una le conviene romper el acuerdo. El cártel no se sostiene y terminan en Cournot.</p>`;
+    }
+    h += `<p class="fuente" style="margin-top:8px">Subrayado, mejor respuesta · Amarillo, equilibrio de Nash</p>`;
+    panel.innerHTML = h;
+  }
+  raiz.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { ver[b.dataset.v] = !ver[b.dataset.v]; pintar(); });
+  cargar(raiz.dataset.inicial || claves[0]);
+}
+document.querySelectorAll(".matriz-app").forEach(crearMatriz);
+</script>
