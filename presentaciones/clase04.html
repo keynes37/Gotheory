@@ -1,0 +1,1097 @@
+<title>Teoría de Juegos · Clase 4</title>
+<!--
+  ============================================================
+  CLASE 4 · BERTRAND Y ESTRATEGIAS MIXTAS
+  - Flechas: avanzar / retroceder.   F: pantalla completa.
+  - S: vista del profesor con notas.  Esc: ver todas las diapositivas.
+  - Inicio (fn + ←): volver a la portada.
+  - PDF: agregue ?print-pdf al final de la dirección y guarde como PDF.
+    En el PDF los interactivos salen ya resueltos.
+
+  QUÉ EDITAR ANTES DE CLASE: solo el bloque CONFIG de abajo.
+  ============================================================
+-->
+<script>
+  const CONFIG = {
+    // Cuántos estudiantes hay en la lista (para sortear quién juega).
+    totalEstudiantes: 23
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+/*!
+* reveal.js 5.1.0
+* https://revealjs.com
+* MIT licensed
+*
+* Copyright (C) 2011-2024 Hakim El Hattab, https://hakim.se
+*/
+.reveal .r-stretch,.reveal .stretch{max-width:none;max-height:none}.reveal pre.r-stretch code,.reveal pre.stretch code{height:100%;max-height:100%;box-sizing:border-box}.reveal .r-fit-text{display:inline-block;white-space:nowrap}.reveal .r-stack{display:grid;grid-template-rows:100%}.reveal .r-stack>*{grid-area:1/1;margin:auto}.reveal .r-hstack,.reveal .r-vstack{display:flex}.reveal .r-hstack img,.reveal .r-hstack video,.reveal .r-vstack img,.reveal .r-vstack video{min-width:0;min-height:0;object-fit:contain}.reveal .r-vstack{flex-direction:column;align-items:center;justify-content:center}.reveal .r-hstack{flex-direction:row;align-items:center;justify-content:center}.reveal .items-stretch{align-items:stretch}.reveal .items-start{align-items:flex-start}.reveal .items-center{align-items:center}.reveal .items-end{align-items:flex-end}.reveal .justify-between{justify-content:space-between}.reveal .justify-around{justify-content:space-around}.reveal .justify-start{justify-content:flex-start}.reveal .justify-center{justify-content:center}.reveal .justify-end{justify-content:flex-end}html.reveal-full-page{width:100%;height:100%;height:100vh;height:calc(var(--vh,1vh) * 100);height:100svh;overflow:hidden}.reveal-viewport{height:100%;overflow:hidden;position:relative;line-height:1;margin:0;background-color:#fff;color:#000;--r-controls-spacing:12px}.reveal-viewport:fullscreen{top:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important}.reveal .fragment{transition:all .2s ease}.reveal .fragment:not(.custom){opacity:0;visibility:hidden;will-change:opacity}.reveal .fragment.visible{opacity:1;visibility:inherit}.reveal .fragment.disabled{transition:none}.reveal .fragment.grow{opacity:1;visibility:inherit}.reveal .fragment.grow.visible{transform:scale(1.3)}.reveal .fragment.shrink{opacity:1;visibility:inherit}.reveal .fragment.shrink.visible{transform:scale(.7)}.reveal .fragment.zoom-in{transform:scale(.1)}.reveal .fragment.zoom-in.visible{transform:none}.reveal .fragment.fade-out{opacity:1;visibility:inherit}.reveal .fragment.fade-out.visible{opacity:0;visibility:hidden}.reveal .fragment.semi-fade-out{opacity:1;visibility:inherit}.reveal .fragment.semi-fade-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.strike{opacity:1;visibility:inherit}.reveal .fragment.strike.visible{text-decoration:line-through}.reveal .fragment.fade-up{transform:translate(0,40px)}.reveal .fragment.fade-up.visible{transform:translate(0,0)}.reveal .fragment.fade-down{transform:translate(0,-40px)}.reveal .fragment.fade-down.visible{transform:translate(0,0)}.reveal .fragment.fade-right{transform:translate(-40px,0)}.reveal .fragment.fade-right.visible{transform:translate(0,0)}.reveal .fragment.fade-left{transform:translate(40px,0)}.reveal .fragment.fade-left.visible{transform:translate(0,0)}.reveal .fragment.current-visible,.reveal .fragment.fade-in-then-out{opacity:0;visibility:hidden}.reveal .fragment.current-visible.current-fragment,.reveal .fragment.fade-in-then-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.fade-in-then-semi-out{opacity:0;visibility:hidden}.reveal .fragment.fade-in-then-semi-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.fade-in-then-semi-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.highlight-blue,.reveal .fragment.highlight-current-blue,.reveal .fragment.highlight-current-green,.reveal .fragment.highlight-current-red,.reveal .fragment.highlight-green,.reveal .fragment.highlight-red{opacity:1;visibility:inherit}.reveal .fragment.highlight-red.visible{color:#ff2c2d}.reveal .fragment.highlight-green.visible{color:#17ff2e}.reveal .fragment.highlight-blue.visible{color:#1b91ff}.reveal .fragment.highlight-current-red.current-fragment{color:#ff2c2d}.reveal .fragment.highlight-current-green.current-fragment{color:#17ff2e}.reveal .fragment.highlight-current-blue.current-fragment{color:#1b91ff}.reveal:after{content:"";font-style:italic}.reveal iframe{z-index:1}.reveal a{position:relative}@keyframes bounce-right{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(10px)}30%{transform:translateX(-5px)}}@keyframes bounce-left{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(-10px)}30%{transform:translateX(5px)}}@keyframes bounce-down{0%,10%,25%,40%,50%{transform:translateY(0)}20%{transform:translateY(10px)}30%{transform:translateY(-5px)}}.reveal .controls{display:none;position:absolute;top:auto;bottom:var(--r-controls-spacing);right:var(--r-controls-spacing);left:auto;z-index:11;color:#000;pointer-events:none;font-size:10px}.reveal .controls button{position:absolute;padding:0;background-color:transparent;border:0;outline:0;cursor:pointer;color:currentColor;transform:scale(.9999);transition:color .2s ease,opacity .2s ease,transform .2s ease;z-index:2;pointer-events:auto;font-size:inherit;visibility:hidden;opacity:0;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}.reveal .controls .controls-arrow:after,.reveal .controls .controls-arrow:before{content:"";position:absolute;top:0;left:0;width:2.6em;height:.5em;border-radius:.25em;background-color:currentColor;transition:all .15s ease,background-color .8s ease;transform-origin:.2em 50%;will-change:transform}.reveal .controls .controls-arrow{position:relative;width:3.6em;height:3.6em}.reveal .controls .controls-arrow:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal .controls .controls-arrow:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}.reveal .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(40deg)}.reveal .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-40deg)}.reveal .controls .controls-arrow:active:before{transform:translateX(.5em) translateY(1.55em) rotate(36deg)}.reveal .controls .controls-arrow:active:after{transform:translateX(.5em) translateY(1.55em) rotate(-36deg)}.reveal .controls .navigate-left{right:6.4em;bottom:3.2em;transform:translateX(-10px)}.reveal .controls .navigate-left.highlight{animation:bounce-left 2s 50 both ease-out}.reveal .controls .navigate-right{right:0;bottom:3.2em;transform:translateX(10px)}.reveal .controls .navigate-right .controls-arrow{transform:rotate(180deg)}.reveal .controls .navigate-right.highlight{animation:bounce-right 2s 50 both ease-out}.reveal .controls .navigate-up{right:3.2em;bottom:6.4em;transform:translateY(-10px)}.reveal .controls .navigate-up .controls-arrow{transform:rotate(90deg)}.reveal .controls .navigate-down{right:3.2em;bottom:-1.4em;padding-bottom:1.4em;transform:translateY(10px)}.reveal .controls .navigate-down .controls-arrow{transform:rotate(-90deg)}.reveal .controls .navigate-down.highlight{animation:bounce-down 2s 50 both ease-out}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled{opacity:.3}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled:hover{opacity:1}.reveal .controls[data-controls-back-arrows=hidden] .navigate-up.enabled{opacity:0;visibility:hidden}.reveal .controls .enabled{visibility:visible;opacity:.9;cursor:pointer;transform:none}.reveal .controls .enabled.fragmented{opacity:.5}.reveal .controls .enabled.fragmented:hover,.reveal .controls .enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled{opacity:.3}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=hidden] .navigate-left.enabled{opacity:0;visibility:hidden}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled{opacity:.3}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled:hover{opacity:1}.reveal.rtl .controls[data-controls-back-arrows=hidden] .navigate-right.enabled{opacity:0;visibility:hidden}.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-down,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-up{display:none}.reveal:not(.has-vertical-slides) .controls .navigate-left,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-left{bottom:1.4em;right:5.5em}.reveal:not(.has-vertical-slides) .controls .navigate-right,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-right{bottom:1.4em;right:.5em}.reveal:not(.has-horizontal-slides) .controls .navigate-up{right:1.4em;bottom:5em}.reveal:not(.has-horizontal-slides) .controls .navigate-down{right:1.4em;bottom:.5em}.reveal.has-dark-background .controls{color:#fff}.reveal.has-light-background .controls{color:#000}.reveal.no-hover .controls .controls-arrow:active:before,.reveal.no-hover .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal.no-hover .controls .controls-arrow:active:after,.reveal.no-hover .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}@media screen and (min-width:500px){.reveal-viewport{--r-controls-spacing:0.8em}.reveal .controls[data-controls-layout=edges]{top:0;right:0;bottom:0;left:0}.reveal .controls[data-controls-layout=edges] .navigate-down,.reveal .controls[data-controls-layout=edges] .navigate-left,.reveal .controls[data-controls-layout=edges] .navigate-right,.reveal .controls[data-controls-layout=edges] .navigate-up{bottom:auto;right:auto}.reveal .controls[data-controls-layout=edges] .navigate-left{top:50%;left:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-right{top:50%;right:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-up{top:var(--r-controls-spacing);left:50%;margin-left:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-down{bottom:calc(var(--r-controls-spacing) - 1.4em + .3em);left:50%;margin-left:-1.8em}}.reveal .progress{position:absolute;display:none;height:3px;width:100%;bottom:0;left:0;z-index:10;background-color:rgba(0,0,0,.2);color:#fff}.reveal .progress:after{content:"";display:block;position:absolute;height:10px;width:100%;top:-10px}.reveal .progress span{display:block;height:100%;width:100%;background-color:currentColor;transition:transform .8s cubic-bezier(.26,.86,.44,.985);transform-origin:0 0;transform:scaleX(0)}.reveal .slide-number{position:absolute;display:block;right:8px;bottom:8px;z-index:31;font-family:Helvetica,sans-serif;font-size:12px;line-height:1;color:#fff;background-color:rgba(0,0,0,.4);padding:5px}.reveal .slide-number a{color:currentColor}.reveal .slide-number-delimiter{margin:0 3px}.reveal{position:relative;width:100%;height:100%;overflow:hidden;touch-action:pinch-zoom}.reveal.embedded{touch-action:pan-y}.reveal.embedded.is-vertical-slide{touch-action:none}.reveal .slides{position:absolute;width:100%;height:100%;top:0;right:0;bottom:0;left:0;margin:auto;pointer-events:none;overflow:visible;z-index:1;text-align:center;perspective:600px;perspective-origin:50% 40%}.reveal .slides>section{perspective:600px}.reveal .slides>section,.reveal .slides>section>section{display:none;position:absolute;width:100%;pointer-events:auto;z-index:10;transform-style:flat;transition:transform-origin .8s cubic-bezier(.26,.86,.44,.985),transform .8s cubic-bezier(.26,.86,.44,.985),visibility .8s cubic-bezier(.26,.86,.44,.985),opacity .8s cubic-bezier(.26,.86,.44,.985)}.reveal[data-transition-speed=fast] .slides section{transition-duration:.4s}.reveal[data-transition-speed=slow] .slides section{transition-duration:1.2s}.reveal .slides section[data-transition-speed=fast]{transition-duration:.4s}.reveal .slides section[data-transition-speed=slow]{transition-duration:1.2s}.reveal .slides>section.stack{padding-top:0;padding-bottom:0;pointer-events:none;height:100%}.reveal .slides>section.present,.reveal .slides>section>section.present{display:block;z-index:11;opacity:1}.reveal .slides>section:empty,.reveal .slides>section>section:empty,.reveal .slides>section>section[data-background-interactive],.reveal .slides>section[data-background-interactive]{pointer-events:none}.reveal.center,.reveal.center .slides,.reveal.center .slides section{min-height:0!important}.reveal .slides>section:not(.present),.reveal .slides>section>section:not(.present){pointer-events:none}.reveal.overview .slides>section,.reveal.overview .slides>section>section{pointer-events:auto}.reveal .slides>section.future,.reveal .slides>section.future>section,.reveal .slides>section.past,.reveal .slides>section.past>section,.reveal .slides>section>section.future,.reveal .slides>section>section.past{opacity:0}.reveal .slides>section[data-transition=slide].past,.reveal .slides>section[data-transition~=slide-out].past,.reveal.slide .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=slide].future,.reveal .slides>section[data-transition~=slide-in].future,.reveal.slide .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=slide].past,.reveal .slides>section>section[data-transition~=slide-out].past,.reveal.slide .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=slide].future,.reveal .slides>section>section[data-transition~=slide-in].future,.reveal.slide .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides>section[data-transition=linear].past,.reveal .slides>section[data-transition~=linear-out].past,.reveal.linear .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=linear].future,.reveal .slides>section[data-transition~=linear-in].future,.reveal.linear .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=linear].past,.reveal .slides>section>section[data-transition~=linear-out].past,.reveal.linear .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=linear].future,.reveal .slides>section>section[data-transition~=linear-in].future,.reveal.linear .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides section[data-transition=default].stack,.reveal.default .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=default].past,.reveal .slides>section[data-transition~=default-out].past,.reveal.default .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=default].future,.reveal .slides>section[data-transition~=default-in].future,.reveal.default .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=default].past,.reveal .slides>section>section[data-transition~=default-out].past,.reveal.default .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=default].future,.reveal .slides>section>section[data-transition~=default-in].future,.reveal.default .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=convex].stack,.reveal.convex .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=convex].past,.reveal .slides>section[data-transition~=convex-out].past,.reveal.convex .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=convex].future,.reveal .slides>section[data-transition~=convex-in].future,.reveal.convex .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=convex].past,.reveal .slides>section>section[data-transition~=convex-out].past,.reveal.convex .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=convex].future,.reveal .slides>section>section[data-transition~=convex-in].future,.reveal.convex .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=concave].stack,.reveal.concave .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=concave].past,.reveal .slides>section[data-transition~=concave-out].past,.reveal.concave .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=concave].future,.reveal .slides>section[data-transition~=concave-in].future,.reveal.concave .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=concave].past,.reveal .slides>section>section[data-transition~=concave-out].past,.reveal.concave .slides>section>section:not([data-transition]).past{transform:translate3d(0,-80%,0) rotateX(-70deg) translate3d(0,-80%,0)}.reveal .slides>section>section[data-transition=concave].future,.reveal .slides>section>section[data-transition~=concave-in].future,.reveal.concave .slides>section>section:not([data-transition]).future{transform:translate3d(0,80%,0) rotateX(70deg) translate3d(0,80%,0)}.reveal .slides section[data-transition=zoom],.reveal.zoom .slides section:not([data-transition]){transition-timing-function:ease}.reveal .slides>section[data-transition=zoom].past,.reveal .slides>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section:not([data-transition]).past{visibility:hidden;transform:scale(16)}.reveal .slides>section[data-transition=zoom].future,.reveal .slides>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section:not([data-transition]).future{visibility:hidden;transform:scale(.2)}.reveal .slides>section>section[data-transition=zoom].past,.reveal .slides>section>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section>section:not([data-transition]).past{transform:scale(16)}.reveal .slides>section>section[data-transition=zoom].future,.reveal .slides>section>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section>section:not([data-transition]).future{transform:scale(.2)}.reveal.cube .slides{perspective:1300px}.reveal.cube .slides section{padding:30px;min-height:700px;backface-visibility:hidden;box-sizing:border-box;transform-style:preserve-3d}.reveal.center.cube .slides section{min-height:0}.reveal.cube .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);border-radius:4px;transform:translateZ(-20px)}.reveal.cube .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);transform:translateZ(-90px) rotateX(65deg)}.reveal.cube .slides>section.stack{padding:0;background:0 0}.reveal.cube .slides>section.past{transform-origin:100% 0;transform:translate3d(-100%,0,0) rotateY(-90deg)}.reveal.cube .slides>section.future{transform-origin:0 0;transform:translate3d(100%,0,0) rotateY(90deg)}.reveal.cube .slides>section>section.past{transform-origin:0 100%;transform:translate3d(0,-100%,0) rotateX(90deg)}.reveal.cube .slides>section>section.future{transform-origin:0 0;transform:translate3d(0,100%,0) rotateX(-90deg)}.reveal.page .slides{perspective-origin:0 50%;perspective:3000px}.reveal.page .slides section{padding:30px;min-height:700px;box-sizing:border-box;transform-style:preserve-3d}.reveal.page .slides section.past{z-index:12}.reveal.page .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);transform:translateZ(-20px)}.reveal.page .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);-webkit-transform:translateZ(-90px) rotateX(65deg)}.reveal.page .slides>section.stack{padding:0;background:0 0}.reveal.page .slides>section.past{transform-origin:0 0;transform:translate3d(-40%,0,0) rotateY(-80deg)}.reveal.page .slides>section.future{transform-origin:100% 0;transform:translate3d(0,0,0)}.reveal.page .slides>section>section.past{transform-origin:0 0;transform:translate3d(0,-40%,0) rotateX(80deg)}.reveal.page .slides>section>section.future{transform-origin:0 100%;transform:translate3d(0,0,0)}.reveal .slides section[data-transition=fade],.reveal.fade .slides section:not([data-transition]),.reveal.fade .slides>section>section:not([data-transition]){transform:none;transition:opacity .5s}.reveal.fade.overview .slides section,.reveal.fade.overview .slides>section>section{transition:none}.reveal .slides section[data-transition=none],.reveal.none .slides section:not([data-transition]){transform:none;transition:none}.reveal .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;visibility:hidden;opacity:0;z-index:100;transition:all 1s ease}.reveal .pause-overlay .resume-button{position:absolute;bottom:20px;right:20px;color:#ccc;border-radius:2px;padding:6px 14px;border:2px solid #ccc;font-size:16px;background:0 0;cursor:pointer}.reveal .pause-overlay .resume-button:hover{color:#fff;border-color:#fff}.reveal.paused .pause-overlay{visibility:visible;opacity:1}.reveal .no-transition,.reveal .no-transition *,.reveal .slides.disable-slide-transitions section{transition:none!important}.reveal .slides.disable-slide-transitions section{transform:none!important}.reveal .backgrounds{position:absolute;width:100%;height:100%;top:0;left:0;perspective:600px}.reveal .slide-background{display:none;position:absolute;width:100%;height:100%;opacity:0;visibility:hidden;overflow:hidden;background-color:rgba(0,0,0,0);transition:all .8s cubic-bezier(.26,.86,.44,.985)}.reveal .slide-background-content{position:absolute;width:100%;height:100%;background-position:50% 50%;background-repeat:no-repeat;background-size:cover}.reveal .slide-background.stack{display:block}.reveal .slide-background.present{opacity:1;visibility:visible;z-index:2}.print-pdf .reveal .slide-background{opacity:1!important;visibility:visible!important}.reveal .slide-background video{position:absolute;width:100%;height:100%;max-width:none;max-height:none;top:0;left:0;object-fit:cover}.reveal .slide-background[data-background-size=contain] video{object-fit:contain}.reveal>.backgrounds .slide-background[data-background-transition=none],.reveal[data-background-transition=none]>.backgrounds .slide-background:not([data-background-transition]){transition:none}.reveal>.backgrounds .slide-background[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background:not([data-background-transition]){opacity:1}.reveal>.backgrounds .slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.past:not([data-background-transition]){transform:translate(-100%,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.future:not([data-background-transition]){transform:translate(100%,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){transform:translate(0,-100%)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){transform:translate(0,100%)}.reveal>.backgrounds .slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(-90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(-90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background:not([data-background-transition]){transition-timing-function:ease}.reveal>.backgrounds .slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal[data-transition-speed=fast]>.backgrounds .slide-background{transition-duration:.4s}.reveal[data-transition-speed=slow]>.backgrounds .slide-background{transition-duration:1.2s}.reveal [data-auto-animate-target^=unmatched]{will-change:opacity}.reveal section[data-auto-animate]:not(.stack):not([data-auto-animate=running]) [data-auto-animate-target^=unmatched]{opacity:0}.reveal.overview{perspective-origin:50% 50%;perspective:700px}.reveal.overview .slides{-moz-transform-style:preserve-3d}.reveal.overview .slides section{height:100%;top:0!important;opacity:1!important;overflow:hidden;visibility:visible!important;cursor:pointer;box-sizing:border-box}.reveal.overview .slides section.present,.reveal.overview .slides section:hover{outline:10px solid rgba(150,150,150,.4);outline-offset:10px}.reveal.overview .slides section .fragment{opacity:1;transition:none}.reveal.overview .slides section:after,.reveal.overview .slides section:before{display:none!important}.reveal.overview .slides>section.stack{padding:0;top:0!important;background:0 0;outline:0;overflow:visible}.reveal.overview .backgrounds{perspective:inherit;-moz-transform-style:preserve-3d}.reveal.overview .backgrounds .slide-background{opacity:1;visibility:visible;outline:10px solid rgba(150,150,150,.1);outline-offset:10px}.reveal.overview .backgrounds .slide-background.stack{overflow:visible}.reveal.overview .slides section,.reveal.overview-deactivating .slides section{transition:none}.reveal.overview .backgrounds .slide-background,.reveal.overview-deactivating .backgrounds .slide-background{transition:none}.reveal.rtl .slides,.reveal.rtl .slides h1,.reveal.rtl .slides h2,.reveal.rtl .slides h3,.reveal.rtl .slides h4,.reveal.rtl .slides h5,.reveal.rtl .slides h6{direction:rtl;font-family:sans-serif}.reveal.rtl code,.reveal.rtl pre{direction:ltr}.reveal.rtl ol,.reveal.rtl ul{text-align:right}.reveal.rtl .progress span{transform-origin:100% 0}.reveal.has-parallax-background .backgrounds{transition:all .8s ease}.reveal.has-parallax-background[data-transition-speed=fast] .backgrounds{transition-duration:.4s}.reveal.has-parallax-background[data-transition-speed=slow] .backgrounds{transition-duration:1.2s}.reveal>.overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;background:rgba(0,0,0,.95);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .3s ease}.reveal>.overlay .spinner{position:absolute;display:block;top:50%;left:50%;width:32px;height:32px;margin:-16px 0 0 -16px;z-index:10;background-image:url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);visibility:visible;opacity:.6;transition:all .3s ease}.reveal>.overlay header{position:absolute;left:0;top:0;width:100%;padding:5px;z-index:2;box-sizing:border-box}.reveal>.overlay header a{display:inline-block;width:40px;height:40px;line-height:36px;padding:0 10px;float:right;opacity:.6;box-sizing:border-box}.reveal>.overlay header a:hover{opacity:1}.reveal>.overlay header a .icon{display:inline-block;width:20px;height:20px;background-position:50% 50%;background-size:100%;background-repeat:no-repeat}.reveal>.overlay header a.close .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC)}.reveal>.overlay header a.external .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==)}.reveal>.overlay .viewport{position:absolute;display:flex;top:50px;right:0;bottom:0;left:0}.reveal>.overlay.overlay-preview .viewport iframe{width:100%;height:100%;max-width:100%;max-height:100%;border:0;opacity:0;visibility:hidden;transition:all .3s ease}.reveal>.overlay.overlay-preview.loaded .viewport iframe{opacity:1;visibility:visible}.reveal>.overlay.overlay-preview.loaded .viewport-inner{position:absolute;z-index:-1;left:0;top:45%;width:100%;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-preview .x-frame-error{opacity:0;transition:opacity .3s ease .3s}.reveal>.overlay.overlay-preview.loaded .x-frame-error{opacity:1}.reveal>.overlay.overlay-preview.loaded .spinner{opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.overlay.overlay-help .viewport{overflow:auto;color:#fff}.reveal>.overlay.overlay-help .viewport .viewport-inner{width:600px;margin:auto;padding:20px 20px 80px 20px;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-help .viewport .viewport-inner .title{font-size:20px}.reveal>.overlay.overlay-help .viewport .viewport-inner table{border:1px solid #fff;border-collapse:collapse;font-size:16px}.reveal>.overlay.overlay-help .viewport .viewport-inner table td,.reveal>.overlay.overlay-help .viewport .viewport-inner table th{width:200px;padding:14px;border:1px solid #fff;vertical-align:middle}.reveal>.overlay.overlay-help .viewport .viewport-inner table th{padding-top:20px;padding-bottom:20px}.reveal .playback{position:absolute;left:15px;bottom:20px;z-index:30;cursor:pointer;transition:all .4s ease;-webkit-tap-highlight-color:transparent}.reveal.overview .playback{opacity:0;visibility:hidden}.reveal .hljs{min-height:100%}.reveal .hljs table{margin:initial}.reveal .hljs-ln-code,.reveal .hljs-ln-numbers{padding:0;border:0}.reveal .hljs-ln-numbers{opacity:.6;padding-right:.75em;text-align:right;vertical-align:top}.reveal .hljs.has-highlights tr:not(.highlight-line){opacity:.4}.reveal .hljs.has-highlights.fragment{transition:all .2s ease}.reveal .hljs:not(:first-child).fragment{position:absolute;top:0;left:0;width:100%;box-sizing:border-box}.reveal pre[data-auto-animate-target]{overflow:hidden}.reveal pre[data-auto-animate-target] code{height:100%}.reveal .roll{display:inline-block;line-height:1.2;overflow:hidden;vertical-align:top;perspective:400px;perspective-origin:50% 50%}.reveal .roll:hover{background:0 0;text-shadow:none}.reveal .roll span{display:block;position:relative;padding:0 2px;pointer-events:none;transition:all .4s ease;transform-origin:50% 0;transform-style:preserve-3d;backface-visibility:hidden}.reveal .roll:hover span{background:rgba(0,0,0,.5);transform:translate3d(0,0,-45px) rotateX(90deg)}.reveal .roll span:after{content:attr(data-title);display:block;position:absolute;left:0;top:0;padding:0 2px;backface-visibility:hidden;transform-origin:50% 0;transform:translate3d(0,110%,0) rotateX(-90deg)}.reveal aside.notes{display:none}.reveal .speaker-notes{display:none;position:absolute;width:33.3333333333%;height:100%;top:0;left:100%;padding:14px 18px 14px 18px;z-index:1;font-size:18px;line-height:1.4;border:1px solid rgba(0,0,0,.05);color:#222;background-color:#f5f5f5;overflow:auto;box-sizing:border-box;text-align:left;font-family:Helvetica,sans-serif;-webkit-overflow-scrolling:touch}.reveal .speaker-notes .notes-placeholder{color:#ccc;font-style:italic}.reveal .speaker-notes:focus{outline:0}.reveal .speaker-notes:before{content:"Speaker notes";display:block;margin-bottom:10px;opacity:.5}.reveal.show-notes{max-width:75%;overflow:visible}.reveal.show-notes .speaker-notes{display:block}@media screen and (min-width:1600px){.reveal .speaker-notes{font-size:20px}}@media screen and (max-width:1024px){.reveal.show-notes{border-left:0;max-width:none;max-height:70%;max-height:70vh;overflow:visible}.reveal.show-notes .speaker-notes{top:100%;left:0;width:100%;height:30vh;border:0}}@media screen and (max-width:600px){.reveal.show-notes{max-height:60%;max-height:60vh}.reveal.show-notes .speaker-notes{top:100%;height:40vh}.reveal .speaker-notes{font-size:14px}}.reveal .jump-to-slide{position:absolute;top:15px;left:15px;z-index:30;font-size:32px;-webkit-tap-highlight-color:transparent}.reveal .jump-to-slide-input{background:0 0;padding:8px;font-size:inherit;color:currentColor;border:0}.reveal .jump-to-slide-input::placeholder{color:currentColor;opacity:.5}.reveal.has-dark-background .jump-to-slide-input{color:#fff}.reveal.has-light-background .jump-to-slide-input{color:#222}.reveal .jump-to-slide-input:focus{outline:0}.zoomed .reveal *,.zoomed .reveal :after,.zoomed .reveal :before{backface-visibility:visible!important}.zoomed .reveal .controls,.zoomed .reveal .progress{opacity:0}.zoomed .reveal .roll span{background:0 0}.zoomed .reveal .roll span:after{visibility:hidden}.reveal-viewport.loading-scroll-mode{visibility:hidden}.reveal-viewport.reveal-scroll{margin:0 auto;overflow:auto;overflow-x:hidden;overflow-y:auto;z-index:1;--r-scrollbar-width:7px;--r-scrollbar-trigger-size:5px;--r-controls-spacing:8px}@media screen and (max-width:500px){.reveal-viewport.reveal-scroll{--r-scrollbar-width:3px;--r-scrollbar-trigger-size:3px}}.reveal-viewport.reveal-scroll .backgrounds,.reveal-viewport.reveal-scroll .controls,.reveal-viewport.reveal-scroll .playback,.reveal-viewport.reveal-scroll .progress,.reveal-viewport.reveal-scroll .slide-number,.reveal-viewport.reveal-scroll .speaker-notes{display:none!important}.reveal-viewport.reveal-scroll .overlay,.reveal-viewport.reveal-scroll .pause-overlay{position:fixed}.reveal-viewport.reveal-scroll .reveal{overflow:visible;touch-action:manipulation}.reveal-viewport.reveal-scroll .slides{position:static;pointer-events:initial;left:auto;top:auto;width:100%!important;margin:0;padding:0;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}.reveal-viewport.reveal-scroll .scroll-page{position:relative;width:100%;height:calc(var(--page-height) + var(--page-scroll-padding));z-index:1;overflow:visible}.reveal-viewport.reveal-scroll .scroll-page-sticky{position:sticky;height:var(--page-height);top:0}.reveal-viewport.reveal-scroll .scroll-page-content{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.reveal-viewport.reveal-scroll .scroll-page section{visibility:visible!important;display:block!important;position:absolute!important;width:var(--slide-width)!important;height:var(--slide-height)!important;top:50%!important;left:50%!important;opacity:1!important;transform:scale(var(--slide-scale)) translate(-50%,-50%)!important;transform-style:flat!important;transform-origin:0 0!important}.reveal-viewport.reveal-scroll .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important;visibility:visible;opacity:1;touch-action:manipulation}.reveal-viewport.reveal-scroll[data-scrollbar=auto]::-webkit-scrollbar,.reveal-viewport.reveal-scroll[data-scrollbar=true]::-webkit-scrollbar{display:none}.reveal-viewport.reveal-scroll[data-scrollbar=auto],.reveal-viewport.reveal-scroll[data-scrollbar=true]{scrollbar-width:none}.reveal-viewport.has-dark-background,.reveal.has-dark-background{--r-overlay-element-bg-color:240,240,240;--r-overlay-element-fg-color:0,0,0}.reveal-viewport.has-light-background,.reveal.has-light-background{--r-overlay-element-bg-color:0,0,0;--r-overlay-element-fg-color:240,240,240}.reveal-viewport.reveal-scroll .scrollbar{position:sticky;top:50%;z-index:20;opacity:0;transition:all .3s ease}.reveal-viewport.reveal-scroll .scrollbar.visible,.reveal-viewport.reveal-scroll .scrollbar:hover{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-inner{position:absolute;width:var(--r-scrollbar-width);height:calc(var(--viewport-height) - var(--r-controls-spacing) * 2);right:var(--r-controls-spacing);top:0;transform:translateY(-50%);border-radius:var(--r-scrollbar-width);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-playhead{position:absolute;width:var(--r-scrollbar-width);height:var(--r-scrollbar-width);top:0;left:0;border-radius:var(--r-scrollbar-width);background-color:rgba(var(--r-overlay-element-bg-color),1);z-index:11;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide{position:absolute;width:100%;background-color:rgba(var(--r-overlay-element-bg-color),.2);box-shadow:0 0 0 1px rgba(var(--r-overlay-element-fg-color),.1);border-radius:var(--r-scrollbar-width);transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:after{content:"";position:absolute;width:200%;height:100%;top:0;left:-50%;background:rgba(0,0,0,0);z-index:-1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:hover{background-color:rgba(var(--r-overlay-element-bg-color),.4)}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-trigger{position:absolute;width:100%;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active.has-triggers{background-color:rgba(var(--r-overlay-element-bg-color),.4);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger:after{content:"";position:absolute;width:var(--r-scrollbar-trigger-size);height:var(--r-scrollbar-trigger-size);border-radius:20px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:rgba(var(--r-overlay-element-bg-color),1);transition:transform .2s ease,opacity .2s ease;opacity:.4}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active:after,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active~.scrollbar-trigger:after{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger~.scrollbar-trigger.active:after{transform:translate(calc(var(--r-scrollbar-width) * -2),0);background-color:rgba(var(--r-overlay-element-bg-color),1)}html.reveal-print *{-webkit-print-color-adjust:exact}html.reveal-print{width:100%;height:100%;overflow:visible}html.reveal-print body{margin:0 auto!important;border:0;padding:0;float:none!important;overflow:visible}html.reveal-print .nestedarrow,html.reveal-print .reveal .controls,html.reveal-print .reveal .playback,html.reveal-print .reveal .progress,html.reveal-print .reveal.overview,html.reveal-print .state-background{display:none!important}html.reveal-print .reveal pre code{overflow:hidden!important}html.reveal-print .reveal{width:auto!important;height:auto!important;overflow:hidden!important}html.reveal-print .reveal .slides{position:static;width:100%!important;height:auto!important;zoom:1!important;pointer-events:initial;left:auto;top:auto;margin:0!important;padding:0!important;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}html.reveal-print .reveal .slides .pdf-page{position:relative;overflow:hidden;z-index:1;page-break-after:always}html.reveal-print .reveal .slides .pdf-page:last-of-type{page-break-after:avoid}html.reveal-print .reveal .slides section{visibility:visible!important;display:block!important;position:absolute!important;margin:0!important;padding:0!important;box-sizing:border-box!important;min-height:1px;opacity:1!important;transform-style:flat!important;transform:none!important}html.reveal-print .reveal section.stack{position:relative!important;margin:0!important;padding:0!important;page-break-after:avoid!important;height:auto!important;min-height:auto!important}html.reveal-print .reveal img{box-shadow:none}html.reveal-print .reveal .backgrounds{display:none}html.reveal-print .reveal .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important}html.reveal-print .reveal.show-notes{max-width:none;max-height:none}html.reveal-print .reveal .speaker-notes-pdf{display:block;width:100%;height:auto;max-height:none;top:auto;right:auto;bottom:auto;left:auto;z-index:100}html.reveal-print .reveal .speaker-notes-pdf[data-layout=separate-page]{position:relative;color:inherit;background-color:transparent;padding:20px;page-break-after:always;border:0}html.reveal-print .reveal .slide-number-pdf{display:block;position:absolute;font-size:14px;visibility:visible}html.reveal-print .aria-status{display:none}@media print{html:not(.print-pdf){overflow:visible;width:auto;height:auto}html:not(.print-pdf) body{margin:0;padding:0;overflow:visible}html:not(.print-pdf) .reveal{background:#fff;font-size:20pt}html:not(.print-pdf) .reveal .backgrounds,html:not(.print-pdf) .reveal .controls,html:not(.print-pdf) .reveal .progress,html:not(.print-pdf) .reveal .slide-number,html:not(.print-pdf) .reveal .state-background{display:none!important}html:not(.print-pdf) .reveal li,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal td{font-size:20pt!important;color:#000}html:not(.print-pdf) .reveal h1,html:not(.print-pdf) .reveal h2,html:not(.print-pdf) .reveal h3,html:not(.print-pdf) .reveal h4,html:not(.print-pdf) .reveal h5,html:not(.print-pdf) .reveal h6{color:#000!important;height:auto;line-height:normal;text-align:left;letter-spacing:normal}html:not(.print-pdf) .reveal h1{font-size:28pt!important}html:not(.print-pdf) .reveal h2{font-size:24pt!important}html:not(.print-pdf) .reveal h3{font-size:22pt!important}html:not(.print-pdf) .reveal h4{font-size:22pt!important;font-variant:small-caps}html:not(.print-pdf) .reveal h5{font-size:21pt!important}html:not(.print-pdf) .reveal h6{font-size:20pt!important;font-style:italic}html:not(.print-pdf) .reveal a:link,html:not(.print-pdf) .reveal a:visited{color:#000!important;font-weight:700;text-decoration:underline}html:not(.print-pdf) .reveal div,html:not(.print-pdf) .reveal ol,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal ul{visibility:visible;position:static;width:auto;height:auto;display:block;overflow:visible;margin:0;text-align:left!important}html:not(.print-pdf) .reveal pre,html:not(.print-pdf) .reveal table{margin-left:0;margin-right:0}html:not(.print-pdf) .reveal pre code{padding:20px}html:not(.print-pdf) .reveal blockquote{margin:20px 0}html:not(.print-pdf) .reveal .slides{position:static!important;width:auto!important;height:auto!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:0!important;zoom:1!important;transform:none!important;overflow:visible!important;display:block!important;text-align:left!important;perspective:none;perspective-origin:50% 50%}html:not(.print-pdf) .reveal .slides section{visibility:visible!important;position:static!important;width:auto!important;height:auto!important;display:block!important;overflow:visible!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:60px 20px!important;z-index:auto!important;opacity:1!important;page-break-after:always!important;transform-style:flat!important;transform:none!important;transition:none!important}html:not(.print-pdf) .reveal .slides section.stack{padding:0!important}html:not(.print-pdf) .reveal .slides section:last-of-type{page-break-after:avoid!important}html:not(.print-pdf) .reveal .slides section .fragment{opacity:1!important;visibility:visible!important;transform:none!important}html:not(.print-pdf) .reveal .r-fit-text{white-space:normal!important}html:not(.print-pdf) .reveal section img{display:block;margin:15px 0;background:#fff;border:1px solid #666;box-shadow:none}html:not(.print-pdf) .reveal section small{font-size:.8em}html:not(.print-pdf) .reveal .hljs{max-height:100%;white-space:pre-wrap;word-wrap:break-word;word-break:break-word;font-size:15pt}html:not(.print-pdf) .reveal .hljs .hljs-ln-numbers{white-space:nowrap}html:not(.print-pdf) .reveal .hljs td{font-size:inherit!important;color:inherit!important}}
+</style>
+<style>
+/* Layout: aula proyectada. Papel claro, tinta oscura, el rojo Uninorte/Sparta como único acento;
+   azul = Jugador 1, rojo = Jugador 2 en todas las matrices. Tema único y claro (proyector). */
+:root {
+  --papel: #faf8f6;
+  --tarjeta: #ffffff;
+  --tinta: #1f1a19;
+  --gris: #6d6360;
+  --linea: #e6dfdb;
+  --rojo: #c62828;
+  --rojo-suave: #fbe9e7;
+  --azul: #1d5fa8;
+  --azul-suave: #e7f0fa;
+  --nash: #ffe08a;
+  --apagado: #c9c1bd;
+  --kraft: #d9b98c;
+  --kraft-oscuro: #b8925f;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-texto: "Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; background: var(--papel); color: var(--tinta); }
+body { margin: 0; }
+
+.reveal { font-family: var(--f-texto); font-size: 28px; color: var(--tinta); background: var(--papel); }
+.reveal .slides { text-align: left; }
+.reveal .slides section { height: 100%; box-sizing: border-box; padding: 6px 8px; }
+.reveal h1, .reveal h2, .reveal h3 { font-family: var(--f-display); color: var(--tinta); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.reveal h1 { font-size: 76px; font-weight: 800; line-height: 1.02; }
+.reveal h2 { font-size: 50px; font-weight: 800; line-height: 1.08; margin-bottom: 22px; }
+.reveal h3 { font-size: 30px; font-weight: 600; margin-bottom: 8px; }
+.reveal p { margin: 0 0 14px; line-height: 1.4; }
+.reveal ul { margin: 0; padding-left: 1.1em; }
+.reveal li { margin-bottom: 10px; line-height: 1.35; }
+.reveal li::marker { color: var(--rojo); }
+.reveal strong { font-weight: 700; }
+.reveal a { color: var(--rojo); text-decoration: underline; text-underline-offset: 3px; }
+.reveal .controls { color: var(--rojo); }
+.reveal .progress { color: var(--rojo); height: 5px; }
+.reveal .slide-number { background: transparent; color: var(--gris); font-family: var(--f-num); font-size: 14px; }
+
+.ceja { font-family: var(--f-num); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rojo); margin-bottom: 12px; font-weight: 600; }
+.sub { color: var(--gris); font-size: 26px; }
+.peq { font-size: 21px; color: var(--gris); }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.j1 { color: var(--azul); }
+.j2 { color: var(--rojo); }
+.fila { display: flex; gap: 40px; align-items: flex-start; }
+.fila > * { min-width: 0; }
+.col { flex: 1; }
+.centro-v { align-items: center; }
+
+/* Portada */
+.portada { display: grid; grid-template-columns: 1.25fr 1fr; gap: 50px; align-items: center; height: 100%; }
+.portada .autor { margin-top: 34px; font-size: 22px; color: var(--gris); line-height: 1.5; }
+.portada .autor b { color: var(--tinta); }
+
+/* Matrices de pagos */
+.matriz { border-collapse: collapse; font-size: 26px; margin: 0 auto; }
+.matriz th { font-family: var(--f-texto); font-weight: 700; font-size: 20px; padding: 8px 14px; color: var(--gris); }
+.matriz .jug { font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+.matriz td { border: 2px solid var(--tinta); width: 150px; height: 82px; text-align: center; font-family: var(--f-num); font-weight: 600; background: var(--tarjeta); transition: background .3s; }
+.matriz td.nash { background: var(--nash); }
+.matriz td.apagada { color: var(--apagado); }
+.matriz .lado { writing-mode: vertical-rl; transform: rotate(180deg); }
+
+/* Tarjetas de situaciones */
+.rejilla { display: grid; gap: 18px; }
+.rejilla.tres { grid-template-columns: repeat(3, 1fr); }
+.rejilla.dos { grid-template-columns: repeat(2, 1fr); }
+.caso { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.caso h3 { font-size: 25px; margin: 0; }
+.caso p { font-size: 20px; margin: 0; color: var(--tinta); line-height: 1.35; }
+.etiqueta { align-self: flex-start; font-family: var(--f-num); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; background: var(--rojo-suave); color: var(--rojo); }
+.etiqueta.az { background: var(--azul-suave); color: var(--azul); }
+.fuente { font-size: 15px; color: var(--gris); }
+
+/* Ingredientes */
+.ingred { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.ingred > div { padding: 18px 20px 0 0; }
+.ingred b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.ingred span { font-size: 21px; color: var(--gris); line-height: 1.35; display: block; }
+.ingred i { font-style: normal; font-family: var(--f-num); color: var(--rojo); font-size: 17px; }
+
+.definicion { border-left: 5px solid var(--rojo); padding: 6px 0 6px 22px; font-size: 27px; line-height: 1.4; margin: 0 0 30px; max-width: 30em; }
+
+/* Botones e insumos */
+.reveal button { font-family: var(--f-texto); font-size: 19px; font-weight: 600; padding: 9px 16px; border: 2px solid var(--tinta); background: var(--tarjeta); color: var(--tinta); border-radius: 7px; cursor: pointer; }
+.reveal button:hover { background: var(--rojo-suave); }
+.reveal button:focus-visible, .reveal input:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+.reveal button.on { background: var(--tinta); color: var(--papel); }
+.reveal button.primario { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.reveal input[type=number], .reveal input.celda { font-family: var(--f-num); font-weight: 600; font-size: 24px; width: 64px; text-align: center; border: 1.5px solid transparent; border-radius: 5px; background: transparent; color: inherit; padding: 2px; }
+.reveal input.celda:hover { border-color: var(--apagado); }
+.reveal input.celda.mr { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; font-weight: 700; }
+
+/* Sorteo con papel y bolsa */
+.bolsa { width: 330px; max-width: 100%; height: auto; display: block; }
+.bolsa .cuerpo { fill: var(--kraft); stroke: var(--kraft-oscuro); stroke-width: 3; }
+.bolsa .pliegue { fill: var(--kraft-oscuro); }
+.bolsa .boca { fill: var(--tinta); opacity: .85; }
+.bolsa .papel rect { fill: #fff; stroke: var(--tinta); stroke-width: 2; }
+.bolsa .papel text { font-family: var(--f-display); font-weight: 800; font-size: 30px; text-anchor: middle; dominant-baseline: central; }
+.bolsa .papel { animation: caer 3.6s ease-in infinite; transform-box: fill-box; transform-origin: center; }
+.bolsa .papel.p2 { animation-delay: 1.2s; }
+.bolsa .papel.p3 { animation-delay: 2.4s; }
+@keyframes caer { 0%, 15% { transform: translateY(0) rotate(0); opacity: 1; } 70% { transform: translateY(150px) rotate(25deg); opacity: 1; } 80%, 100% { transform: translateY(170px) rotate(30deg); opacity: 0; } }
+html.print-pdf .bolsa .papel { animation: none; }
+.foto-sorteo { max-width: 360px; max-height: 300px; border-radius: 8px; border: 2px solid var(--tinta); }
+.pasos { list-style: none; padding: 0 !important; counter-reset: paso; margin-top: 20px !important; }
+.pasos li { counter-increment: paso; display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: baseline; font-size: 23px; margin-bottom: 8px; }
+.pasos li::before { content: counter(paso); font-family: var(--f-num); font-weight: 600; color: var(--papel); background: var(--rojo); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 17px; }
+.pasos li::marker { content: ""; }
+.contador { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.contador .tipo { border: 2px solid var(--tinta); border-radius: 8px; padding: 10px 12px; background: var(--tarjeta); display: flex; flex-direction: column; gap: 4px; }
+.contador .tipo b { font-family: var(--f-display); font-size: 26px; }
+.contador .tipo .cuenta { font-family: var(--f-num); font-size: 40px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.contador .tipo span { font-size: 16px; color: var(--gris); }
+.contador button { margin-top: 4px; }
+.reloj { font-family: var(--f-num); font-size: 58px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.reglas { list-style: none; padding: 0 !important; }
+.reglas li { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--linea); margin: 0; }
+.reglas li::marker { content: ""; }
+
+/* Panel explicativo de la matriz */
+.panel { font-size: 21px; line-height: 1.4; }
+.panel h3 { font-size: 23px; margin: 10px 0 4px; }
+.panel p { margin: 0 0 6px; }
+
+/* Barras */
+.barras { display: flex; flex-direction: column; gap: 10px; }
+.barra { display: grid; grid-template-columns: 210px 1fr 80px; gap: 12px; align-items: center; font-size: 21px; }
+.barra .pista { height: 30px; background: var(--linea); border-radius: 4px; overflow: hidden; }
+.barra .relleno { height: 100%; background: var(--tinta); border-radius: 4px; transition: width .5s; }
+.barra .relleno.r { background: var(--rojo); }
+.barra .relleno.a { background: var(--azul); }
+.barra .v { font-family: var(--f-num); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.dato { font-family: var(--f-num); font-size: 44px; font-weight: 600; line-height: 1; }
+
+/* Torneo */
+.opciones { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 19px; }
+.opciones label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.reveal input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--rojo); }
+.reveal input[type=range] { accent-color: var(--rojo); width: 200px; }
+
+/* Penalti */
+.arco { display: flex; gap: 14px; }
+.arco button { flex: 1; font-size: 24px; padding: 18px; }
+.tiros { display: flex; flex-wrap: wrap; gap: 6px; min-height: 34px; }
+.tiro { font-family: var(--f-num); font-size: 15px; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+.tiro.gol { background: var(--azul-suave); color: var(--azul); }
+.tiro.atajada { background: var(--rojo-suave); color: var(--rojo); }
+
+/* Árbol */
+.arbol line { stroke: var(--tinta); stroke-width: 3; transition: stroke .3s, opacity .3s; }
+.arbol line.elegida { stroke: var(--rojo); stroke-width: 6; }
+.arbol line.descartada { opacity: .2; }
+.arbol circle { fill: var(--tinta); }
+.arbol text { font-family: var(--f-texto); font-size: 20px; fill: var(--tinta); }
+.arbol text.nodo { font-weight: 700; font-size: 21px; }
+.arbol text.pago { font-family: var(--f-num); font-weight: 600; font-size: 22px; }
+.arbol .descartada-t { opacity: .3; }
+
+/* Tipos de juego */
+.contrastes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 40px; }
+.contraste { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.contraste .par { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.contraste b { font-family: var(--f-display); font-size: 25px; display: block; }
+.contraste span { font-size: 19px; color: var(--gris); line-height: 1.35; display: block; }
+.contraste .hoy { margin-top: 8px; font-size: 16px; font-family: var(--f-num); color: var(--rojo); }
+
+.refs { font-size: 18px; line-height: 1.4; columns: 2; column-gap: 40px; }
+.refs p { break-inside: avoid; margin-bottom: 10px; }
+.nueva { font-family: var(--f-num); font-size: 12px; color: var(--rojo); font-weight: 600; letter-spacing: .05em; }
+
+/* Lo que va solo en vivo o solo en el PDF */
+.solo-pdf { display: none; }
+html.print-pdf .solo-clase { display: none !important; }
+html.print-pdf .solo-pdf { display: block !important; }
+@media print { .solo-clase { display: none !important; } .solo-pdf { display: block !important; } }
+.solo-pdf.recuadro { border: 1.5px dashed var(--apagado); border-radius: 8px; padding: 14px 18px; font-size: 20px; color: var(--gris); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+<style>
+/* Agregados de la clase 2 */
+.reveal .fragment.custom.marcar.visible { background: var(--nash); }
+.matriz.compacta td { height: 56px; width: 130px; font-size: 22px; }
+.matriz.compacta th { font-size: 18px; padding: 6px 10px; }
+.matriz .vacia { border: none; background: none; }
+.panel { max-height: 470px; overflow-y: auto; }
+
+.sorteo { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.sorteo-num { font-family: var(--f-display); font-weight: 800; font-size: 150px; line-height: 1; color: var(--rojo); min-width: 3ch; text-align: center; font-variant-numeric: tabular-nums; }
+.sorteo-num.nombre { font-size: 64px; min-height: 150px; display: grid; place-items: center; max-width: 520px; text-wrap: balance; }
+.sorteo-num.girando { color: var(--apagado); }
+
+.observa { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.observa > div { padding: 16px 18px 0 0; }
+.observa b { display: block; font-family: var(--f-display); font-size: 28px; margin-bottom: 6px; }
+.observa span { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.versus > div { border-top: 3px solid var(--tinta); padding-top: 14px; }
+.versus h3 { font-size: 32px; }
+.cita { font-style: italic; color: var(--gris); font-size: 20px; border-left: 3px solid var(--linea); padding-left: 14px; margin-top: 10px; }
+
+.tabla-def { border-collapse: collapse; width: 100%; font-size: 21px; }
+.tabla-def th { text-align: left; font-family: var(--f-num); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 8px 12px 8px 0; border-bottom: 2px solid var(--tinta); }
+.tabla-def td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--linea); vertical-align: top; line-height: 1.35; }
+.tabla-def td:first-child { font-weight: 700; white-space: nowrap; }
+
+.video-caja { width: 100%; max-width: 760px; aspect-ratio: 16 / 9; background: var(--tinta); border-radius: 10px; display: grid; place-items: center; overflow: hidden; }
+.video-caja iframe { width: 100%; height: 100%; border: 0; }
+.video-caja .play { display: flex; flex-direction: column; align-items: center; gap: 14px; color: var(--papel); }
+.reveal .video-caja button { background: var(--rojo); border-color: var(--rojo); color: #fff; font-size: 22px; padding: 14px 24px; }
+
+.foto-nash { max-height: 420px; max-width: 100%; border-radius: 8px; filter: grayscale(1); }
+.hechos { list-style: none; padding: 0 !important; }
+.hechos li { display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 23px; }
+.hechos li::marker { content: ""; }
+.hechos .anio { font-family: var(--f-num); font-weight: 600; color: var(--rojo); font-size: 20px; }
+
+.perfiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.perfiles span { font-family: var(--f-num); font-size: 19px; border: 1.5px solid var(--linea); border-radius: 6px; padding: 8px 10px; text-align: center; background: var(--tarjeta); }
+
+.capitulo { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.capitulo h1 { font-size: 96px; }
+.agenda { list-style: none; padding: 0 !important; counter-reset: ag; }
+.agenda li { counter-increment: ag; display: grid; grid-template-columns: 60px 1fr; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 30px; }
+.agenda li::before { content: counter(ag, decimal-leading-zero); font-family: var(--f-num); color: var(--rojo); font-size: 20px; font-weight: 600; }
+.agenda li::marker { content: ""; }
+.agenda a { color: var(--tinta); text-decoration: none; font-family: var(--f-display); font-weight: 600; }
+.agenda a:hover { color: var(--rojo); }
+.agenda small { display: block; font-family: var(--f-texto); font-size: 19px; color: var(--gris); font-weight: 400; }
+
+</style>
+<style>
+/* Agregados de la clase 3 */
+.estructuras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.estructuras > div { padding: 16px 22px 0 0; }
+.estructuras b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.estructuras .quien { font-family: var(--f-num); font-size: 16px; color: var(--rojo); display: block; margin-bottom: 8px; }
+.estructuras span.d { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+.estructuras > div.foco b { color: var(--rojo); }
+
+.arbolito { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
+.arbolito .rama { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.arbolito .rama h3 { font-size: 28px; }
+.arbolito .sub2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+.arbolito .sub2 > div { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 12px 16px; }
+.arbolito .sub2 b { font-family: var(--f-num); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); display: block; margin-bottom: 6px; }
+.arbolito .sub2 span { display: block; font-family: var(--f-display); font-size: 24px; line-height: 1.3; }
+
+.grafico { width: 100%; height: auto; display: block; }
+.grafico .eje { stroke: var(--tinta); stroke-width: 2; }
+.grafico .rej { stroke: var(--linea); stroke-width: 1; }
+.grafico .r1 { stroke: var(--azul); stroke-width: 4; }
+.grafico .r2 { stroke: var(--rojo); stroke-width: 4; }
+.grafico .camino { stroke: var(--tinta); stroke-width: 2.5; stroke-dasharray: 6 5; fill: none; }
+.grafico .punto { fill: var(--tinta); }
+.grafico .eqp { fill: var(--nash); stroke: var(--tinta); stroke-width: 2.5; }
+.grafico text { font-family: var(--f-num); font-size: 15px; fill: var(--gris); }
+.grafico text.et { font-family: var(--f-texto); font-size: 19px; font-weight: 700; }
+.grafico .curva { stroke: var(--azul); stroke-width: 4; fill: none; }
+.grafico .area { fill: var(--azul-suave); }
+
+.controles { display: flex; flex-direction: column; gap: 14px; font-size: 20px; }
+.controles label { display: grid; grid-template-columns: 150px 1fr 60px; align-items: center; gap: 10px; }
+.controles .num { font-weight: 600; text-align: right; }
+.reveal .controles input[type=range] { width: 100%; }
+.cifras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 20px; margin-top: 6px; }
+.cifras div { border-top: 1.5px solid var(--linea); padding-top: 6px; }
+.cifras span { display: block; font-size: 15px; color: var(--gris); font-family: var(--f-num); letter-spacing: .04em; text-transform: uppercase; }
+.cifras b { font-family: var(--f-num); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.mate { font-size: 30px; }
+.mate.peq2 { font-size: 26px; }
+
+.ronda-entrada { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ronda-entrada .firma { border: 2px solid var(--tinta); border-radius: 10px; padding: 12px 16px; background: var(--tarjeta); }
+.ronda-entrada .firma h3 { font-size: 22px; margin: 0 0 6px; }
+.ronda-entrada .firma .est { font-family: var(--f-num); font-size: 15px; color: var(--gris); }
+.reveal .ronda-entrada input[type=number] { width: 110px; font-size: 34px; border: 1.5px solid var(--apagado); border-radius: 6px; background: var(--papel); }
+.historial { width: 100%; border-collapse: collapse; font-size: 18px; font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.historial th { text-align: right; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 4px 8px; border-bottom: 2px solid var(--tinta); font-family: var(--f-num); }
+.historial td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--linea); }
+.historial th:first-child, .historial td:first-child { text-align: left; }
+.historial tr.ultima td { background: var(--nash); }
+
+.comparar { width: 100%; border-collapse: collapse; font-size: 21px; }
+.comparar th { text-align: left; font-family: var(--f-num); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 6px 10px 6px 0; border-bottom: 2px solid var(--tinta); }
+.comparar td { padding: 9px 10px 9px 0; border-bottom: 1px solid var(--linea); vertical-align: middle; }
+.comparar td.n { font-family: var(--f-num); font-weight: 600; text-align: right; width: 70px; font-variant-numeric: tabular-nums; }
+.comparar .barrita { height: 18px; background: var(--linea); border-radius: 3px; overflow: hidden; min-width: 140px; }
+.comparar .barrita i { display: block; height: 100%; background: var(--tinta); }
+.comparar tr.cournot td { background: var(--nash); }
+.comparar .barrita i.cs { background: var(--azul); }
+.comparar .barrita i.pi { background: var(--rojo); }
+
+.matriz-app .celda { width: 84px !important; }
+.reveal .fragment.custom.marcar-fila.visible td { background: var(--nash); }
+
+</style>
+<style>
+/* Agregados de la clase 4 */
+.escalera { display: flex; flex-wrap: wrap; gap: 6px; min-height: 40px; align-content: flex-start; }
+.escalera span { font-family: var(--f-num); font-size: 16px; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+.escalera .f1 { background: var(--azul-suave); color: var(--azul); }
+.escalera .f2 { background: var(--rojo-suave); color: var(--rojo); }
+.precios-vivos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.precios-vivos .caja { border: 2px solid var(--tinta); border-radius: 10px; padding: 12px 16px; background: var(--tarjeta); }
+.precios-vivos .caja h3 { font-size: 22px; margin: 0 0 4px; }
+.precios-vivos .grande { font-family: var(--f-num); font-size: 54px; font-weight: 600; line-height: 1; }
+.precios-vivos .gana { font-size: 16px; color: var(--gris); font-family: var(--f-num); margin-top: 6px; }
+.formula-casos { font-size: 26px; }
+.moneda { display: flex; gap: 14px; }
+.moneda button { flex: 1; font-size: 26px !important; padding: 20px !important; }
+.grande-pregunta { display: flex; align-items: center; justify-content: center; height: 100%; text-align: center; }
+.grande-pregunta h1 { font-size: 110px; }
+.grande-pregunta h1 span { color: var(--rojo); }
+.matriz-app td { white-space: nowrap; }
+.matriz .prob { font-family: var(--f-num); font-size: 18px; color: var(--gris); font-weight: 600; }
+</style>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 · PORTADA -->
+<section>
+  <div class="portada">
+    <div>
+      <div class="ceja">Microeconomía II · Universidad del Norte · Clase 4</div>
+      <h1>Bertrand y estrategias mixtas</h1>
+      <p class="sub" style="margin-top:18px">Cuando competir por precio se vuelve una guerra, y cuando lo mejor es ser impredecible</p>
+      <div class="autor"><b>Carlos A. Yanes Guerra</b><br>Departamento de Economía · Barranquilla, 2026</div>
+    </div>
+    <table class="matriz" aria-label="Matriz de cara o sello con probabilidades de un medio">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Jugador 2</th></tr>
+      <tr><th></th><th></th><th>Cara <span class="prob">½</span></th><th>Sello <span class="prob">½</span></th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Jugador 1</span></th><th>Cara <span class="prob">½</span></th>
+        <td><span class="j1">1</span> , <span class="j2">−1</span></td><td><span class="j1">−1</span> , <span class="j2">1</span></td></tr>
+      <tr><th>Sello <span class="prob">½</span></th>
+        <td><span class="j1">−1</span> , <span class="j2">1</span></td><td><span class="j1">1</span> , <span class="j2">−1</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 2 · AGENDA -->
+<section>
+  <div class="ceja">Hoy</div>
+  <h2>La ruta de la clase</h2>
+  <ol class="agenda">
+    <li><a href="#/bertrand">Juego de Bertrand<small>Dos firmas que compiten bajando el precio</small></a></li>
+    <li><a href="#/guerra">Guerra de precios en el salón<small>Dos estudiantes, varias rondas y una sorpresa al final</small></a></li>
+    <li><a href="#/mixtos">Juegos sin equilibrio en puras<small>Cara o sello, y por qué conviene ser impredecible</small></a></li>
+    <li><a href="#/esperado">Valor esperado<small>La herramienta para decidir con incertidumbre</small></a></li>
+    <li><a href="#/equilibrio-mixto">Equilibrio mixto<small>Funciones de reacción y el cruce en un medio</small></a></li>
+  </ol>
+</section>
+
+<!-- 3 · PREGUNTAS -->
+<section data-background-image="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmtyOXVleWE0ajF0MGgwMW05dWxmY2ZqdW1xY2tza2tobXYyZHN0OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jWK3ykVYW9XFjySTTy/giphy.gif" data-background-size="cover">
+  <div class="grande-pregunta"><h1 style="color:var(--rojo);text-shadow:0 2px 12px rgba(255,255,255,.8)">¿Preguntas?</h1></div>
+  <aside class="notes">Repaso rápido de Cournot. ¿Qué hacía cada firma? Elegía cantidad dado lo que producía la otra. Hoy cambiamos cantidad por precio.</aside>
+</section>
+
+<!-- 4 · CAPÍTULO BERTRAND -->
+<section id="bertrand">
+  <div class="capitulo">
+    <div class="ceja">Optimización</div>
+    <h1>Juego de Bertrand</h1>
+  </div>
+</section>
+
+<!-- 5 · MODELO -->
+<section>
+  <div class="ceja">Modelo de Bertrand</div>
+  <h2>Ya no se elige cuánto, se elige a cuánto</h2>
+  <div class="versus">
+    <div>
+      <ul>
+        <li>Su exponente es <strong>Joseph Bertrand</strong>, que en 1883 le respondió a Cournot.</li>
+        <li>El producto es <strong>homogéneo</strong>. El cliente no ve diferencia entre una firma y otra.</li>
+        <li>En lugar de elegir qué <em>cantidad</em> producir, las firmas eligen <strong>precios</strong>.</li>
+        <li>El mercado se vuelve más <strong>reactivo</strong> y <strong>agresivo</strong>.</li>
+      </ul>
+    </div>
+    <div class="caso">
+      <span class="etiqueta">Para imaginarlo</span>
+      <h3>Las dos papelerías de la esquina</h3>
+      <p>Frente a la universidad hay dos papelerías que sacan la misma fotocopia en blanco y negro. Si una cobra 150 pesos y la otra 200, ¿a cuál va usted? ¿Y qué hace la de 200 al día siguiente?</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · CASO -->
+<section>
+  <div class="ceja">Caso Bertrand de empresa</div>
+  <h2>La misma demanda de siempre</h2>
+  <div class="fila centro-v">
+    <div class="col">
+      <p>Usamos una función de demanda de <strong>mercado</strong></p>
+      <p class="mate">\[ P(Q) = 60 - Q \]</p>
+      <p>El <strong>costo marginal</strong> es idéntico para ambas firmas y vale 6 pesos</p>
+      <p class="mate">\[ CMg_1 = CMg_2 = 6 \]</p>
+    </div>
+    <div class="col">
+      <p style="font-size:32px"><strong>¿Cuál es el equilibrio de Nash?</strong></p>
+      <p style="font-size:32px"><strong>¿Qué precio debe elegir cada firma?</strong></p>
+      <p class="peq fragment">Pista. Si a usted le cobran más que en la otra firma por lo mismo, ¿cuántas unidades le compra?</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · LÓGICA -->
+<section>
+  <div class="ceja">La lógica de Bertrand</div>
+  <h2>El que cobra menos se lleva todo</h2>
+  <p>Como el producto es idéntico, toda la demanda se va para la firma más barata. Si cobran igual, se reparten el mercado por mitades.</p>
+  <p class="mate formula-casos">\[ \pi_1(p_1, p_2) = \begin{cases} (p_1 - 6)(60 - p_1) & \text{si } p_1 < p_2 \\[4pt] \tfrac{1}{2}(p_1 - 6)(60 - p_1) & \text{si } p_1 = p_2 \\[4pt] 0 & \text{si } p_1 > p_2 \end{cases} \]</p>
+  <ul>
+    <li class="fragment">Si la otra cobra cualquier precio por encima de 6, a usted le conviene cobrar <strong>un poquito menos</strong> y quedarse con todo el mercado.</li>
+    <li class="fragment">La otra piensa igual y le baja a usted. Y así, una y otra vez.</li>
+    <li class="fragment">¿Dónde para? Solo cuando ya no hay margen para bajar, en <strong>precio igual al costo marginal</strong>.</li>
+  </ul>
+  <aside class="notes">Esta es la forma normal de Bertrand. Cada firma tiene infinitas estrategias (cualquier precio), por eso no cabe en una matriz. La siguiente diapositiva lo muestra con una animación.</aside>
+</section>
+
+<!-- 8 · GUERRA AUTOMÁTICA -->
+<section>
+  <div class="ceja">Véalo pasar</div>
+  <h2>Una guerra de precios, peso a peso</h2>
+  <div class="fila">
+    <div class="col">
+      <div class="precios-vivos">
+        <div class="caja"><h3 class="j1">Firma 1</h3><div class="grande j1" id="gp1">33</div><div class="gana" id="gg1"></div></div>
+        <div class="caja"><h3 class="j2">Firma 2</h3><div class="grande j2" id="gp2">33</div><div class="gana" id="gg2"></div></div>
+      </div>
+      <div class="botones solo-clase" style="margin-top:16px"><button class="primario" id="gPaso">Siguiente movida</button><button id="gFin">Hasta el final</button><button id="gReset">Reiniciar</button></div>
+      <p id="gLectura" style="margin-top:12px;font-size:22px"></p>
+    </div>
+    <div class="col">
+      <h3>Los precios que van saliendo</h3>
+      <div class="escalera" id="gEscalera"></div>
+    </div>
+  </div>
+  <aside class="notes">Arrancan los dos en 33, el precio de monopolio. Cada movida, la firma que está repartiendo baja un peso y se lleva todo. Con precios en pesos enteros paran en 7; con centavos llegarían a 6, el costo.</aside>
+</section>
+
+<!-- 9 · EQUILIBRIO -->
+<section>
+  <div class="ceja">Equilibrio del mercado</div>
+  <h2>Precio igual a costo marginal</h2>
+  <div class="versus">
+    <div>
+      <p>En equilibrio cada firma cobra</p>
+      <p class="mate">\[ p_1^* = p_2^* = CMg = 6 \]</p>
+      <p class="fragment">Usando la demanda \( Q = 60 - P \)</p>
+      <p class="mate fragment">\[ Q = 54 \quad \Rightarrow \quad q_1^* = q_2^* = 27 \]</p>
+    </div>
+    <div class="fragment">
+      <div class="cifras">
+        <div><span>Precio</span><b>6</b></div>
+        <div><span>Cantidad total</span><b>54</b></div>
+        <div><span>Cada firma</span><b>27</b></div>
+        <div><span>Beneficio c/u</span><b>0</b></div>
+      </div>
+      <p class="peq" style="margin-top:14px">Nadie gana cambiando solo. Si sube el precio, no vende nada. Si lo baja, vende por debajo del costo y pierde.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · NOCIONES -->
+<section>
+  <div class="ceja">Nociones</div>
+  <h2>La paradoja de Bertrand</h2>
+  <p>Con solo <strong>dos</strong> firmas se llega al mismo resultado de la competencia perfecta. Producen eficientemente, pero sin beneficio económico.</p>
+  <table class="comparar" style="margin-top:10px">
+    <tr><th>Con P = 60 − Q y CMg = 6</th><th>Precio</th><th>Cantidad</th><th>Beneficio total</th></tr>
+    <tr><td>Monopolio</td><td class="n">33</td><td class="n">27</td><td class="n">729</td></tr>
+    <tr><td>Cournot, eligen cantidades</td><td class="n">24</td><td class="n">36</td><td class="n">648</td></tr>
+    <tr class="cournot"><td>Bertrand, eligen precios</td><td class="n">6</td><td class="n">54</td><td class="n">0</td></tr>
+  </table>
+  <p class="fragment peq" style="margin-top:16px">Entonces, ¿por qué las papelerías de la esquina sí ganan plata? Porque en la vida real casi nunca se cumplen todos los supuestos. Hay límites de capacidad, el producto no es tan idéntico y, si juegan todos los días, pueden aprender a no pelear.</p>
+  <aside class="notes">Mismo mercado, distinto juego, resultados opuestos. Lo que se elige, cantidad o precio, cambia todo. Cournot: q = 18 cada una, P = 24.</aside>
+</section>
+
+<!-- 11 · JUEGO EN VIVO -->
+<section id="guerra">
+  <div class="ceja">Jueguen ustedes</div>
+  <h2>Guerra de precios en el salón</h2>
+  <div class="fila solo-clase">
+    <div style="flex:0 0 520px;display:flex;flex-direction:column;gap:14px">
+      <p class="peq" style="margin:0">Demanda P = 60 − Q, costo 6. Cada firma escribe su precio en un papel. El precio más bajo se lleva todo el mercado; si empatan, se reparten.</p>
+      <div class="ronda-entrada">
+        <div class="firma"><h3 class="j1">Firma 1</h3><div class="est" id="best1">Estudiante —</div><input type="number" id="bp1" min="0" max="60" value="30" aria-label="Precio de la Firma 1"></div>
+        <div class="firma"><h3 class="j2">Firma 2</h3><div class="est" id="best2">Estudiante —</div><input type="number" id="bp2" min="0" max="60" value="25" aria-label="Precio de la Firma 2"></div>
+      </div>
+      <div class="botones"><button class="primario" id="bRonda">Jugar ronda</button><button id="bSorteo">Sortear firmas</button><button id="bReset">Empezar de nuevo</button></div>
+      <p id="bLectura" style="margin:0;font-size:21px"></p>
+    </div>
+    <div class="col">
+      <table class="historial">
+        <thead><tr><th>Ronda</th><th>p₁</th><th>p₂</th><th>Vende</th><th>π₁</th><th>π₂</th></tr></thead>
+        <tbody id="bHist"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="solo-pdf recuadro">En clase, dos estudiantes jugaron de firmas durante varias rondas escribiendo precios. Cada ronda, el que cobraba menos se llevaba el mercado, así que los precios bajaron rápido hacia el costo marginal, como predice Bertrand.</div>
+  <aside class="notes">Después de cada ronda, preguntar a quien perdió qué precio va a poner ahora. Lo normal es que bajen hasta 7 u 8 en pocas rondas.</aside>
+</section>
+
+<!-- 12 · CAPÍTULO PROBABILIDAD -->
+<section id="mixtos">
+  <div class="capitulo">
+    <div class="ceja">Veamos algo adicional</div>
+    <h1>Lo de probabilidad</h1>
+  </div>
+</section>
+
+<!-- 13 · CARA O SELLO -->
+<section>
+  <div class="ceja">Juegos mixtos</div>
+  <h2>Cara o sello</h2>
+  <div class="fila centro-v">
+    <table class="matriz">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Jugador 2</th></tr>
+      <tr><th></th><th></th><th>Cara</th><th>Sello</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Jugador 1</span></th><th>Cara</th>
+        <td><span class="j1">1</span> , <span class="j2">−1</span></td><td><span class="j1">−1</span> , <span class="j2">1</span></td></tr>
+      <tr><th>Sello</th>
+        <td><span class="j1">−1</span> , <span class="j2">1</span></td><td><span class="j1">1</span> , <span class="j2">−1</span></td></tr>
+    </table>
+    <div class="col">
+      <p>Cada uno pone una moneda. Si <strong>coinciden</strong>, gana el Jugador 1. Si <strong>no coinciden</strong>, gana el Jugador 2. En inglés se llama <em>matching pennies</em>.</p>
+      <p class="fragment">Busque el equilibrio con lo que ya sabe. Revise las cuatro casillas.</p>
+      <p class="fragment">En cada casilla, alguno de los dos quiere cambiar. Este juego <strong>no tiene equilibrio de Nash en estrategias puras</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · ¿ENTONCES? -->
+<section>
+  <div class="grande-pregunta"><h1>¿Entonces <span>qué</span> hacemos?</h1></div>
+</section>
+
+<!-- 15 · RESPUESTA -->
+<section>
+  <div class="ceja">Respuesta</div>
+  <h2>Que el otro no pueda adivinar</h2>
+  <ul>
+    <li>El Jugador 1 quiere jugar <strong>Cara</strong> si cree que el Jugador 2 también juega Cara.</li>
+    <li class="fragment">Pero el Jugador 2 juega <strong>Cara</strong> si cree que el Jugador 1 juega Sello. Así que el Jugador 1 tendría que hacerle creer que va a jugar Sello.</li>
+    <li class="fragment">Como no hay coordinación y no es fácil engañar a un jugador racional, quizá lo mejor que puede hacer cada uno es jugar de forma <strong>aleatoria</strong>.</li>
+  </ul>
+  <p class="fragment" style="margin-top:22px;font-size:30px">Si soy predecible, pierdo. Si soy impredecible, el otro no me puede explotar.</p>
+</section>
+
+<!-- 16 · CONTRA LA MÁQUINA -->
+<section>
+  <div class="ceja">Pruébelo usted</div>
+  <h2>Usted contra la máquina</h2>
+  <div class="fila">
+    <div class="col">
+      <p>Usted es el <strong class="j1">Jugador 1</strong> y gana si las monedas coinciden. La máquina es el <strong class="j2">Jugador 2</strong> y se fija en sus patrones para no coincidir.</p>
+      <p class="peq solo-pdf recuadro">En clase, un estudiante jugó cara o sello contra un programa que aprendía de sus patrones. Quien repetía o alternaba de forma predecible perdía más de la mitad de las veces. La única defensa es jugar 50 y 50 de verdad.</p>
+    </div>
+    <div class="col solo-clase" style="display:flex;flex-direction:column;gap:14px">
+      <div class="moneda"><button id="mCara">Cara</button><button id="mSello">Sello</button></div>
+      <div style="display:flex;gap:30px;align-items:flex-end">
+        <div><div class="dato j1" id="mGano">0</div><div class="peq">usted gana</div></div>
+        <div><div class="dato j2" id="mPerdio">0</div><div class="peq">gana la máquina</div></div>
+        <div style="margin-left:auto"><button id="mReset">Reiniciar</button></div>
+      </div>
+      <div class="tiros" id="mTiros"></div>
+      <p class="peq" id="mLectura" style="margin:0">Juegue unas 20 veces. Trate de que la máquina no lo lea.</p>
+    </div>
+  </div>
+  <aside class="notes">Pasar dos o tres estudiantes. Casi todos pierden más de la mitad porque los humanos somos malos generando azar. Conectar con los penaltis de la clase 1.</aside>
+</section>
+
+<!-- 17 · DEFINICIÓN -->
+<section>
+  <div class="ceja">Estrategias mixtas</div>
+  <h2>Jugar con probabilidades</h2>
+  <ul>
+    <li>Aunque existan equilibrios en estrategias puras, los jugadores pueden elegir sus estrategias con cierta probabilidad.</li>
+    <li>A eso le llamamos <strong>estrategia mixta</strong>. Es una distribución de probabilidad \( \sigma_i \) sobre las estrategias puras \( S_i \). Por ejemplo, Cara con ½ y Sello con ½.</li>
+  </ul>
+  <p class="fragment">El equilibrio de Nash se extiende a mixtas. Un perfil \( \sigma^* = (\sigma_1^*, \dots, \sigma_n^*) \), con \( \sigma_i^* \in \Delta(S_i) \), es equilibrio si para cada jugador \( i \)</p>
+  <p class="mate fragment">\[ u_i(\sigma_i^*, \sigma_{-i}^*) \;\geq\; u_i(s_i', \sigma_{-i}^*) \qquad \forall\, s_i' \in S_i \]</p>
+  <p class="fragment peq">Cada estrategia mixta es la mejor respuesta a las estrategias mixtas de los demás. Nash demostró en 1950 que todo juego finito tiene al menos un equilibrio así.</p>
+</section>
+
+<!-- 18 · CAPÍTULO VALOR ESPERADO -->
+<section id="esperado">
+  <div class="capitulo">
+    <div class="ceja">Equilibrio mixto</div>
+    <h1>Uso del valor esperado</h1>
+  </div>
+</section>
+
+<!-- 19 · VALOR ESPERADO -->
+<section>
+  <div class="ceja">Valor esperado</div>
+  <h2>El promedio que uno espera</h2>
+  <p class="definicion">El valor esperado es la media ponderada de todos los resultados posibles de un experimento aleatorio. Cada resultado pesa según su probabilidad de ocurrir.</p>
+  <p class="mate">\[ E[X] = \sum_{i=1}^{n} x_i \, P(x_i) \]</p>
+  <p>Donde \( x_i \) son los valores posibles de \( X \) y \( P(x_i) \) es la probabilidad de cada uno. La suma recorre todos los valores posibles.</p>
+  <p class="peq fragment">En economía se interpreta como lo que se espera obtener en promedio si la misma situación incierta se repitiera muchas veces.</p>
+</section>
+
+<!-- 20 · RASPAO -->
+<section>
+  <div class="ceja">Pruébelo usted</div>
+  <h2>El vendedor de raspao</h2>
+  <div class="fila">
+    <div class="col">
+      <p>Don Álvaro vende raspao en el Malecón. Si hace sol vende <strong>100 mil</strong> pesos en la tarde; si llueve, apenas <strong>20 mil</strong>.</p>
+      <div class="controles solo-clase">
+        <label>Probabilidad de sol <input type="range" id="rSol" min="0" max="100" step="5" value="70"><span class="num" id="rSolV">70 %</span></label>
+      </div>
+      <p class="mate peq2" id="rFormula"></p>
+    </div>
+    <div class="col">
+      <div class="barras">
+        <div class="barra"><span>Si hace sol</span><div class="pista"><div class="relleno r" style="width:100%"></div></div><span class="v">100</span></div>
+        <div class="barra"><span>Si llueve</span><div class="pista"><div class="relleno a" style="width:20%"></div></div><span class="v">20</span></div>
+        <div class="barra"><span><b>Valor esperado</b></span><div class="pista"><div class="relleno" id="rBar"></div></div><span class="v" id="rE"></span></div>
+      </div>
+      <p class="peq" style="margin-top:14px">Ningún día gana exactamente el valor esperado. Pero si sale cien tardes, ese es su promedio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · ESTRUCTURA -->
+<section id="equilibrio-mixto">
+  <div class="ceja">Equilibrio mixto en teoría de juegos</div>
+  <h2>Estructura del juego mixto</h2>
+  <div class="fila centro-v">
+    <table class="matriz">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">Jugador 2</th></tr>
+      <tr><th></th><th></th><th>Cara <span class="prob">Q</span></th><th>Sello <span class="prob">1 − Q</span></th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Jugador 1</span></th><th>Cara <span class="prob">P</span></th>
+        <td><span class="j1">1</span> , <span class="j2">−1</span></td><td><span class="j1">−1</span> , <span class="j2">1</span></td></tr>
+      <tr><th>Sello <span class="prob">1 − P</span></th>
+        <td><span class="j1">−1</span> , <span class="j2">1</span></td><td><span class="j1">1</span> , <span class="j2">−1</span></td></tr>
+    </table>
+    <div class="col">
+      <p><strong class="j1">P</strong> es la probabilidad con que el Jugador 1 juega Cara. <strong class="j2">Q</strong> es la probabilidad con que el Jugador 2 juega Cara.</p>
+      <p class="definicion" style="font-size:24px">P y Q son también las <strong>creencias</strong> de cada uno sobre lo que posiblemente va a jugar el otro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 22 · JUGADOR 1 -->
+<section>
+  <div class="ceja">¿Qué hace el Jugador 1?</div>
+  <h2>Comparar Cara contra Sello</h2>
+  <div class="fila">
+    <div class="col">
+      <p>El Jugador 1 compara lo que espera ganar con cada moneda</p>
+      <p class="mate peq2">\[ \underbrace{1(Q) + (-1)(1-Q)}_{E[\text{Cara}]} \;\geq\; \underbrace{(-1)(Q) + 1(1-Q)}_{E[\text{Sello}]} \]</p>
+      <p class="mate peq2 fragment">\[ \begin{aligned} 2Q - 1 &\geq 1 - 2Q \\ 4Q &\geq 2 \\ Q &\geq \tfrac{1}{2} \end{aligned} \]</p>
+    </div>
+    <div style="flex:0 0 520px">
+      <svg class="grafico" id="gEsp" viewBox="0 0 520 380" role="img" aria-label="Pago esperado de Cara y de Sello según Q"></svg>
+      <div class="controles solo-clase"><label>Creencia Q <input type="range" id="eQ" min="0" max="100" step="5" value="30"><span class="num" id="eQV">0,3</span></label></div>
+      <p id="eLectura" style="margin:6px 0 0;font-size:21px"></p>
+    </div>
+  </div>
+  <aside class="notes">Mover Q y mostrar que, por debajo de ½, Sello paga más, y por encima, Cara. Justo en ½ al Jugador 1 le da igual. Esa indiferencia es la clave del equilibrio.</aside>
+</section>
+
+<!-- 23 · FUNCIONES DE REACCIÓN -->
+<section>
+  <div class="ceja">Funciones de reacción</div>
+  <h2>Cada uno responde a la creencia sobre el otro</h2>
+  <div class="versus">
+    <div>
+      <h3 class="j1">Jugador 1</h3>
+      <p class="mate peq2">\[ FR_1 = \begin{cases} P = 1 & \text{si } Q > \tfrac{1}{2} \\ P \in [0, 1] & \text{si } Q = \tfrac{1}{2} \\ P = 0 & \text{si } Q < \tfrac{1}{2} \end{cases} \]</p>
+      <p class="peq">El Jugador 1 juega Cara seguro si cree que el otro probablemente juega Cara.</p>
+    </div>
+    <div class="fragment">
+      <h3 class="j2">Jugador 2</h3>
+      <p class="mate peq2">\[ FR_2 = \begin{cases} Q = 1 & \text{si } P < \tfrac{1}{2} \\ Q \in [0, 1] & \text{si } P = \tfrac{1}{2} \\ Q = 0 & \text{si } P > \tfrac{1}{2} \end{cases} \]</p>
+      <p class="peq">El Jugador 2 quiere no coincidir. Si cree que el otro juega mucho Cara, él juega Sello.</p>
+    </div>
+  </div>
+  <p class="fragment" style="margin-top:14px">La interpretación es clave. Cada uno elige lo mejor <strong>dado lo que cree</strong> que hará el otro.</p>
+</section>
+
+<!-- 24 · CRUCE -->
+<section>
+  <div class="ceja">El equilibrio mixto</div>
+  <h2>Las dos reacciones se cruzan en un solo punto</h2>
+  <div class="fila">
+    <div style="flex:0 0 470px">
+      <svg class="grafico" viewBox="0 0 470 450" role="img" aria-label="Funciones de reacción de los dos jugadores que se cruzan en un medio, un medio">
+        <line class="rej" x1="60" y1="215" x2="440" y2="215"/><line class="rej" x1="250" y1="25" x2="250" y2="405"/>
+        <line class="eje" x1="60" y1="405" x2="440" y2="405"/><line class="eje" x1="60" y1="405" x2="60" y2="25"/>
+        <text x="60" y="428" text-anchor="middle">0</text><text x="250" y="428" text-anchor="middle">½</text><text x="440" y="428" text-anchor="middle">1</text>
+        <text x="50" y="410" text-anchor="end">0</text><text x="50" y="220" text-anchor="end">½</text><text x="50" y="30" text-anchor="end">1</text>
+        <text x="440" y="448" text-anchor="end">P, prob. de Cara del Jugador 1</text>
+        <text x="66" y="18">Q, prob. de Cara del Jugador 2</text>
+        <g class="fragment" data-fragment-index="1">
+          <polyline points="60,405 60,215 440,215 440,25" style="fill:none;stroke:var(--azul);stroke-width:6"/>
+          <text class="et" x="300" y="205" style="fill:var(--azul)">FR₁</text>
+        </g>
+        <g class="fragment" data-fragment-index="2">
+          <polyline points="60,25 250,25 250,405 440,405" style="fill:none;stroke:var(--rojo);stroke-width:6;stroke-dasharray:14 8"/>
+          <text class="et" x="262" y="60" style="fill:var(--rojo)">FR₂</text>
+        </g>
+        <g class="fragment" data-fragment-index="3">
+          <circle class="eqp" cx="250" cy="215" r="13"/>
+        </g>
+      </svg>
+    </div>
+    <div class="col">
+      <p class="fragment" data-fragment-index="3" style="font-size:30px">Equilibrio de Nash en mixtas \[ P^* = Q^* = \tfrac{1}{2} \]</p>
+      <p class="fragment" data-fragment-index="4">El truco está en la <strong>indiferencia</strong>. Cada jugador elige sus probabilidades para dejar al <strong>otro</strong> indiferente entre sus dos monedas. Así el otro no tiene cómo aprovecharse.</p>
+      <p class="fragment peq" data-fragment-index="5">Pago esperado de cada uno en equilibrio, cero. Nadie le gana al otro en promedio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 25 · CALCULADORA -->
+<section>
+  <div class="ceja">Pruébelo usted</div>
+  <h2>Equilibrios mixtos de verdad</h2>
+  <div class="matriz-app" id="mx4" data-juegos="cara,penalti,parque" data-inicial="cara"></div>
+  <aside class="notes">El penalti usa probabilidades de gol cercanas a las que encontró Palacios-Huerta (2003) en ligas profesionales. El equilibrio dice que el delantero patee a su lado natural (aquí, izquierda) cerca de 38 % de las veces, y eso es muy parecido a lo que hacen los profesionales. Parque o cine es de la clase 2.</aside>
+</section>
+
+<!-- 26 · PARA LLEVAR -->
+<section>
+  <div class="ceja">Para llevar</div>
+  <h2>Cuatro ideas de hoy</h2>
+  <ul style="font-size:29px">
+    <li class="fragment">En Bertrand se compite con precios. Con producto idéntico, dos firmas bastan para llegar a precio igual a costo marginal.</li>
+    <li class="fragment">Algunos juegos no tienen equilibrio en estrategias puras. Ahí lo mejor es ser impredecible.</li>
+    <li class="fragment">Una estrategia mixta asigna probabilidades a las estrategias puras, y se evalúa con el valor esperado.</li>
+    <li class="fragment">En el equilibrio mixto cada uno deja al otro indiferente. Por eso nadie puede explotar a nadie.</li>
+  </ul>
+</section>
+
+<!-- 27 · GIF FINAL -->
+<section data-background-image="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGhueDJuMnc4MzN1b3NzbGZwMWtjeXByM2RxZTFoZXVoM2UydXllYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dLrXrKZXPHrmWctsqk/giphy.gif" data-background-size="cover" data-background-opacity="0.6">
+</section>
+
+<!-- 28 · REFERENCIAS -->
+<section>
+  <div class="ceja">Referencias</div>
+  <h2>Para leer más</h2>
+  <div class="refs">
+    <p>Osborne, M. J. y Rubinstein, A. (1994). <em>A Course in Game Theory</em>. MIT Press.</p>
+    <p>Dixit, A. K., Skeath, S. y Reiley, D. H. (2020). <em>Games of Strategy</em> (5.ª ed.). W. W. Norton.</p>
+    <p>Watson, J. (2013). <em>Strategy: An Introduction to Game Theory</em> (3.ª ed.). W. W. Norton.</p>
+    <p>Gibbons, R. (1992). <em>A Primer in Game Theory</em>. Harvester Wheatsheaf.</p>
+    <p>Straub, P. G. (2022). <em>Theoretical Foundations of Game Theory</em>. Springer.</p>
+    <p>Binmore, K. (2007). <em>Playing for Real</em>. Oxford University Press.</p>
+    <p>Safner, R. (2021). <em>Lecture Notes on Game Theory</em>. Hood College.</p>
+    <p><span class="nueva">NUEVA</span><br>Bertrand, J. (1883). Théorie mathématique de la richesse sociale. <em>Journal des Savants</em>, 499–508.</p>
+    <p><span class="nueva">NUEVA</span><br>Nash, J. F. (1950). Equilibrium Points in n-Person Games. <em>Proceedings of the National Academy of Sciences</em>, 36(1), 48–49.</p>
+    <p><span class="nueva">NUEVA</span><br>Palacios-Huerta, I. (2003). Professionals Play Minimax. <em>Review of Economic Studies</em>, 70(2).</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] }, svg: { fontCache: "global" } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const IMPRESION = /print-pdf/i.test(location.search);
+const NS = "http://www.w3.org/2000/svg";
+const fmt = x => (Math.round(x * 100) / 100).toLocaleString("es-CO");
+
+Reveal.initialize({
+  width: 1280, height: 720, margin: 0.05,
+  center: false, hash: true, transition: "fade", transitionSpeed: "fast",
+  slideNumber: "c/t", controls: true, progress: true,
+  pdfSeparateFragments: false,
+  plugins: typeof RevealNotes !== "undefined" ? [RevealNotes] : []
+});
+
+function el(svg, tag, attrs, texto) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (texto !== undefined) e.textContent = texto;
+  svg.appendChild(e); return e;
+}
+const piB = p => Math.max(0, (p - 6) * (60 - p));
+
+/* ---------- Guerra de precios automática ---------- */
+(function () {
+  let p = [33, 33], turno = 1, fin = false, timer = null;
+  function pintar(texto) {
+    $("gp1").textContent = p[0]; $("gp2").textContent = p[1];
+    const g = p[0] < p[1] ? [piB(p[0]), 0] : p[0] > p[1] ? [0, piB(p[1])] : [piB(p[0]) / 2, piB(p[1]) / 2];
+    $("gg1").textContent = "Gana " + fmt(g[0]); $("gg2").textContent = "Gana " + fmt(g[1]);
+    if (texto) $("gLectura").innerHTML = texto;
+  }
+  function chip(f, v) { const s = document.createElement("span"); s.className = "f" + (f + 1); s.textContent = v; $("gEscalera").appendChild(s); }
+  function paso() {
+    if (fin) return;
+    const otro = p[1 - turno];
+    const bajar = piB(otro - 1), igualar = piB(otro) / 2;
+    if (bajar > igualar) {
+      p[turno] = otro - 1; chip(turno, p[turno]);
+      pintar(`La Firma ${turno + 1} baja a <b>${p[turno]}</b> y se lleva todo el mercado.`);
+    } else {
+      p[turno] = otro; chip(turno, p[turno]); fin = true;
+      pintar(`Ya no conviene bajar más. Bajar a ${otro - 1} da cero, igualar en ${otro} da ${fmt(igualar)}. Paran en <b>${otro}</b>, a un peso del costo. Con centavos llegarían a <b>6</b>.`);
+      clearInterval(timer); timer = null;
+    }
+    turno = 1 - turno;
+  }
+  function reiniciar() { clearInterval(timer); timer = null; p = [33, 33]; turno = 1; fin = false; $("gEscalera").innerHTML = ""; chip(0, 33); chip(1, 33); pintar("Arrancan las dos en <b>33</b>, el precio de monopolio, y se reparten el mercado."); }
+  $("gPaso").onclick = paso;
+  $("gFin").onclick = () => { if (!timer && !fin) timer = setInterval(paso, 180); };
+  $("gReset").onclick = reiniciar;
+  reiniciar();
+  if (IMPRESION) while (!fin) paso();
+})();
+
+/* ---------- Guerra de precios en vivo ---------- */
+(function () {
+  let ronda = 0, quedan = Array.from({ length: CONFIG.totalEstudiantes }, (_, i) => i + 1);
+  $("bRonda").onclick = () => {
+    const p1 = Math.max(0, +$("bp1").value || 0), p2 = Math.max(0, +$("bp2").value || 0);
+    ronda++;
+    let g1 = 0, g2 = 0, vende;
+    if (p1 < p2) { g1 = (p1 - 6) * Math.max(0, 60 - p1); vende = "Firma 1"; }
+    else if (p2 < p1) { g2 = (p2 - 6) * Math.max(0, 60 - p2); vende = "Firma 2"; }
+    else { g1 = g2 = (p1 - 6) * Math.max(0, 60 - p1) / 2; vende = "Las dos"; }
+    document.querySelectorAll("#bHist tr").forEach(t => t.classList.remove("ultima"));
+    const tr = document.createElement("tr"); tr.className = "ultima";
+    tr.innerHTML = `<td>${ronda}</td><td>${p1}</td><td>${p2}</td><td style="text-align:left">${vende}</td><td>${fmt(g1)}</td><td>${fmt(g2)}</td>`;
+    $("bHist").appendChild(tr);
+    while ($("bHist").children.length > 8) $("bHist").removeChild($("bHist").firstChild);
+    const bajo = Math.min(p1, p2);
+    $("bLectura").innerHTML = bajo < 6
+      ? "Alguien cobró por debajo del costo. Vende, pero pierde plata en cada unidad."
+      : bajo <= 7 ? "Llegaron al costo, o casi. Eso es <b>Bertrand</b>. Bajar más da pérdidas y subir deja sin clientes."
+      : p1 === p2 ? `Empataron y se reparten. Pero cualquiera de los dos se lleva todo cobrando <b>${bajo - 1}</b>. ¿Quién se anima?`
+      : `El que perdió puede ganar todo cobrando <b>${bajo - 1}</b> en la próxima ronda. ¿Lo hará?`;
+  };
+  $("bSorteo").onclick = () => {
+    if (quedan.length < 2) quedan = Array.from({ length: CONFIG.totalEstudiantes }, (_, i) => i + 1);
+    const a = quedan.splice(Math.floor(Math.random() * quedan.length), 1)[0];
+    const b = quedan.splice(Math.floor(Math.random() * quedan.length), 1)[0];
+    $("best1").textContent = "Estudiante n.º " + a; $("best2").textContent = "Estudiante n.º " + b;
+  };
+  $("bReset").onclick = () => { ronda = 0; $("bHist").innerHTML = ""; $("bLectura").textContent = ""; };
+})();
+
+/* ---------- Cara o sello contra la máquina ---------- */
+(function () {
+  let hist = [], gano = 0, perdio = 0;
+  function predecir() {
+    if (hist.length < 2) return Math.random() < 0.5 ? "C" : "S";
+    const ult = hist.slice(-2).join(""), tr = { C: 0, S: 0 }, fr = { C: 0, S: 0 };
+    for (let i = 2; i < hist.length; i++) if (hist[i - 2] + hist[i - 1] === ult) tr[hist[i]]++;
+    const u1 = hist[hist.length - 1], t1 = { C: 0, S: 0 };
+    for (let i = 1; i < hist.length; i++) if (hist[i - 1] === u1) t1[hist[i]]++;
+    hist.forEach(h => fr[h]++);
+    const sc = { C: tr.C * 3 + t1.C * 2 + fr.C, S: tr.S * 3 + t1.S * 2 + fr.S };
+    if (sc.C === sc.S) return Math.random() < 0.5 ? "C" : "S";
+    return sc.C > sc.S ? "C" : "S";
+  }
+  function jugar(m) {
+    const prediccion = predecir();
+    const maquina = prediccion === "C" ? "S" : "C";
+    const coincide = maquina === m;
+    coincide ? gano++ : perdio++;
+    hist.push(m);
+    $("mGano").textContent = gano; $("mPerdio").textContent = perdio;
+    const chip = document.createElement("span");
+    chip.className = "tiro " + (coincide ? "gol" : "atajada");
+    chip.textContent = (m === "C" ? "Cara" : "Sello") + (coincide ? " ✓" : " ✗");
+    $("mTiros").appendChild(chip);
+    while ($("mTiros").children.length > 20) $("mTiros").removeChild($("mTiros").firstChild);
+    const n = hist.length, caras = hist.filter(h => h === "C").length;
+    $("mLectura").innerHTML = n < 10
+      ? `Lleva ${n} jugadas. Siga.`
+      : `Jugó Cara el ${Math.round(caras / n * 100)} % de las veces y ganó el <b>${Math.round(gano / n * 100)} %</b>. ${gano / n < 0.45 ? "La máquina lo está leyendo. Usted tiene patrones." : "Va bien. Está siendo difícil de leer."}`;
+  }
+  $("mCara").onclick = () => jugar("C");
+  $("mSello").onclick = () => jugar("S");
+  $("mReset").onclick = () => { hist = []; gano = perdio = 0; $("mGano").textContent = 0; $("mPerdio").textContent = 0; $("mTiros").innerHTML = ""; $("mLectura").textContent = "Juegue unas 20 veces. Trate de que la máquina no lo lea."; };
+})();
+
+/* ---------- Raspao ---------- */
+(function () {
+  function pintar() {
+    const s = +$("rSol").value / 100, E = s * 100 + (1 - s) * 20;
+    $("rSolV").textContent = Math.round(s * 100) + " %";
+    $("rE").textContent = fmt(E); $("rBar").style.width = E + "%";
+    $("rFormula").textContent = `E = ${fmt(s)} × 100 + ${fmt(1 - s)} × 20 = ${fmt(E)} mil pesos`;
+  }
+  $("rSol").addEventListener("input", pintar); pintar();
+})();
+
+/* ---------- Pago esperado del Jugador 1 según Q ---------- */
+(function () {
+  const svg = $("gEsp"), X0 = 60, Y0 = 330, W = 430, H = 290;
+  const sx = q => X0 + q * W, sy = v => Y0 - (v + 1) / 2 * H;
+  function pintar() {
+    const Q = +$("eQ").value / 100;
+    $("eQV").textContent = fmt(Q);
+    svg.innerHTML = "";
+    [-1, 0, 1].forEach(v => { el(svg, "line", { class: "rej", x1: X0, y1: sy(v), x2: X0 + W, y2: sy(v) }); el(svg, "text", { x: X0 - 10, y: sy(v) + 5, "text-anchor": "end" }, v); });
+    [0, 0.5, 1].forEach(q => el(svg, "text", { x: sx(q), y: Y0 + 22, "text-anchor": "middle" }, q === 0.5 ? "½" : q));
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0 + W, y2: Y0 });
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0, y2: Y0 - H });
+    el(svg, "text", { x: X0 + W, y: Y0 + 44, "text-anchor": "end" }, "Q, lo que cree del Jugador 2");
+    el(svg, "line", { x1: sx(0), y1: sy(-1), x2: sx(1), y2: sy(1), style: "stroke:var(--azul);stroke-width:4" });
+    el(svg, "line", { x1: sx(0), y1: sy(1), x2: sx(1), y2: sy(-1), style: "stroke:var(--rojo);stroke-width:4" });
+    el(svg, "text", { class: "et", x: sx(1) - 6, y: sy(1) + 24, "text-anchor": "end", style: "fill:var(--azul)" }, "E[Cara] = 2Q − 1");
+    el(svg, "text", { class: "et", x: sx(0) + 8, y: sy(1) + 24, style: "fill:var(--rojo)" }, "E[Sello] = 1 − 2Q");
+    el(svg, "line", { x1: sx(Q), y1: Y0, x2: sx(Q), y2: Y0 - H, style: "stroke:var(--tinta);stroke-width:1.5;stroke-dasharray:5 5" });
+    el(svg, "circle", { cx: sx(Q), cy: sy(2 * Q - 1), r: 8, style: "fill:var(--azul)" });
+    el(svg, "circle", { cx: sx(Q), cy: sy(1 - 2 * Q), r: 8, style: "fill:var(--rojo)" });
+    const c = 2 * Q - 1, s = 1 - 2 * Q;
+    $("eLectura").innerHTML = Math.abs(c - s) < 1e-9
+      ? `Con Q = ½ las dos monedas dan <b>0</b>. Al Jugador 1 le da igual. Cualquier P le sirve.`
+      : c > s ? `Cara da <b>${fmt(c)}</b> y Sello <b>${fmt(s)}</b>. Le conviene <b class="j1">Cara</b>, P = 1.`
+              : `Cara da <b>${fmt(c)}</b> y Sello <b>${fmt(s)}</b>. Le conviene <b class="j2">Sello</b>, P = 0.`;
+  }
+  $("eQ").addEventListener("input", pintar);
+  if (IMPRESION) $("eQ").value = 50;
+  pintar();
+})();
+
+/* ---------- Matrices (motor de la clase 2) ---------- */
+const JUEGOS = {
+  cara:    { nombre: "Cara o sello", n1: "Jugador 1", n2: "Jugador 2", f: ["Cara", "Sello"], c: ["Cara", "Sello"],
+             a: [[1, -1], [-1, 1]], b: [[-1, 1], [1, -1]] },
+  penalti: { nombre: "Penalti con datos", n1: "Delantero", n2: "Portero", f: ["Izq.", "Der."], c: ["Izq.", "Der."],
+             a: [[58, 95], [93, 70]], b: [[42, 5], [7, 30]] },
+  parque:  { nombre: "Parque o cine", n1: "Jugador 1", n2: "Jugador 2", f: ["Parque", "Cine"], c: ["Parque", "Cine"],
+             a: [[2, 0], [0, 3]], b: [[3, 0], [0, 2]] }
+};
+function analizar(g) {
+  const R = g.a.length, C = g.a[0].length;
+  const mr1 = g.a.map(r => r.map(() => false)), mr2 = g.a.map(r => r.map(() => false));
+  for (let j = 0; j < C; j++) { const m = Math.max(...g.a.map(r => r[j])); for (let i = 0; i < R; i++) mr1[i][j] = g.a[i][j] === m; }
+  for (let i = 0; i < R; i++) { const m = Math.max(...g.b[i]); for (let j = 0; j < C; j++) mr2[i][j] = g.b[i][j] === m; }
+  const nash = [];
+  for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) if (mr1[i][j] && mr2[i][j]) nash.push([i, j]);
+  const dom = [];
+  for (let i = 0; i < R; i++) for (let k = 0; k < R; k++) if (i !== k) {
+    const ge = g.a[i].every((v, j) => v >= g.a[k][j]), gt = g.a[i].map((v, j) => v > g.a[k][j]);
+    if (ge && gt.some(Boolean)) dom.push(`Para ${g.n1}, <b>${g.f[i]}</b> domina ${gt.every(Boolean) ? "estrictamente" : "débilmente"} a ${g.f[k]}.`);
+  }
+  for (let j = 0; j < C; j++) for (let k = 0; k < C; k++) if (j !== k) {
+    const col = i => g.b[i][j], otra = i => g.b[i][k];
+    const ge = g.b.every((_, i) => col(i) >= otra(i)), gt = g.b.map((_, i) => col(i) > otra(i));
+    if (ge && gt.some(Boolean)) dom.push(`Para ${g.n2}, <b>${g.c[j]}</b> domina ${gt.every(Boolean) ? "estrictamente" : "débilmente"} a ${g.c[k]}.`);
+  }
+  let mixta = null;
+  if (R === 2 && C === 2) {
+    const dq = g.a[0][0] - g.a[0][1] - g.a[1][0] + g.a[1][1];
+    const dp = g.b[0][0] - g.b[1][0] - g.b[0][1] + g.b[1][1];
+    if (dq && dp) {
+      const q = (g.a[1][1] - g.a[0][1]) / dq, p = (g.b[1][1] - g.b[1][0]) / dp;
+      if (p > 0 && p < 1 && q > 0 && q < 1) mixta = { p, q };
+    }
+  }
+  return { mr1, mr2, nash, dom, mixta };
+}
+
+function fraccion(x) {
+  for (let d = 1; d <= 6; d++) { const n = Math.round(x * d); if (Math.abs(n / d - x) < 1e-9) return n + "/" + d; }
+  return Math.round(x * 100) + " %";
+}
+
+function crearMatriz(raiz) {
+  const id = raiz.id, claves = raiz.dataset.juegos.split(","), compacta = !!raiz.dataset.compacta;
+  const ver = { mr1: IMPRESION, mr2: IMPRESION, nash: IMPRESION };
+  let g;
+  raiz.innerHTML = `
+    <div class="botones solo-clase" style="margin-bottom:14px">
+      ${claves.length > 1 ? claves.map(k => `<button data-k="${k}">${JUEGOS[k].nombre}</button>`).join("") + '<span style="width:14px"></span>' : ""}
+      <button data-v="mr1">Mejor respuesta <span data-n="1"></span></button>
+      <button data-v="mr2">Mejor respuesta <span data-n="2"></span></button>
+      <button data-v="nash">Equilibrio de Nash</button>
+    </div>
+    <div class="fila"><div class="tabla"></div><div class="col panel"></div></div>`;
+  const tabla = raiz.querySelector(".tabla"), panel = raiz.querySelector(".panel");
+
+  function cargar(k) {
+    g = JSON.parse(JSON.stringify(JUEGOS[k]));
+    const R = g.a.length, C = g.a[0].length;
+    let h = `<table class="matriz${compacta || R > 2 ? " compacta" : ""}"><tr><th></th><th></th><th colspan="${C}" class="jug j2">${g.n2}</th></tr><tr><th></th><th></th>`;
+    g.c.forEach(c => h += `<th>${c}</th>`);
+    h += "</tr>";
+    for (let i = 0; i < R; i++) {
+      h += "<tr>";
+      if (i === 0) h += `<th rowspan="${R}" class="jug j1"><span class="lado">${g.n1}</span></th>`;
+      h += `<th>${g.f[i]}</th>`;
+      for (let j = 0; j < C; j++) h += `<td id="${id}t${i}${j}"><input class="celda j1" id="${id}a${i}${j}" value="${g.a[i][j]}" aria-label="Pago de ${g.n1} en ${g.f[i]}, ${g.c[j]}"> , <input class="celda j2" id="${id}b${i}${j}" value="${g.b[i][j]}" aria-label="Pago de ${g.n2} en ${g.f[i]}, ${g.c[j]}"></td>`;
+      h += "</tr>";
+    }
+    tabla.innerHTML = h + "</table>";
+    tabla.querySelectorAll("input").forEach(el => el.addEventListener("input", pintar));
+    raiz.querySelector('[data-n="1"]').textContent = g.n1;
+    raiz.querySelector('[data-n="2"]').textContent = g.n2;
+    raiz.querySelectorAll("[data-k]").forEach(b => b.classList.toggle("on", b.dataset.k === k));
+    if (!IMPRESION) ver.mr1 = ver.mr2 = ver.nash = false;
+    pintar();
+  }
+  function leer() {
+    const n = el => parseFloat(String(el.value).replace(",", ".")) || 0;
+    g.a.forEach((r, i) => r.forEach((_, j) => { g.a[i][j] = n($(id + "a" + i + j)); g.b[i][j] = n($(id + "b" + i + j)); }));
+  }
+  function pintar() {
+    leer(); const r = analizar(g), R = g.a.length, C = g.a[0].length;
+    for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) {
+      $(id + "a" + i + j).classList.toggle("mr", ver.mr1 && r.mr1[i][j]);
+      $(id + "b" + i + j).classList.toggle("mr", ver.mr2 && r.mr2[i][j]);
+      $(id + "t" + i + j).classList.toggle("nash", ver.nash && r.nash.some(([x, y]) => x === i && y === j));
+    }
+    raiz.querySelectorAll("[data-v]").forEach(b => b.classList.toggle("on", ver[b.dataset.v]));
+    let h = "";
+    if (!ver.mr1 && !ver.mr2 && !ver.nash) h = `<h3>¿Qué haría usted?</h3><p>Prediga el equilibrio antes de presionar los botones.</p><p class="peq">Haga clic en cualquier número para cambiarlo.</p>`;
+    if (ver.mr1) {
+      h += `<h3 class="j1">${g.n1} elige la mejor fila</h3>`;
+      for (let j = 0; j < C; j++) h += `<p>Si ${g.n2} juega ${g.c[j]} → ${g.f.filter((_, i) => r.mr1[i][j]).map(x => "<b>" + x + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.mr2) {
+      h += `<h3 class="j2">${g.n2} elige la mejor columna</h3>`;
+      for (let i = 0; i < R; i++) h += `<p>Si ${g.n1} juega ${g.f[i]} → ${g.c.filter((_, j) => r.mr2[i][j]).map(x => "<b>" + x + "</b>").join(" o ")}</p>`;
+    }
+    if (ver.nash) {
+      h += `<h3>Equilibrio de Nash</h3>`;
+      h += r.nash.length
+        ? `<p>${r.nash.map(([i, j]) => `<b>(${g.f[i]}, ${g.c[j]})</b> con pagos (${g.a[i][j]}, ${g.b[i][j]})`).join("; ")}.</p>`
+        : `<p>No hay equilibrio en estrategias puras.</p>`;
+      r.dom.forEach(t => h += `<p class="peq">${t}</p>`);
+      if (r.mixta) h += `<p class="peq">En estrategias mixtas, ${g.n1} juega ${g.f[0]} con ${fraccion(r.mixta.p)} y ${g.n2} juega ${g.c[0]} con ${fraccion(r.mixta.q)}.</p>`;
+    }
+    h += `<p class="fuente" style="margin-top:8px">Subrayado, mejor respuesta · Amarillo, equilibrio de Nash</p>`;
+    panel.innerHTML = h;
+  }
+  raiz.querySelectorAll("[data-k]").forEach(b => b.onclick = () => cargar(b.dataset.k));
+  raiz.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { ver[b.dataset.v] = !ver[b.dataset.v]; pintar(); });
+  cargar(raiz.dataset.inicial || claves[0]);
+}
+
+document.querySelectorAll(".matriz-app").forEach(crearMatriz);
+</script>
