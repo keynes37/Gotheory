@@ -25,3 +25,5 @@ All class presentations are available as long as the GitHub links are present.
 [Clase 3 2026](https://keynes37.github.io/Gotheory/presentaciones/clase03.html)
 
 [Clase 4 2026](https://keynes37.github.io/Gotheory/presentaciones/clase04.html)
+
+[Clase 5 2026](https://keynes37.github.io/Gotheory/presentaciones/clase05.html)
