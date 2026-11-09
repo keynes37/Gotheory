@@ -1,0 +1,909 @@
+<title>Teoría de Juegos · Clase 5</title>
+<!--
+  ============================================================
+  CLASE 5 · JUEGOS EVOLUTIVOS
+  - Flechas: avanzar / retroceder.   F: pantalla completa.
+  - S: vista del profesor con notas.  Esc: ver todas las diapositivas.
+  - Inicio (fn + ←): volver a la portada.
+  - PDF: agregue ?print-pdf al final de la dirección y guarde como PDF.
+    En el PDF los interactivos salen ya resueltos.
+
+  Las figuras c5g1.svg, c5g2.svg y la foto de Axelrod se toman de ../imagen/
+  ============================================================
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+/*!
+* reveal.js 5.1.0
+* https://revealjs.com
+* MIT licensed
+*
+* Copyright (C) 2011-2024 Hakim El Hattab, https://hakim.se
+*/
+.reveal .r-stretch,.reveal .stretch{max-width:none;max-height:none}.reveal pre.r-stretch code,.reveal pre.stretch code{height:100%;max-height:100%;box-sizing:border-box}.reveal .r-fit-text{display:inline-block;white-space:nowrap}.reveal .r-stack{display:grid;grid-template-rows:100%}.reveal .r-stack>*{grid-area:1/1;margin:auto}.reveal .r-hstack,.reveal .r-vstack{display:flex}.reveal .r-hstack img,.reveal .r-hstack video,.reveal .r-vstack img,.reveal .r-vstack video{min-width:0;min-height:0;object-fit:contain}.reveal .r-vstack{flex-direction:column;align-items:center;justify-content:center}.reveal .r-hstack{flex-direction:row;align-items:center;justify-content:center}.reveal .items-stretch{align-items:stretch}.reveal .items-start{align-items:flex-start}.reveal .items-center{align-items:center}.reveal .items-end{align-items:flex-end}.reveal .justify-between{justify-content:space-between}.reveal .justify-around{justify-content:space-around}.reveal .justify-start{justify-content:flex-start}.reveal .justify-center{justify-content:center}.reveal .justify-end{justify-content:flex-end}html.reveal-full-page{width:100%;height:100%;height:100vh;height:calc(var(--vh,1vh) * 100);height:100svh;overflow:hidden}.reveal-viewport{height:100%;overflow:hidden;position:relative;line-height:1;margin:0;background-color:#fff;color:#000;--r-controls-spacing:12px}.reveal-viewport:fullscreen{top:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important}.reveal .fragment{transition:all .2s ease}.reveal .fragment:not(.custom){opacity:0;visibility:hidden;will-change:opacity}.reveal .fragment.visible{opacity:1;visibility:inherit}.reveal .fragment.disabled{transition:none}.reveal .fragment.grow{opacity:1;visibility:inherit}.reveal .fragment.grow.visible{transform:scale(1.3)}.reveal .fragment.shrink{opacity:1;visibility:inherit}.reveal .fragment.shrink.visible{transform:scale(.7)}.reveal .fragment.zoom-in{transform:scale(.1)}.reveal .fragment.zoom-in.visible{transform:none}.reveal .fragment.fade-out{opacity:1;visibility:inherit}.reveal .fragment.fade-out.visible{opacity:0;visibility:hidden}.reveal .fragment.semi-fade-out{opacity:1;visibility:inherit}.reveal .fragment.semi-fade-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.strike{opacity:1;visibility:inherit}.reveal .fragment.strike.visible{text-decoration:line-through}.reveal .fragment.fade-up{transform:translate(0,40px)}.reveal .fragment.fade-up.visible{transform:translate(0,0)}.reveal .fragment.fade-down{transform:translate(0,-40px)}.reveal .fragment.fade-down.visible{transform:translate(0,0)}.reveal .fragment.fade-right{transform:translate(-40px,0)}.reveal .fragment.fade-right.visible{transform:translate(0,0)}.reveal .fragment.fade-left{transform:translate(40px,0)}.reveal .fragment.fade-left.visible{transform:translate(0,0)}.reveal .fragment.current-visible,.reveal .fragment.fade-in-then-out{opacity:0;visibility:hidden}.reveal .fragment.current-visible.current-fragment,.reveal .fragment.fade-in-then-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.fade-in-then-semi-out{opacity:0;visibility:hidden}.reveal .fragment.fade-in-then-semi-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.fade-in-then-semi-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.highlight-blue,.reveal .fragment.highlight-current-blue,.reveal .fragment.highlight-current-green,.reveal .fragment.highlight-current-red,.reveal .fragment.highlight-green,.reveal .fragment.highlight-red{opacity:1;visibility:inherit}.reveal .fragment.highlight-red.visible{color:#ff2c2d}.reveal .fragment.highlight-green.visible{color:#17ff2e}.reveal .fragment.highlight-blue.visible{color:#1b91ff}.reveal .fragment.highlight-current-red.current-fragment{color:#ff2c2d}.reveal .fragment.highlight-current-green.current-fragment{color:#17ff2e}.reveal .fragment.highlight-current-blue.current-fragment{color:#1b91ff}.reveal:after{content:"";font-style:italic}.reveal iframe{z-index:1}.reveal a{position:relative}@keyframes bounce-right{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(10px)}30%{transform:translateX(-5px)}}@keyframes bounce-left{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(-10px)}30%{transform:translateX(5px)}}@keyframes bounce-down{0%,10%,25%,40%,50%{transform:translateY(0)}20%{transform:translateY(10px)}30%{transform:translateY(-5px)}}.reveal .controls{display:none;position:absolute;top:auto;bottom:var(--r-controls-spacing);right:var(--r-controls-spacing);left:auto;z-index:11;color:#000;pointer-events:none;font-size:10px}.reveal .controls button{position:absolute;padding:0;background-color:transparent;border:0;outline:0;cursor:pointer;color:currentColor;transform:scale(.9999);transition:color .2s ease,opacity .2s ease,transform .2s ease;z-index:2;pointer-events:auto;font-size:inherit;visibility:hidden;opacity:0;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}.reveal .controls .controls-arrow:after,.reveal .controls .controls-arrow:before{content:"";position:absolute;top:0;left:0;width:2.6em;height:.5em;border-radius:.25em;background-color:currentColor;transition:all .15s ease,background-color .8s ease;transform-origin:.2em 50%;will-change:transform}.reveal .controls .controls-arrow{position:relative;width:3.6em;height:3.6em}.reveal .controls .controls-arrow:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal .controls .controls-arrow:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}.reveal .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(40deg)}.reveal .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-40deg)}.reveal .controls .controls-arrow:active:before{transform:translateX(.5em) translateY(1.55em) rotate(36deg)}.reveal .controls .controls-arrow:active:after{transform:translateX(.5em) translateY(1.55em) rotate(-36deg)}.reveal .controls .navigate-left{right:6.4em;bottom:3.2em;transform:translateX(-10px)}.reveal .controls .navigate-left.highlight{animation:bounce-left 2s 50 both ease-out}.reveal .controls .navigate-right{right:0;bottom:3.2em;transform:translateX(10px)}.reveal .controls .navigate-right .controls-arrow{transform:rotate(180deg)}.reveal .controls .navigate-right.highlight{animation:bounce-right 2s 50 both ease-out}.reveal .controls .navigate-up{right:3.2em;bottom:6.4em;transform:translateY(-10px)}.reveal .controls .navigate-up .controls-arrow{transform:rotate(90deg)}.reveal .controls .navigate-down{right:3.2em;bottom:-1.4em;padding-bottom:1.4em;transform:translateY(10px)}.reveal .controls .navigate-down .controls-arrow{transform:rotate(-90deg)}.reveal .controls .navigate-down.highlight{animation:bounce-down 2s 50 both ease-out}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled{opacity:.3}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled:hover{opacity:1}.reveal .controls[data-controls-back-arrows=hidden] .navigate-up.enabled{opacity:0;visibility:hidden}.reveal .controls .enabled{visibility:visible;opacity:.9;cursor:pointer;transform:none}.reveal .controls .enabled.fragmented{opacity:.5}.reveal .controls .enabled.fragmented:hover,.reveal .controls .enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled{opacity:.3}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=hidden] .navigate-left.enabled{opacity:0;visibility:hidden}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled{opacity:.3}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled:hover{opacity:1}.reveal.rtl .controls[data-controls-back-arrows=hidden] .navigate-right.enabled{opacity:0;visibility:hidden}.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-down,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-up{display:none}.reveal:not(.has-vertical-slides) .controls .navigate-left,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-left{bottom:1.4em;right:5.5em}.reveal:not(.has-vertical-slides) .controls .navigate-right,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-right{bottom:1.4em;right:.5em}.reveal:not(.has-horizontal-slides) .controls .navigate-up{right:1.4em;bottom:5em}.reveal:not(.has-horizontal-slides) .controls .navigate-down{right:1.4em;bottom:.5em}.reveal.has-dark-background .controls{color:#fff}.reveal.has-light-background .controls{color:#000}.reveal.no-hover .controls .controls-arrow:active:before,.reveal.no-hover .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal.no-hover .controls .controls-arrow:active:after,.reveal.no-hover .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}@media screen and (min-width:500px){.reveal-viewport{--r-controls-spacing:0.8em}.reveal .controls[data-controls-layout=edges]{top:0;right:0;bottom:0;left:0}.reveal .controls[data-controls-layout=edges] .navigate-down,.reveal .controls[data-controls-layout=edges] .navigate-left,.reveal .controls[data-controls-layout=edges] .navigate-right,.reveal .controls[data-controls-layout=edges] .navigate-up{bottom:auto;right:auto}.reveal .controls[data-controls-layout=edges] .navigate-left{top:50%;left:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-right{top:50%;right:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-up{top:var(--r-controls-spacing);left:50%;margin-left:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-down{bottom:calc(var(--r-controls-spacing) - 1.4em + .3em);left:50%;margin-left:-1.8em}}.reveal .progress{position:absolute;display:none;height:3px;width:100%;bottom:0;left:0;z-index:10;background-color:rgba(0,0,0,.2);color:#fff}.reveal .progress:after{content:"";display:block;position:absolute;height:10px;width:100%;top:-10px}.reveal .progress span{display:block;height:100%;width:100%;background-color:currentColor;transition:transform .8s cubic-bezier(.26,.86,.44,.985);transform-origin:0 0;transform:scaleX(0)}.reveal .slide-number{position:absolute;display:block;right:8px;bottom:8px;z-index:31;font-family:Helvetica,sans-serif;font-size:12px;line-height:1;color:#fff;background-color:rgba(0,0,0,.4);padding:5px}.reveal .slide-number a{color:currentColor}.reveal .slide-number-delimiter{margin:0 3px}.reveal{position:relative;width:100%;height:100%;overflow:hidden;touch-action:pinch-zoom}.reveal.embedded{touch-action:pan-y}.reveal.embedded.is-vertical-slide{touch-action:none}.reveal .slides{position:absolute;width:100%;height:100%;top:0;right:0;bottom:0;left:0;margin:auto;pointer-events:none;overflow:visible;z-index:1;text-align:center;perspective:600px;perspective-origin:50% 40%}.reveal .slides>section{perspective:600px}.reveal .slides>section,.reveal .slides>section>section{display:none;position:absolute;width:100%;pointer-events:auto;z-index:10;transform-style:flat;transition:transform-origin .8s cubic-bezier(.26,.86,.44,.985),transform .8s cubic-bezier(.26,.86,.44,.985),visibility .8s cubic-bezier(.26,.86,.44,.985),opacity .8s cubic-bezier(.26,.86,.44,.985)}.reveal[data-transition-speed=fast] .slides section{transition-duration:.4s}.reveal[data-transition-speed=slow] .slides section{transition-duration:1.2s}.reveal .slides section[data-transition-speed=fast]{transition-duration:.4s}.reveal .slides section[data-transition-speed=slow]{transition-duration:1.2s}.reveal .slides>section.stack{padding-top:0;padding-bottom:0;pointer-events:none;height:100%}.reveal .slides>section.present,.reveal .slides>section>section.present{display:block;z-index:11;opacity:1}.reveal .slides>section:empty,.reveal .slides>section>section:empty,.reveal .slides>section>section[data-background-interactive],.reveal .slides>section[data-background-interactive]{pointer-events:none}.reveal.center,.reveal.center .slides,.reveal.center .slides section{min-height:0!important}.reveal .slides>section:not(.present),.reveal .slides>section>section:not(.present){pointer-events:none}.reveal.overview .slides>section,.reveal.overview .slides>section>section{pointer-events:auto}.reveal .slides>section.future,.reveal .slides>section.future>section,.reveal .slides>section.past,.reveal .slides>section.past>section,.reveal .slides>section>section.future,.reveal .slides>section>section.past{opacity:0}.reveal .slides>section[data-transition=slide].past,.reveal .slides>section[data-transition~=slide-out].past,.reveal.slide .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=slide].future,.reveal .slides>section[data-transition~=slide-in].future,.reveal.slide .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=slide].past,.reveal .slides>section>section[data-transition~=slide-out].past,.reveal.slide .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=slide].future,.reveal .slides>section>section[data-transition~=slide-in].future,.reveal.slide .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides>section[data-transition=linear].past,.reveal .slides>section[data-transition~=linear-out].past,.reveal.linear .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=linear].future,.reveal .slides>section[data-transition~=linear-in].future,.reveal.linear .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=linear].past,.reveal .slides>section>section[data-transition~=linear-out].past,.reveal.linear .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=linear].future,.reveal .slides>section>section[data-transition~=linear-in].future,.reveal.linear .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides section[data-transition=default].stack,.reveal.default .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=default].past,.reveal .slides>section[data-transition~=default-out].past,.reveal.default .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=default].future,.reveal .slides>section[data-transition~=default-in].future,.reveal.default .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=default].past,.reveal .slides>section>section[data-transition~=default-out].past,.reveal.default .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=default].future,.reveal .slides>section>section[data-transition~=default-in].future,.reveal.default .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=convex].stack,.reveal.convex .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=convex].past,.reveal .slides>section[data-transition~=convex-out].past,.reveal.convex .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=convex].future,.reveal .slides>section[data-transition~=convex-in].future,.reveal.convex .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=convex].past,.reveal .slides>section>section[data-transition~=convex-out].past,.reveal.convex .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=convex].future,.reveal .slides>section>section[data-transition~=convex-in].future,.reveal.convex .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=concave].stack,.reveal.concave .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=concave].past,.reveal .slides>section[data-transition~=concave-out].past,.reveal.concave .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=concave].future,.reveal .slides>section[data-transition~=concave-in].future,.reveal.concave .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=concave].past,.reveal .slides>section>section[data-transition~=concave-out].past,.reveal.concave .slides>section>section:not([data-transition]).past{transform:translate3d(0,-80%,0) rotateX(-70deg) translate3d(0,-80%,0)}.reveal .slides>section>section[data-transition=concave].future,.reveal .slides>section>section[data-transition~=concave-in].future,.reveal.concave .slides>section>section:not([data-transition]).future{transform:translate3d(0,80%,0) rotateX(70deg) translate3d(0,80%,0)}.reveal .slides section[data-transition=zoom],.reveal.zoom .slides section:not([data-transition]){transition-timing-function:ease}.reveal .slides>section[data-transition=zoom].past,.reveal .slides>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section:not([data-transition]).past{visibility:hidden;transform:scale(16)}.reveal .slides>section[data-transition=zoom].future,.reveal .slides>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section:not([data-transition]).future{visibility:hidden;transform:scale(.2)}.reveal .slides>section>section[data-transition=zoom].past,.reveal .slides>section>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section>section:not([data-transition]).past{transform:scale(16)}.reveal .slides>section>section[data-transition=zoom].future,.reveal .slides>section>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section>section:not([data-transition]).future{transform:scale(.2)}.reveal.cube .slides{perspective:1300px}.reveal.cube .slides section{padding:30px;min-height:700px;backface-visibility:hidden;box-sizing:border-box;transform-style:preserve-3d}.reveal.center.cube .slides section{min-height:0}.reveal.cube .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);border-radius:4px;transform:translateZ(-20px)}.reveal.cube .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);transform:translateZ(-90px) rotateX(65deg)}.reveal.cube .slides>section.stack{padding:0;background:0 0}.reveal.cube .slides>section.past{transform-origin:100% 0;transform:translate3d(-100%,0,0) rotateY(-90deg)}.reveal.cube .slides>section.future{transform-origin:0 0;transform:translate3d(100%,0,0) rotateY(90deg)}.reveal.cube .slides>section>section.past{transform-origin:0 100%;transform:translate3d(0,-100%,0) rotateX(90deg)}.reveal.cube .slides>section>section.future{transform-origin:0 0;transform:translate3d(0,100%,0) rotateX(-90deg)}.reveal.page .slides{perspective-origin:0 50%;perspective:3000px}.reveal.page .slides section{padding:30px;min-height:700px;box-sizing:border-box;transform-style:preserve-3d}.reveal.page .slides section.past{z-index:12}.reveal.page .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);transform:translateZ(-20px)}.reveal.page .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);-webkit-transform:translateZ(-90px) rotateX(65deg)}.reveal.page .slides>section.stack{padding:0;background:0 0}.reveal.page .slides>section.past{transform-origin:0 0;transform:translate3d(-40%,0,0) rotateY(-80deg)}.reveal.page .slides>section.future{transform-origin:100% 0;transform:translate3d(0,0,0)}.reveal.page .slides>section>section.past{transform-origin:0 0;transform:translate3d(0,-40%,0) rotateX(80deg)}.reveal.page .slides>section>section.future{transform-origin:0 100%;transform:translate3d(0,0,0)}.reveal .slides section[data-transition=fade],.reveal.fade .slides section:not([data-transition]),.reveal.fade .slides>section>section:not([data-transition]){transform:none;transition:opacity .5s}.reveal.fade.overview .slides section,.reveal.fade.overview .slides>section>section{transition:none}.reveal .slides section[data-transition=none],.reveal.none .slides section:not([data-transition]){transform:none;transition:none}.reveal .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;visibility:hidden;opacity:0;z-index:100;transition:all 1s ease}.reveal .pause-overlay .resume-button{position:absolute;bottom:20px;right:20px;color:#ccc;border-radius:2px;padding:6px 14px;border:2px solid #ccc;font-size:16px;background:0 0;cursor:pointer}.reveal .pause-overlay .resume-button:hover{color:#fff;border-color:#fff}.reveal.paused .pause-overlay{visibility:visible;opacity:1}.reveal .no-transition,.reveal .no-transition *,.reveal .slides.disable-slide-transitions section{transition:none!important}.reveal .slides.disable-slide-transitions section{transform:none!important}.reveal .backgrounds{position:absolute;width:100%;height:100%;top:0;left:0;perspective:600px}.reveal .slide-background{display:none;position:absolute;width:100%;height:100%;opacity:0;visibility:hidden;overflow:hidden;background-color:rgba(0,0,0,0);transition:all .8s cubic-bezier(.26,.86,.44,.985)}.reveal .slide-background-content{position:absolute;width:100%;height:100%;background-position:50% 50%;background-repeat:no-repeat;background-size:cover}.reveal .slide-background.stack{display:block}.reveal .slide-background.present{opacity:1;visibility:visible;z-index:2}.print-pdf .reveal .slide-background{opacity:1!important;visibility:visible!important}.reveal .slide-background video{position:absolute;width:100%;height:100%;max-width:none;max-height:none;top:0;left:0;object-fit:cover}.reveal .slide-background[data-background-size=contain] video{object-fit:contain}.reveal>.backgrounds .slide-background[data-background-transition=none],.reveal[data-background-transition=none]>.backgrounds .slide-background:not([data-background-transition]){transition:none}.reveal>.backgrounds .slide-background[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background:not([data-background-transition]){opacity:1}.reveal>.backgrounds .slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.past:not([data-background-transition]){transform:translate(-100%,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.future:not([data-background-transition]){transform:translate(100%,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){transform:translate(0,-100%)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){transform:translate(0,100%)}.reveal>.backgrounds .slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(-90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(-90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background:not([data-background-transition]){transition-timing-function:ease}.reveal>.backgrounds .slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal[data-transition-speed=fast]>.backgrounds .slide-background{transition-duration:.4s}.reveal[data-transition-speed=slow]>.backgrounds .slide-background{transition-duration:1.2s}.reveal [data-auto-animate-target^=unmatched]{will-change:opacity}.reveal section[data-auto-animate]:not(.stack):not([data-auto-animate=running]) [data-auto-animate-target^=unmatched]{opacity:0}.reveal.overview{perspective-origin:50% 50%;perspective:700px}.reveal.overview .slides{-moz-transform-style:preserve-3d}.reveal.overview .slides section{height:100%;top:0!important;opacity:1!important;overflow:hidden;visibility:visible!important;cursor:pointer;box-sizing:border-box}.reveal.overview .slides section.present,.reveal.overview .slides section:hover{outline:10px solid rgba(150,150,150,.4);outline-offset:10px}.reveal.overview .slides section .fragment{opacity:1;transition:none}.reveal.overview .slides section:after,.reveal.overview .slides section:before{display:none!important}.reveal.overview .slides>section.stack{padding:0;top:0!important;background:0 0;outline:0;overflow:visible}.reveal.overview .backgrounds{perspective:inherit;-moz-transform-style:preserve-3d}.reveal.overview .backgrounds .slide-background{opacity:1;visibility:visible;outline:10px solid rgba(150,150,150,.1);outline-offset:10px}.reveal.overview .backgrounds .slide-background.stack{overflow:visible}.reveal.overview .slides section,.reveal.overview-deactivating .slides section{transition:none}.reveal.overview .backgrounds .slide-background,.reveal.overview-deactivating .backgrounds .slide-background{transition:none}.reveal.rtl .slides,.reveal.rtl .slides h1,.reveal.rtl .slides h2,.reveal.rtl .slides h3,.reveal.rtl .slides h4,.reveal.rtl .slides h5,.reveal.rtl .slides h6{direction:rtl;font-family:sans-serif}.reveal.rtl code,.reveal.rtl pre{direction:ltr}.reveal.rtl ol,.reveal.rtl ul{text-align:right}.reveal.rtl .progress span{transform-origin:100% 0}.reveal.has-parallax-background .backgrounds{transition:all .8s ease}.reveal.has-parallax-background[data-transition-speed=fast] .backgrounds{transition-duration:.4s}.reveal.has-parallax-background[data-transition-speed=slow] .backgrounds{transition-duration:1.2s}.reveal>.overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;background:rgba(0,0,0,.95);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .3s ease}.reveal>.overlay .spinner{position:absolute;display:block;top:50%;left:50%;width:32px;height:32px;margin:-16px 0 0 -16px;z-index:10;background-image:url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);visibility:visible;opacity:.6;transition:all .3s ease}.reveal>.overlay header{position:absolute;left:0;top:0;width:100%;padding:5px;z-index:2;box-sizing:border-box}.reveal>.overlay header a{display:inline-block;width:40px;height:40px;line-height:36px;padding:0 10px;float:right;opacity:.6;box-sizing:border-box}.reveal>.overlay header a:hover{opacity:1}.reveal>.overlay header a .icon{display:inline-block;width:20px;height:20px;background-position:50% 50%;background-size:100%;background-repeat:no-repeat}.reveal>.overlay header a.close .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC)}.reveal>.overlay header a.external .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==)}.reveal>.overlay .viewport{position:absolute;display:flex;top:50px;right:0;bottom:0;left:0}.reveal>.overlay.overlay-preview .viewport iframe{width:100%;height:100%;max-width:100%;max-height:100%;border:0;opacity:0;visibility:hidden;transition:all .3s ease}.reveal>.overlay.overlay-preview.loaded .viewport iframe{opacity:1;visibility:visible}.reveal>.overlay.overlay-preview.loaded .viewport-inner{position:absolute;z-index:-1;left:0;top:45%;width:100%;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-preview .x-frame-error{opacity:0;transition:opacity .3s ease .3s}.reveal>.overlay.overlay-preview.loaded .x-frame-error{opacity:1}.reveal>.overlay.overlay-preview.loaded .spinner{opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.overlay.overlay-help .viewport{overflow:auto;color:#fff}.reveal>.overlay.overlay-help .viewport .viewport-inner{width:600px;margin:auto;padding:20px 20px 80px 20px;text-align:center;letter-spacing:normal}.reveal>.overlay.overlay-help .viewport .viewport-inner .title{font-size:20px}.reveal>.overlay.overlay-help .viewport .viewport-inner table{border:1px solid #fff;border-collapse:collapse;font-size:16px}.reveal>.overlay.overlay-help .viewport .viewport-inner table td,.reveal>.overlay.overlay-help .viewport .viewport-inner table th{width:200px;padding:14px;border:1px solid #fff;vertical-align:middle}.reveal>.overlay.overlay-help .viewport .viewport-inner table th{padding-top:20px;padding-bottom:20px}.reveal .playback{position:absolute;left:15px;bottom:20px;z-index:30;cursor:pointer;transition:all .4s ease;-webkit-tap-highlight-color:transparent}.reveal.overview .playback{opacity:0;visibility:hidden}.reveal .hljs{min-height:100%}.reveal .hljs table{margin:initial}.reveal .hljs-ln-code,.reveal .hljs-ln-numbers{padding:0;border:0}.reveal .hljs-ln-numbers{opacity:.6;padding-right:.75em;text-align:right;vertical-align:top}.reveal .hljs.has-highlights tr:not(.highlight-line){opacity:.4}.reveal .hljs.has-highlights.fragment{transition:all .2s ease}.reveal .hljs:not(:first-child).fragment{position:absolute;top:0;left:0;width:100%;box-sizing:border-box}.reveal pre[data-auto-animate-target]{overflow:hidden}.reveal pre[data-auto-animate-target] code{height:100%}.reveal .roll{display:inline-block;line-height:1.2;overflow:hidden;vertical-align:top;perspective:400px;perspective-origin:50% 50%}.reveal .roll:hover{background:0 0;text-shadow:none}.reveal .roll span{display:block;position:relative;padding:0 2px;pointer-events:none;transition:all .4s ease;transform-origin:50% 0;transform-style:preserve-3d;backface-visibility:hidden}.reveal .roll:hover span{background:rgba(0,0,0,.5);transform:translate3d(0,0,-45px) rotateX(90deg)}.reveal .roll span:after{content:attr(data-title);display:block;position:absolute;left:0;top:0;padding:0 2px;backface-visibility:hidden;transform-origin:50% 0;transform:translate3d(0,110%,0) rotateX(-90deg)}.reveal aside.notes{display:none}.reveal .speaker-notes{display:none;position:absolute;width:33.3333333333%;height:100%;top:0;left:100%;padding:14px 18px 14px 18px;z-index:1;font-size:18px;line-height:1.4;border:1px solid rgba(0,0,0,.05);color:#222;background-color:#f5f5f5;overflow:auto;box-sizing:border-box;text-align:left;font-family:Helvetica,sans-serif;-webkit-overflow-scrolling:touch}.reveal .speaker-notes .notes-placeholder{color:#ccc;font-style:italic}.reveal .speaker-notes:focus{outline:0}.reveal .speaker-notes:before{content:"Speaker notes";display:block;margin-bottom:10px;opacity:.5}.reveal.show-notes{max-width:75%;overflow:visible}.reveal.show-notes .speaker-notes{display:block}@media screen and (min-width:1600px){.reveal .speaker-notes{font-size:20px}}@media screen and (max-width:1024px){.reveal.show-notes{border-left:0;max-width:none;max-height:70%;max-height:70vh;overflow:visible}.reveal.show-notes .speaker-notes{top:100%;left:0;width:100%;height:30vh;border:0}}@media screen and (max-width:600px){.reveal.show-notes{max-height:60%;max-height:60vh}.reveal.show-notes .speaker-notes{top:100%;height:40vh}.reveal .speaker-notes{font-size:14px}}.reveal .jump-to-slide{position:absolute;top:15px;left:15px;z-index:30;font-size:32px;-webkit-tap-highlight-color:transparent}.reveal .jump-to-slide-input{background:0 0;padding:8px;font-size:inherit;color:currentColor;border:0}.reveal .jump-to-slide-input::placeholder{color:currentColor;opacity:.5}.reveal.has-dark-background .jump-to-slide-input{color:#fff}.reveal.has-light-background .jump-to-slide-input{color:#222}.reveal .jump-to-slide-input:focus{outline:0}.zoomed .reveal *,.zoomed .reveal :after,.zoomed .reveal :before{backface-visibility:visible!important}.zoomed .reveal .controls,.zoomed .reveal .progress{opacity:0}.zoomed .reveal .roll span{background:0 0}.zoomed .reveal .roll span:after{visibility:hidden}.reveal-viewport.loading-scroll-mode{visibility:hidden}.reveal-viewport.reveal-scroll{margin:0 auto;overflow:auto;overflow-x:hidden;overflow-y:auto;z-index:1;--r-scrollbar-width:7px;--r-scrollbar-trigger-size:5px;--r-controls-spacing:8px}@media screen and (max-width:500px){.reveal-viewport.reveal-scroll{--r-scrollbar-width:3px;--r-scrollbar-trigger-size:3px}}.reveal-viewport.reveal-scroll .backgrounds,.reveal-viewport.reveal-scroll .controls,.reveal-viewport.reveal-scroll .playback,.reveal-viewport.reveal-scroll .progress,.reveal-viewport.reveal-scroll .slide-number,.reveal-viewport.reveal-scroll .speaker-notes{display:none!important}.reveal-viewport.reveal-scroll .overlay,.reveal-viewport.reveal-scroll .pause-overlay{position:fixed}.reveal-viewport.reveal-scroll .reveal{overflow:visible;touch-action:manipulation}.reveal-viewport.reveal-scroll .slides{position:static;pointer-events:initial;left:auto;top:auto;width:100%!important;margin:0;padding:0;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}.reveal-viewport.reveal-scroll .scroll-page{position:relative;width:100%;height:calc(var(--page-height) + var(--page-scroll-padding));z-index:1;overflow:visible}.reveal-viewport.reveal-scroll .scroll-page-sticky{position:sticky;height:var(--page-height);top:0}.reveal-viewport.reveal-scroll .scroll-page-content{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.reveal-viewport.reveal-scroll .scroll-page section{visibility:visible!important;display:block!important;position:absolute!important;width:var(--slide-width)!important;height:var(--slide-height)!important;top:50%!important;left:50%!important;opacity:1!important;transform:scale(var(--slide-scale)) translate(-50%,-50%)!important;transform-style:flat!important;transform-origin:0 0!important}.reveal-viewport.reveal-scroll .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important;visibility:visible;opacity:1;touch-action:manipulation}.reveal-viewport.reveal-scroll[data-scrollbar=auto]::-webkit-scrollbar,.reveal-viewport.reveal-scroll[data-scrollbar=true]::-webkit-scrollbar{display:none}.reveal-viewport.reveal-scroll[data-scrollbar=auto],.reveal-viewport.reveal-scroll[data-scrollbar=true]{scrollbar-width:none}.reveal-viewport.has-dark-background,.reveal.has-dark-background{--r-overlay-element-bg-color:240,240,240;--r-overlay-element-fg-color:0,0,0}.reveal-viewport.has-light-background,.reveal.has-light-background{--r-overlay-element-bg-color:0,0,0;--r-overlay-element-fg-color:240,240,240}.reveal-viewport.reveal-scroll .scrollbar{position:sticky;top:50%;z-index:20;opacity:0;transition:all .3s ease}.reveal-viewport.reveal-scroll .scrollbar.visible,.reveal-viewport.reveal-scroll .scrollbar:hover{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-inner{position:absolute;width:var(--r-scrollbar-width);height:calc(var(--viewport-height) - var(--r-controls-spacing) * 2);right:var(--r-controls-spacing);top:0;transform:translateY(-50%);border-radius:var(--r-scrollbar-width);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-playhead{position:absolute;width:var(--r-scrollbar-width);height:var(--r-scrollbar-width);top:0;left:0;border-radius:var(--r-scrollbar-width);background-color:rgba(var(--r-overlay-element-bg-color),1);z-index:11;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide{position:absolute;width:100%;background-color:rgba(var(--r-overlay-element-bg-color),.2);box-shadow:0 0 0 1px rgba(var(--r-overlay-element-fg-color),.1);border-radius:var(--r-scrollbar-width);transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:after{content:"";position:absolute;width:200%;height:100%;top:0;left:-50%;background:rgba(0,0,0,0);z-index:-1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:hover{background-color:rgba(var(--r-overlay-element-bg-color),.4)}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-trigger{position:absolute;width:100%;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active.has-triggers{background-color:rgba(var(--r-overlay-element-bg-color),.4);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger:after{content:"";position:absolute;width:var(--r-scrollbar-trigger-size);height:var(--r-scrollbar-trigger-size);border-radius:20px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:rgba(var(--r-overlay-element-bg-color),1);transition:transform .2s ease,opacity .2s ease;opacity:.4}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active:after,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active~.scrollbar-trigger:after{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger~.scrollbar-trigger.active:after{transform:translate(calc(var(--r-scrollbar-width) * -2),0);background-color:rgba(var(--r-overlay-element-bg-color),1)}html.reveal-print *{-webkit-print-color-adjust:exact}html.reveal-print{width:100%;height:100%;overflow:visible}html.reveal-print body{margin:0 auto!important;border:0;padding:0;float:none!important;overflow:visible}html.reveal-print .nestedarrow,html.reveal-print .reveal .controls,html.reveal-print .reveal .playback,html.reveal-print .reveal .progress,html.reveal-print .reveal.overview,html.reveal-print .state-background{display:none!important}html.reveal-print .reveal pre code{overflow:hidden!important}html.reveal-print .reveal{width:auto!important;height:auto!important;overflow:hidden!important}html.reveal-print .reveal .slides{position:static;width:100%!important;height:auto!important;zoom:1!important;pointer-events:initial;left:auto;top:auto;margin:0!important;padding:0!important;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}html.reveal-print .reveal .slides .pdf-page{position:relative;overflow:hidden;z-index:1;page-break-after:always}html.reveal-print .reveal .slides .pdf-page:last-of-type{page-break-after:avoid}html.reveal-print .reveal .slides section{visibility:visible!important;display:block!important;position:absolute!important;margin:0!important;padding:0!important;box-sizing:border-box!important;min-height:1px;opacity:1!important;transform-style:flat!important;transform:none!important}html.reveal-print .reveal section.stack{position:relative!important;margin:0!important;padding:0!important;page-break-after:avoid!important;height:auto!important;min-height:auto!important}html.reveal-print .reveal img{box-shadow:none}html.reveal-print .reveal .backgrounds{display:none}html.reveal-print .reveal .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important}html.reveal-print .reveal.show-notes{max-width:none;max-height:none}html.reveal-print .reveal .speaker-notes-pdf{display:block;width:100%;height:auto;max-height:none;top:auto;right:auto;bottom:auto;left:auto;z-index:100}html.reveal-print .reveal .speaker-notes-pdf[data-layout=separate-page]{position:relative;color:inherit;background-color:transparent;padding:20px;page-break-after:always;border:0}html.reveal-print .reveal .slide-number-pdf{display:block;position:absolute;font-size:14px;visibility:visible}html.reveal-print .aria-status{display:none}@media print{html:not(.print-pdf){overflow:visible;width:auto;height:auto}html:not(.print-pdf) body{margin:0;padding:0;overflow:visible}html:not(.print-pdf) .reveal{background:#fff;font-size:20pt}html:not(.print-pdf) .reveal .backgrounds,html:not(.print-pdf) .reveal .controls,html:not(.print-pdf) .reveal .progress,html:not(.print-pdf) .reveal .slide-number,html:not(.print-pdf) .reveal .state-background{display:none!important}html:not(.print-pdf) .reveal li,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal td{font-size:20pt!important;color:#000}html:not(.print-pdf) .reveal h1,html:not(.print-pdf) .reveal h2,html:not(.print-pdf) .reveal h3,html:not(.print-pdf) .reveal h4,html:not(.print-pdf) .reveal h5,html:not(.print-pdf) .reveal h6{color:#000!important;height:auto;line-height:normal;text-align:left;letter-spacing:normal}html:not(.print-pdf) .reveal h1{font-size:28pt!important}html:not(.print-pdf) .reveal h2{font-size:24pt!important}html:not(.print-pdf) .reveal h3{font-size:22pt!important}html:not(.print-pdf) .reveal h4{font-size:22pt!important;font-variant:small-caps}html:not(.print-pdf) .reveal h5{font-size:21pt!important}html:not(.print-pdf) .reveal h6{font-size:20pt!important;font-style:italic}html:not(.print-pdf) .reveal a:link,html:not(.print-pdf) .reveal a:visited{color:#000!important;font-weight:700;text-decoration:underline}html:not(.print-pdf) .reveal div,html:not(.print-pdf) .reveal ol,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal ul{visibility:visible;position:static;width:auto;height:auto;display:block;overflow:visible;margin:0;text-align:left!important}html:not(.print-pdf) .reveal pre,html:not(.print-pdf) .reveal table{margin-left:0;margin-right:0}html:not(.print-pdf) .reveal pre code{padding:20px}html:not(.print-pdf) .reveal blockquote{margin:20px 0}html:not(.print-pdf) .reveal .slides{position:static!important;width:auto!important;height:auto!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:0!important;zoom:1!important;transform:none!important;overflow:visible!important;display:block!important;text-align:left!important;perspective:none;perspective-origin:50% 50%}html:not(.print-pdf) .reveal .slides section{visibility:visible!important;position:static!important;width:auto!important;height:auto!important;display:block!important;overflow:visible!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:60px 20px!important;z-index:auto!important;opacity:1!important;page-break-after:always!important;transform-style:flat!important;transform:none!important;transition:none!important}html:not(.print-pdf) .reveal .slides section.stack{padding:0!important}html:not(.print-pdf) .reveal .slides section:last-of-type{page-break-after:avoid!important}html:not(.print-pdf) .reveal .slides section .fragment{opacity:1!important;visibility:visible!important;transform:none!important}html:not(.print-pdf) .reveal .r-fit-text{white-space:normal!important}html:not(.print-pdf) .reveal section img{display:block;margin:15px 0;background:#fff;border:1px solid #666;box-shadow:none}html:not(.print-pdf) .reveal section small{font-size:.8em}html:not(.print-pdf) .reveal .hljs{max-height:100%;white-space:pre-wrap;word-wrap:break-word;word-break:break-word;font-size:15pt}html:not(.print-pdf) .reveal .hljs .hljs-ln-numbers{white-space:nowrap}html:not(.print-pdf) .reveal .hljs td{font-size:inherit!important;color:inherit!important}}
+</style>
+<style>
+/* Layout: aula proyectada. Papel claro, tinta oscura, el rojo Uninorte/Sparta como único acento;
+   azul = Jugador 1, rojo = Jugador 2 en todas las matrices. Tema único y claro (proyector). */
+:root {
+  --papel: #faf8f6;
+  --tarjeta: #ffffff;
+  --tinta: #1f1a19;
+  --gris: #6d6360;
+  --linea: #e6dfdb;
+  --rojo: #c62828;
+  --rojo-suave: #fbe9e7;
+  --azul: #1d5fa8;
+  --azul-suave: #e7f0fa;
+  --nash: #ffe08a;
+  --apagado: #c9c1bd;
+  --kraft: #d9b98c;
+  --kraft-oscuro: #b8925f;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-texto: "Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; background: var(--papel); color: var(--tinta); }
+body { margin: 0; }
+
+.reveal { font-family: var(--f-texto); font-size: 28px; color: var(--tinta); background: var(--papel); }
+.reveal .slides { text-align: left; }
+.reveal .slides section { height: 100%; box-sizing: border-box; padding: 6px 8px; }
+.reveal h1, .reveal h2, .reveal h3 { font-family: var(--f-display); color: var(--tinta); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.reveal h1 { font-size: 76px; font-weight: 800; line-height: 1.02; }
+.reveal h2 { font-size: 50px; font-weight: 800; line-height: 1.08; margin-bottom: 22px; }
+.reveal h3 { font-size: 30px; font-weight: 600; margin-bottom: 8px; }
+.reveal p { margin: 0 0 14px; line-height: 1.4; }
+.reveal ul { margin: 0; padding-left: 1.1em; }
+.reveal li { margin-bottom: 10px; line-height: 1.35; }
+.reveal li::marker { color: var(--rojo); }
+.reveal strong { font-weight: 700; }
+.reveal a { color: var(--rojo); text-decoration: underline; text-underline-offset: 3px; }
+.reveal .controls { color: var(--rojo); }
+.reveal .progress { color: var(--rojo); height: 5px; }
+.reveal .slide-number { background: transparent; color: var(--gris); font-family: var(--f-num); font-size: 14px; }
+
+.ceja { font-family: var(--f-num); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rojo); margin-bottom: 12px; font-weight: 600; }
+.sub { color: var(--gris); font-size: 26px; }
+.peq { font-size: 21px; color: var(--gris); }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.j1 { color: var(--azul); }
+.j2 { color: var(--rojo); }
+.fila { display: flex; gap: 40px; align-items: flex-start; }
+.fila > * { min-width: 0; }
+.col { flex: 1; }
+.centro-v { align-items: center; }
+
+/* Portada */
+.portada { display: grid; grid-template-columns: 1.25fr 1fr; gap: 50px; align-items: center; height: 100%; }
+.portada .autor { margin-top: 34px; font-size: 22px; color: var(--gris); line-height: 1.5; }
+.portada .autor b { color: var(--tinta); }
+
+/* Matrices de pagos */
+.matriz { border-collapse: collapse; font-size: 26px; margin: 0 auto; }
+.matriz th { font-family: var(--f-texto); font-weight: 700; font-size: 20px; padding: 8px 14px; color: var(--gris); }
+.matriz .jug { font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+.matriz td { border: 2px solid var(--tinta); width: 150px; height: 82px; text-align: center; font-family: var(--f-num); font-weight: 600; background: var(--tarjeta); transition: background .3s; }
+.matriz td.nash { background: var(--nash); }
+.matriz td.apagada { color: var(--apagado); }
+.matriz .lado { writing-mode: vertical-rl; transform: rotate(180deg); }
+
+/* Tarjetas de situaciones */
+.rejilla { display: grid; gap: 18px; }
+.rejilla.tres { grid-template-columns: repeat(3, 1fr); }
+.rejilla.dos { grid-template-columns: repeat(2, 1fr); }
+.caso { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.caso h3 { font-size: 25px; margin: 0; }
+.caso p { font-size: 20px; margin: 0; color: var(--tinta); line-height: 1.35; }
+.etiqueta { align-self: flex-start; font-family: var(--f-num); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; background: var(--rojo-suave); color: var(--rojo); }
+.etiqueta.az { background: var(--azul-suave); color: var(--azul); }
+.fuente { font-size: 15px; color: var(--gris); }
+
+/* Ingredientes */
+.ingred { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.ingred > div { padding: 18px 20px 0 0; }
+.ingred b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.ingred span { font-size: 21px; color: var(--gris); line-height: 1.35; display: block; }
+.ingred i { font-style: normal; font-family: var(--f-num); color: var(--rojo); font-size: 17px; }
+
+.definicion { border-left: 5px solid var(--rojo); padding: 6px 0 6px 22px; font-size: 27px; line-height: 1.4; margin: 0 0 30px; max-width: 30em; }
+
+/* Botones e insumos */
+.reveal button { font-family: var(--f-texto); font-size: 19px; font-weight: 600; padding: 9px 16px; border: 2px solid var(--tinta); background: var(--tarjeta); color: var(--tinta); border-radius: 7px; cursor: pointer; }
+.reveal button:hover { background: var(--rojo-suave); }
+.reveal button:focus-visible, .reveal input:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+.reveal button.on { background: var(--tinta); color: var(--papel); }
+.reveal button.primario { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.reveal input[type=number], .reveal input.celda { font-family: var(--f-num); font-weight: 600; font-size: 24px; width: 64px; text-align: center; border: 1.5px solid transparent; border-radius: 5px; background: transparent; color: inherit; padding: 2px; }
+.reveal input.celda:hover { border-color: var(--apagado); }
+.reveal input.celda.mr { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; font-weight: 700; }
+
+/* Sorteo con papel y bolsa */
+.bolsa { width: 330px; max-width: 100%; height: auto; display: block; }
+.bolsa .cuerpo { fill: var(--kraft); stroke: var(--kraft-oscuro); stroke-width: 3; }
+.bolsa .pliegue { fill: var(--kraft-oscuro); }
+.bolsa .boca { fill: var(--tinta); opacity: .85; }
+.bolsa .papel rect { fill: #fff; stroke: var(--tinta); stroke-width: 2; }
+.bolsa .papel text { font-family: var(--f-display); font-weight: 800; font-size: 30px; text-anchor: middle; dominant-baseline: central; }
+.bolsa .papel { animation: caer 3.6s ease-in infinite; transform-box: fill-box; transform-origin: center; }
+.bolsa .papel.p2 { animation-delay: 1.2s; }
+.bolsa .papel.p3 { animation-delay: 2.4s; }
+@keyframes caer { 0%, 15% { transform: translateY(0) rotate(0); opacity: 1; } 70% { transform: translateY(150px) rotate(25deg); opacity: 1; } 80%, 100% { transform: translateY(170px) rotate(30deg); opacity: 0; } }
+html.print-pdf .bolsa .papel { animation: none; }
+.foto-sorteo { max-width: 360px; max-height: 300px; border-radius: 8px; border: 2px solid var(--tinta); }
+.pasos { list-style: none; padding: 0 !important; counter-reset: paso; margin-top: 20px !important; }
+.pasos li { counter-increment: paso; display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: baseline; font-size: 23px; margin-bottom: 8px; }
+.pasos li::before { content: counter(paso); font-family: var(--f-num); font-weight: 600; color: var(--papel); background: var(--rojo); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 17px; }
+.pasos li::marker { content: ""; }
+.contador { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.contador .tipo { border: 2px solid var(--tinta); border-radius: 8px; padding: 10px 12px; background: var(--tarjeta); display: flex; flex-direction: column; gap: 4px; }
+.contador .tipo b { font-family: var(--f-display); font-size: 26px; }
+.contador .tipo .cuenta { font-family: var(--f-num); font-size: 40px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.contador .tipo span { font-size: 16px; color: var(--gris); }
+.contador button { margin-top: 4px; }
+.reloj { font-family: var(--f-num); font-size: 58px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.reglas { list-style: none; padding: 0 !important; }
+.reglas li { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--linea); margin: 0; }
+.reglas li::marker { content: ""; }
+
+/* Panel explicativo de la matriz */
+.panel { font-size: 21px; line-height: 1.4; }
+.panel h3 { font-size: 23px; margin: 10px 0 4px; }
+.panel p { margin: 0 0 6px; }
+
+/* Barras */
+.barras { display: flex; flex-direction: column; gap: 10px; }
+.barra { display: grid; grid-template-columns: 210px 1fr 80px; gap: 12px; align-items: center; font-size: 21px; }
+.barra .pista { height: 30px; background: var(--linea); border-radius: 4px; overflow: hidden; }
+.barra .relleno { height: 100%; background: var(--tinta); border-radius: 4px; transition: width .5s; }
+.barra .relleno.r { background: var(--rojo); }
+.barra .relleno.a { background: var(--azul); }
+.barra .v { font-family: var(--f-num); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.dato { font-family: var(--f-num); font-size: 44px; font-weight: 600; line-height: 1; }
+
+/* Torneo */
+.opciones { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 19px; }
+.opciones label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.reveal input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--rojo); }
+.reveal input[type=range] { accent-color: var(--rojo); width: 200px; }
+
+/* Penalti */
+.arco { display: flex; gap: 14px; }
+.arco button { flex: 1; font-size: 24px; padding: 18px; }
+.tiros { display: flex; flex-wrap: wrap; gap: 6px; min-height: 34px; }
+.tiro { font-family: var(--f-num); font-size: 15px; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+.tiro.gol { background: var(--azul-suave); color: var(--azul); }
+.tiro.atajada { background: var(--rojo-suave); color: var(--rojo); }
+
+/* Árbol */
+.arbol line { stroke: var(--tinta); stroke-width: 3; transition: stroke .3s, opacity .3s; }
+.arbol line.elegida { stroke: var(--rojo); stroke-width: 6; }
+.arbol line.descartada { opacity: .2; }
+.arbol circle { fill: var(--tinta); }
+.arbol text { font-family: var(--f-texto); font-size: 20px; fill: var(--tinta); }
+.arbol text.nodo { font-weight: 700; font-size: 21px; }
+.arbol text.pago { font-family: var(--f-num); font-weight: 600; font-size: 22px; }
+.arbol .descartada-t { opacity: .3; }
+
+/* Tipos de juego */
+.contrastes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 40px; }
+.contraste { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.contraste .par { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.contraste b { font-family: var(--f-display); font-size: 25px; display: block; }
+.contraste span { font-size: 19px; color: var(--gris); line-height: 1.35; display: block; }
+.contraste .hoy { margin-top: 8px; font-size: 16px; font-family: var(--f-num); color: var(--rojo); }
+
+.refs { font-size: 18px; line-height: 1.4; columns: 2; column-gap: 40px; }
+.refs p { break-inside: avoid; margin-bottom: 10px; }
+.nueva { font-family: var(--f-num); font-size: 12px; color: var(--rojo); font-weight: 600; letter-spacing: .05em; }
+
+/* Lo que va solo en vivo o solo en el PDF */
+.solo-pdf { display: none; }
+html.print-pdf .solo-clase { display: none !important; }
+html.print-pdf .solo-pdf { display: block !important; }
+@media print { .solo-clase { display: none !important; } .solo-pdf { display: block !important; } }
+.solo-pdf.recuadro { border: 1.5px dashed var(--apagado); border-radius: 8px; padding: 14px 18px; font-size: 20px; color: var(--gris); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+<style>
+/* Agregados de la clase 2 */
+.reveal .fragment.custom.marcar.visible { background: var(--nash); }
+.matriz.compacta td { height: 56px; width: 130px; font-size: 22px; }
+.matriz.compacta th { font-size: 18px; padding: 6px 10px; }
+.matriz .vacia { border: none; background: none; }
+.panel { max-height: 470px; overflow-y: auto; }
+
+.sorteo { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.sorteo-num { font-family: var(--f-display); font-weight: 800; font-size: 150px; line-height: 1; color: var(--rojo); min-width: 3ch; text-align: center; font-variant-numeric: tabular-nums; }
+.sorteo-num.nombre { font-size: 64px; min-height: 150px; display: grid; place-items: center; max-width: 520px; text-wrap: balance; }
+.sorteo-num.girando { color: var(--apagado); }
+
+.observa { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.observa > div { padding: 16px 18px 0 0; }
+.observa b { display: block; font-family: var(--f-display); font-size: 28px; margin-bottom: 6px; }
+.observa span { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.versus > div { border-top: 3px solid var(--tinta); padding-top: 14px; }
+.versus h3 { font-size: 32px; }
+.cita { font-style: italic; color: var(--gris); font-size: 20px; border-left: 3px solid var(--linea); padding-left: 14px; margin-top: 10px; }
+
+.tabla-def { border-collapse: collapse; width: 100%; font-size: 21px; }
+.tabla-def th { text-align: left; font-family: var(--f-num); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 8px 12px 8px 0; border-bottom: 2px solid var(--tinta); }
+.tabla-def td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--linea); vertical-align: top; line-height: 1.35; }
+.tabla-def td:first-child { font-weight: 700; white-space: nowrap; }
+
+.video-caja { width: 100%; max-width: 760px; aspect-ratio: 16 / 9; background: var(--tinta); border-radius: 10px; display: grid; place-items: center; overflow: hidden; }
+.video-caja iframe { width: 100%; height: 100%; border: 0; }
+.video-caja .play { display: flex; flex-direction: column; align-items: center; gap: 14px; color: var(--papel); }
+.reveal .video-caja button { background: var(--rojo); border-color: var(--rojo); color: #fff; font-size: 22px; padding: 14px 24px; }
+
+.foto-nash { max-height: 420px; max-width: 100%; border-radius: 8px; filter: grayscale(1); }
+.hechos { list-style: none; padding: 0 !important; }
+.hechos li { display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 23px; }
+.hechos li::marker { content: ""; }
+.hechos .anio { font-family: var(--f-num); font-weight: 600; color: var(--rojo); font-size: 20px; }
+
+.perfiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.perfiles span { font-family: var(--f-num); font-size: 19px; border: 1.5px solid var(--linea); border-radius: 6px; padding: 8px 10px; text-align: center; background: var(--tarjeta); }
+
+.capitulo { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.capitulo h1 { font-size: 96px; }
+.agenda { list-style: none; padding: 0 !important; counter-reset: ag; }
+.agenda li { counter-increment: ag; display: grid; grid-template-columns: 60px 1fr; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--linea); margin: 0; font-size: 30px; }
+.agenda li::before { content: counter(ag, decimal-leading-zero); font-family: var(--f-num); color: var(--rojo); font-size: 20px; font-weight: 600; }
+.agenda li::marker { content: ""; }
+.agenda a { color: var(--tinta); text-decoration: none; font-family: var(--f-display); font-weight: 600; }
+.agenda a:hover { color: var(--rojo); }
+.agenda small { display: block; font-family: var(--f-texto); font-size: 19px; color: var(--gris); font-weight: 400; }
+
+</style>
+<style>
+/* Agregados de la clase 3 */
+.estructuras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.estructuras > div { padding: 16px 22px 0 0; }
+.estructuras b { display: block; font-family: var(--f-display); font-size: 30px; margin-bottom: 6px; }
+.estructuras .quien { font-family: var(--f-num); font-size: 16px; color: var(--rojo); display: block; margin-bottom: 8px; }
+.estructuras span.d { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+.estructuras > div.foco b { color: var(--rojo); }
+
+.arbolito { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
+.arbolito .rama { border-top: 3px solid var(--tinta); padding-top: 12px; }
+.arbolito .rama h3 { font-size: 28px; }
+.arbolito .sub2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+.arbolito .sub2 > div { background: var(--tarjeta); border: 1.5px solid var(--linea); border-radius: 10px; padding: 12px 16px; }
+.arbolito .sub2 b { font-family: var(--f-num); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); display: block; margin-bottom: 6px; }
+.arbolito .sub2 span { display: block; font-family: var(--f-display); font-size: 24px; line-height: 1.3; }
+
+.grafico { width: 100%; height: auto; display: block; }
+.grafico .eje { stroke: var(--tinta); stroke-width: 2; }
+.grafico .rej { stroke: var(--linea); stroke-width: 1; }
+.grafico .r1 { stroke: var(--azul); stroke-width: 4; }
+.grafico .r2 { stroke: var(--rojo); stroke-width: 4; }
+.grafico .camino { stroke: var(--tinta); stroke-width: 2.5; stroke-dasharray: 6 5; fill: none; }
+.grafico .punto { fill: var(--tinta); }
+.grafico .eqp { fill: var(--nash); stroke: var(--tinta); stroke-width: 2.5; }
+.grafico text { font-family: var(--f-num); font-size: 15px; fill: var(--gris); }
+.grafico text.et { font-family: var(--f-texto); font-size: 19px; font-weight: 700; }
+.grafico .curva { stroke: var(--azul); stroke-width: 4; fill: none; }
+.grafico .area { fill: var(--azul-suave); }
+
+.controles { display: flex; flex-direction: column; gap: 14px; font-size: 20px; }
+.controles label { display: grid; grid-template-columns: 150px 1fr 60px; align-items: center; gap: 10px; }
+.controles .num { font-weight: 600; text-align: right; }
+.reveal .controles input[type=range] { width: 100%; }
+.cifras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 20px; margin-top: 6px; }
+.cifras div { border-top: 1.5px solid var(--linea); padding-top: 6px; }
+.cifras span { display: block; font-size: 15px; color: var(--gris); font-family: var(--f-num); letter-spacing: .04em; text-transform: uppercase; }
+.cifras b { font-family: var(--f-num); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.mate { font-size: 30px; }
+.mate.peq2 { font-size: 26px; }
+
+.ronda-entrada { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ronda-entrada .firma { border: 2px solid var(--tinta); border-radius: 10px; padding: 12px 16px; background: var(--tarjeta); }
+.ronda-entrada .firma h3 { font-size: 22px; margin: 0 0 6px; }
+.ronda-entrada .firma .est { font-family: var(--f-num); font-size: 15px; color: var(--gris); }
+.reveal .ronda-entrada input[type=number] { width: 110px; font-size: 34px; border: 1.5px solid var(--apagado); border-radius: 6px; background: var(--papel); }
+.historial { width: 100%; border-collapse: collapse; font-size: 18px; font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+.historial th { text-align: right; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 4px 8px; border-bottom: 2px solid var(--tinta); font-family: var(--f-num); }
+.historial td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--linea); }
+.historial th:first-child, .historial td:first-child { text-align: left; }
+.historial tr.ultima td { background: var(--nash); }
+
+.comparar { width: 100%; border-collapse: collapse; font-size: 21px; }
+.comparar th { text-align: left; font-family: var(--f-num); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); padding: 6px 10px 6px 0; border-bottom: 2px solid var(--tinta); }
+.comparar td { padding: 9px 10px 9px 0; border-bottom: 1px solid var(--linea); vertical-align: middle; }
+.comparar td.n { font-family: var(--f-num); font-weight: 600; text-align: right; width: 70px; font-variant-numeric: tabular-nums; }
+.comparar .barrita { height: 18px; background: var(--linea); border-radius: 3px; overflow: hidden; min-width: 140px; }
+.comparar .barrita i { display: block; height: 100%; background: var(--tinta); }
+.comparar tr.cournot td { background: var(--nash); }
+.comparar .barrita i.cs { background: var(--azul); }
+.comparar .barrita i.pi { background: var(--rojo); }
+
+.matriz-app .celda { width: 84px !important; }
+.reveal .fragment.custom.marcar-fila.visible td { background: var(--nash); }
+
+</style>
+<style>
+/* Agregados de la clase 4 */
+.escalera { display: flex; flex-wrap: wrap; gap: 6px; min-height: 40px; align-content: flex-start; }
+.escalera span { font-family: var(--f-num); font-size: 16px; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+.escalera .f1 { background: var(--azul-suave); color: var(--azul); }
+.escalera .f2 { background: var(--rojo-suave); color: var(--rojo); }
+.precios-vivos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.precios-vivos .caja { border: 2px solid var(--tinta); border-radius: 10px; padding: 12px 16px; background: var(--tarjeta); }
+.precios-vivos .caja h3 { font-size: 22px; margin: 0 0 4px; }
+.precios-vivos .grande { font-family: var(--f-num); font-size: 54px; font-weight: 600; line-height: 1; }
+.precios-vivos .gana { font-size: 16px; color: var(--gris); font-family: var(--f-num); margin-top: 6px; }
+.formula-casos { font-size: 26px; }
+.moneda { display: flex; gap: 14px; }
+.moneda button { flex: 1; font-size: 26px !important; padding: 20px !important; }
+.grande-pregunta { display: flex; align-items: center; justify-content: center; height: 100%; text-align: center; }
+.grande-pregunta h1 { font-size: 110px; }
+.grande-pregunta h1 span { color: var(--rojo); }
+.matriz-app td { white-space: nowrap; }
+.matriz .prob { font-family: var(--f-num); font-size: 18px; color: var(--gris); font-weight: 600; }
+</style>
+
+<style>
+/* Agregados de la clase 5 */
+.figura-ext { display: flex; justify-content: center; align-items: center; height: 560px; }
+.figura-ext img { max-height: 100%; max-width: 100%; }
+.figura-ext .sin-img { border: 1.5px dashed var(--apagado); border-radius: 10px; padding: 26px 30px; color: var(--gris); font-size: 22px; max-width: 760px; }
+.cita-grande { font-family: var(--f-display); font-size: 34px; line-height: 1.35; font-weight: 600; max-width: 1050px; text-wrap: pretty; }
+.cita-grande strong { color: var(--rojo); }
+.cita-autor { font-family: var(--f-num); font-size: 18px; color: var(--gris); margin-top: 22px; letter-spacing: .04em; }
+.foto-axelrod { max-height: 380px; max-width: 100%; border-radius: 8px; filter: grayscale(1); }
+.gif-caja img { max-height: 420px; max-width: 100%; border-radius: 8px; }
+.requisitos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 3px solid var(--tinta); }
+.requisitos > div { padding: 16px 20px 0 0; }
+.requisitos b { display: block; font-family: var(--f-display); font-size: 28px; margin-bottom: 6px; }
+.requisitos span { font-size: 20px; color: var(--gris); line-height: 1.35; display: block; }
+.flujo { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 18px 0 8px; flex-wrap: wrap; }
+.flujo span.paso { font-family: var(--f-display); font-weight: 600; font-size: 26px; border: 2px solid var(--tinta); border-radius: 8px; padding: 10px 18px; background: var(--tarjeta); }
+.flujo span.flecha { font-size: 30px; color: var(--rojo); }
+.esperados { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.esperados .fila-e { display: grid; grid-template-columns: 230px 1fr 90px; gap: 12px; align-items: center; font-size: 22px; }
+.esperados .pista { height: 32px; background: var(--linea); border-radius: 4px; overflow: hidden; }
+.esperados .relleno { height: 100%; transition: width .3s; }
+.esperados .v { font-family: var(--f-num); font-weight: 600; font-size: 24px; text-align: right; font-variant-numeric: tabular-nums; }
+.veredicto { margin-top: 16px; font-size: 24px; padding: 12px 16px; border-left: 5px solid var(--rojo); background: var(--rojo-suave); border-radius: 0 8px 8px 0; }
+.veredicto.ok { border-color: var(--azul); background: var(--azul-suave); }
+.leyenda-sim { display: flex; gap: 22px; font-size: 18px; margin-top: 6px; }
+.leyenda-sim i { display: inline-block; width: 22px; height: 6px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
+.curso { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.curso > div { border-top: 3px solid var(--tinta); padding-top: 10px; }
+.curso .n { font-family: var(--f-num); font-size: 15px; color: var(--rojo); font-weight: 600; letter-spacing: .06em; }
+.curso b { display: block; font-family: var(--f-display); font-size: 24px; margin: 4px 0 6px; line-height: 1.15; }
+.curso span { display: block; font-size: 18px; color: var(--gris); line-height: 1.35; }
+</style>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 · PORTADA -->
+<section>
+  <div class="portada">
+    <div>
+      <div class="ceja">Microeconomía II · Universidad del Norte · Clase 5</div>
+      <h1>Juegos evolutivos</h1>
+      <p class="sub" style="margin-top:18px">Más jugadores, poblaciones enteras y la pregunta de por qué existe la cooperación</p>
+      <div class="autor"><b>Carlos A. Yanes Guerra</b><br>Departamento de Economía · Barranquilla, 2026</div>
+    </div>
+    <svg class="grafico" viewBox="0 0 420 360" role="img" aria-label="Curvas de dos poblaciones que cambian con las generaciones">
+      <line class="eje" x1="40" y1="20" x2="40" y2="320"/><line class="eje" x1="40" y1="320" x2="400" y2="320"/>
+      <path d="M40,60 C140,70 190,260 400,312" style="fill:none;stroke:var(--azul);stroke-width:5"/>
+      <path d="M40,300 C140,290 190,90 400,30" style="fill:none;stroke:var(--rojo);stroke-width:5"/>
+      <text x="50" y="16">Población</text><text x="400" y="342" text-anchor="end">Generaciones</text>
+      <text class="et" x="300" y="292" style="fill:var(--azul)">Cooperan</text>
+      <text class="et" x="290" y="70" style="fill:var(--rojo)">Traicionan</text>
+    </svg>
+  </div>
+</section>
+
+<!-- 2 · AGENDA -->
+<section>
+  <div class="ceja">Hoy, la última clase</div>
+  <h2>La ruta de la clase</h2>
+  <ol class="agenda">
+    <li><a href="#/tres">Juegos con más jugadores<small>Un empresario, un reclutador y un aspirante</small></a></li>
+    <li><a href="#/evolucion">Juegos evolutivos<small>Darwin, Axelrod y los murciélagos vampiro</small></a></li>
+    <li><a href="#/eee">Estrategias evolutivamente estables<small>¿Puede un mutante invadir a una población?</small></a></li>
+    <li><a href="#/simulador">Simulador de evolución<small>Vea a las poblaciones cambiar generación tras generación</small></a></li>
+    <li><a href="#/curso">Lo que nos llevamos del curso<small>Cinco clases en una diapositiva</small></a></li>
+  </ol>
+</section>
+
+<!-- 3 · PREGUNTAS -->
+<section data-background-image="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXlrcnNlNDB5aTNsMXE0cWxqNXZwN3o1dmNwZXdkaHZhbjJnZGtvbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LoUpRwmLhTMFZfrrLC/giphy.gif" data-background-size="cover">
+  <div class="grande-pregunta"><h1 style="color:var(--rojo);text-shadow:0 2px 12px rgba(255,255,255,.8)">¿Preguntas?</h1></div>
+</section>
+
+<!-- 4 · CAPÍTULO -->
+<section id="tres">
+  <div class="capitulo">
+    <div class="ceja">Juegos</div>
+    <h1>Otras extensiones</h1>
+  </div>
+</section>
+
+<!-- 5 · MÁS JUGADORES -->
+<section>
+  <div class="ceja">Juegos con más jugadores</div>
+  <h2>Cuando en la mesa hay tres</h2>
+  <ul>
+    <li>En muchas situaciones hay <strong>más de dos jugadores</strong>.</li>
+    <li class="fragment">Para esos casos hay que establecer qué juega cada quien, en qué orden lo hace y si tiene o no <strong>información completa</strong>.</li>
+    <li class="fragment">Cada jugador puede observar o no los movimientos de los demás. Veamos un ejemplo.</li>
+  </ul>
+</section>
+
+<!-- 6 · CASO -->
+<section>
+  <div class="ceja">Ejemplo · Un caso de contratación</div>
+  <h2>El empresario, el reclutador y el aspirante</h2>
+  <div class="rejilla tres">
+    <div class="caso fragment"><span class="etiqueta az">Jugador 1</span><h3>El empresario</h3><p>Puede contratar al aspirante, no contratarlo o dejarle la decisión a un reclutador.</p></div>
+    <div class="caso fragment"><span class="etiqueta az">Jugador 2</span><h3>El reclutador</h3><p>Solo decide si el empresario se lo delega. Entonces contrata o no contrata.</p></div>
+    <div class="caso fragment"><span class="etiqueta">Jugador 3</span><h3>El aspirante</h3><p>Si lo contratan, puede ser productivo o no serlo. Su decisión afecta las utilidades de los otros dos.</p></div>
+  </div>
+  <p class="peq fragment" style="margin-top:22px">Esto también se conoce como un <strong>problema de agencia</strong>. Alguien decide en nombre de otro, y lo que hace el contratado no siempre se puede vigilar.</p>
+</section>
+
+<!-- 7 · CONDICIONES -->
+<section>
+  <div class="ceja">Condiciones</div>
+  <h2>Los elementos del juego</h2>
+  <ul>
+    <li>Un conjunto de jugadores \( N = \{J_1, J_2, J_3\} \). \( J_1 \) es el empresario, \( J_2 \) el reclutador y \( J_3 \) el aspirante.</li>
+    <li>Estrategias del empresario \( S_1 = \{C, NC, DA\} \). Contratar, no contratar o delegar al reclutador.</li>
+    <li>Estrategias del reclutador \( S_2 = \{C, NC\} \).</li>
+    <li>Estrategias del aspirante \( S_3 = \{\text{Eficiente}, \text{No eficiente}\} \).</li>
+    <li class="fragment">Reglas. \( J_1 \) empieza y juega lo mejor para él. \( J_2 \) solo juega si \( J_1 \) le delega. En cada pago, el primer valor es de \( J_1 \), el segundo de \( J_2 \) y el tercero de \( J_3 \).</li>
+  </ul>
+</section>
+
+<!-- 8 · ¿RESULTADO? -->
+<section>
+  <div class="grande-pregunta"><h1>¿Cuál es el <span>resultado</span>?</h1></div>
+  <aside class="notes">Dar un minuto para que piensen quién mueve último y qué haría. Pista: se resuelve hacia atrás, empezando por el aspirante.</aside>
+</section>
+
+<!-- 9 · FORMA EXTENSIVA -->
+<section>
+  <div class="ceja">Forma extensiva</div>
+  <h2 style="margin-bottom:6px">El árbol de la contratación</h2>
+  <div class="figura-ext" id="figExt" data-src="../imagen/c5g1.svg" data-alt="Árbol del juego de contratación con tres jugadores"></div>
+  <aside class="notes">Resolver hacia atrás. Primero, qué hace el aspirante una vez contratado. Luego, el reclutador si le delegan. Al final, el empresario.</aside>
+</section>
+
+<!-- 10 · FORMA NORMAL -->
+<section>
+  <div class="ceja">Forma normal</div>
+  <h2 style="margin-bottom:6px">El mismo juego en matrices</h2>
+  <div class="figura-ext" id="figNor" data-src="../imagen/c5g2.svg" data-alt="Forma normal del juego de contratación con tres jugadores"></div>
+  <aside class="notes">Con tres jugadores se necesita una matriz por cada estrategia del tercer jugador.</aside>
+</section>
+
+<!-- 11 · CAPÍTULO EVOLUTIVOS -->
+<section id="evolucion">
+  <div class="capitulo">
+    <div class="ceja">Naturaleza en grupos de personas</div>
+    <h1>Juegos evolutivos</h1>
+  </div>
+</section>
+
+<!-- 12 · DARWIN 1876 -->
+<section>
+  <div class="capitulo">
+    <p class="cita-grande">"Un hombre, por otra parte, mira hacia el <strong>futuro</strong> y hacia el <strong>pasado</strong>, y compara sus diversos sentimientos, deseos y remembranzas. Él encuentra, de acuerdo al veredicto de los hombres más sabios, que la más alta satisfacción se deriva de seguir <strong>ciertos impulsos</strong>, a saber, los instintos sociales. Si él actúa para el bien de los demás, recibirá la <strong>aprobación</strong> de los demás y ganará el amor de aquellos con quienes vive; y esta última ganancia será sin duda el placer mayor sobre la tierra."</p>
+    <div class="cita-autor">CHARLES DARWIN · 1876</div>
+  </div>
+</section>
+
+<!-- 13 · AXELROD -->
+<section>
+  <div class="ceja">De la evolución social</div>
+  <h2>Robert Axelrod y la evolución de la cooperación</h2>
+  <div class="fila centro-v">
+    <div class="col">
+      <ul>
+        <li>Investigó cómo puede <strong>surgir la cooperación</strong> entre individuos que solo piensan en sí mismos.</li>
+        <li>Usó el dilema del prisionero para describir las sociedades humanas y el <strong>comportamiento</strong> de los animales en la biología evolutiva.</li>
+        <li>En 1980 organizó unos famosos torneos. Expertos de todo el mundo enviaron estrategias para jugar el dilema del prisionero <strong>repetido muchas veces</strong>.</li>
+        <li class="fragment">Ganó la más sencilla de todas, <strong>Ojo por ojo</strong>. Coopera de entrada y luego copia lo que el otro hizo la vez anterior. ¿Se acuerdan del torneo de la clase 1?</li>
+      </ul>
+    </div>
+    <div id="fotoAxelrod" style="flex:0 0 320px;display:flex;flex-direction:column;align-items:center;gap:8px"></div>
+  </div>
+</section>
+
+<!-- 14 · MURCIÉLAGOS -->
+<section>
+  <div class="ceja">Caso murciélagos</div>
+  <h2>Los vampiros que comparten la cena</h2>
+  <div class="fila centro-v">
+    <div class="gif-caja" style="flex:0 0 440px">
+      <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemU2MG4zdzRoZXg3OHp0cDJmZnVpYXozdjE4bml4N3lhejdkMGZxMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/btVJjbAHGCB4BSFfNq/giphy.gif" alt="Murciélago" onerror="this.remove()">
+    </div>
+    <div class="col">
+      <ul>
+        <li>Los <strong>murciélagos vampiro</strong> mueren de hambre después de unas 60 horas sin comer.</li>
+        <li>Se alimentan unos a otros regurgitando sangre.</li>
+        <li>Compartir es un gran beneficio para el que recibe y un gran costo para el que da.</li>
+        <li>Wilkinson (1984) mostró que los murciélagos que <strong>reciben</strong> comida son más propensos a <strong>dar</strong> comida después.</li>
+        <li>Comparten más allá de sus parientes cercanos.</li>
+      </ul>
+      <p class="fragment" style="margin-top:14px;font-size:28px">¿Por qué un animal le daría comida a otro que no es de su familia?</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · PAPEL DE LA EVOLUCIÓN -->
+<section>
+  <div class="ceja">El papel de la evolución</div>
+  <h2>La selección natural</h2>
+  <div class="fila centro-v">
+    <div class="col">
+      <p><strong>Evolución.</strong> Cambio a lo largo del tiempo de uno o más rasgos heredados en poblaciones de individuos.</p>
+      <p class="cita" style="font-size:22px">«Si se producen variaciones útiles para cualquier ser orgánico, los individuos así caracterizados tendrán, sin duda, la mejor oportunidad de ser preservados en la lucha por la vida; y por el fuerte principio de la herencia tenderán a producir descendencia con características similares. A este principio de conservación lo he llamado, en aras de la brevedad, Selección Natural.»</p>
+      <p class="fuente">Charles Darwin, <em>El origen de las especies</em> (1859), capítulo 4.</p>
+    </div>
+    <div class="gif-caja" style="flex:0 0 380px">
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTVhdmZ6dDVkdHluNGF2ejBoMjBtOGI3bWY4aGpxMXlhaG5xajVlNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ohhwu9r3BRtEKm5Fe/giphy.gif" alt="Charles Darwin" onerror="this.remove()">
+    </div>
+  </div>
+</section>
+
+<!-- 16 · CONSIDERACIONES -->
+<section>
+  <div class="ceja">Consideraciones generales</div>
+  <h2>Lo que necesita la selección natural</h2>
+  <p class="sub" style="margin-top:-8px;margin-bottom:24px">La mayor idea de Darwin y el principal mecanismo del cambio biológico. Necesita cuatro ingredientes.</p>
+  <div class="requisitos">
+    <div class="fragment"><b>Variación</b><span>Los organismos no son todos iguales.</span></div>
+    <div class="fragment"><b>Herencia</b><span>Los hijos se parecen a los padres. Los rasgos se replican.</span></div>
+    <div class="fragment"><b>Reproducción diferencial</b><span>Unos dejan más descendencia que otros.</span></div>
+    <div class="fragment"><b>Aptitud</b><span>La capacidad de replicarse frente a los otros tipos. Los rasgos más aptos se vuelven más comunes.</span></div>
+  </div>
+  <p class="fragment" style="margin-top:26px">En un juego evolutivo, la <strong>aptitud es el pago</strong>. Las estrategias que pagan más se reproducen más.</p>
+</section>
+
+<!-- 17 · CAPÍTULO EEE -->
+<section id="eee">
+  <div class="capitulo">
+    <div class="ceja">Juegos evolutivos</div>
+    <h1>Estrategias evolutivamente estables</h1>
+  </div>
+</section>
+
+<!-- 18 · POBLACIÓN DE COOPERANTES -->
+<section>
+  <div class="ceja">Estrategias estables evolutivas</div>
+  <h2>Una población de cooperantes</h2>
+  <div class="fila centro-v">
+    <table class="matriz">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">El otro</th></tr>
+      <tr><th></th><th></th><th>Coopera</th><th>Traiciona</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Usted</span></th><th>Coopera</th>
+        <td><span class="j1">3</span> , <span class="j2">3</span></td><td><span class="j1">1</span> , <span class="j2">4</span></td></tr>
+      <tr><th>Traiciona</th>
+        <td><span class="j1">4</span> , <span class="j2">1</span></td><td><span class="j1">2</span> , <span class="j2">2</span></td></tr>
+    </table>
+    <div class="col">
+      <p>Ya no hay dos jugadores fijos. Hay una <strong>población</strong> grande donde los individuos se encuentran al azar, de dos en dos, y juegan este dilema del prisionero.</p>
+      <p>Cada individuo nace con una estrategia y no la cambia. Lo que cambia, generación tras generación, es <strong>cuántos hay de cada tipo</strong>.</p>
+      <div class="flujo fragment"><span class="paso">Mirar pagos</span><span class="flecha">⟶</span><span class="paso">Hallar Nash</span><span class="flecha">⟶</span><span class="paso">¿Es estable?</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · DEFINICIÓN EEE -->
+<section>
+  <div class="ceja">Estabilidad del equilibrio</div>
+  <h2>¿Qué es una EEE?</h2>
+  <p class="definicion">Una estrategia es <strong>evolutivamente estable</strong> si, cuando toda la población la juega, ningún grupo pequeño de <strong>mutantes</strong> con otra estrategia puede invadirla.</p>
+  <p>Formalmente, \( s^* \) es EEE si para toda estrategia mutante \( s \neq s^* \) se cumple que</p>
+  <p class="mate">\[ u(s^*, s^*) > u(s, s^*) \quad \text{o bien} \quad u(s^*, s^*) = u(s, s^*) \;\text{ y }\; u(s^*, s) > u(s, s) \]</p>
+  <p class="peq fragment">El concepto lo propusieron John Maynard Smith y George Price en 1973, pensando en animales, no en personas racionales. Toda EEE es un equilibrio de Nash, pero no todo equilibrio de Nash es EEE.</p>
+</section>
+
+<!-- 20 · LLEGAN LOS MUTANTES -->
+<section>
+  <div class="ceja">Hagamos el análisis</div>
+  <h2>Llegan los traidores</h2>
+  <div class="fila centro-v">
+    <ul class="col">
+      <li>Toda la población coopera. De pronto aparece una pequeña fracción \( \epsilon \) de <strong>mutantes</strong> que traicionan.</li>
+      <li>Muchos individuos se encuentran al azar e interactúan.</li>
+      <li>La probabilidad de toparse con un <strong>cooperante</strong> es \( 1 - \epsilon \).</li>
+      <li>La probabilidad de toparse con un <strong>mutante</strong> es \( \epsilon \).</li>
+    </ul>
+    <div class="col">
+      <p class="mate peq2">\[ E[\text{Cooperar}] = 3(1 - \epsilon) + 1(\epsilon) = 3 - 2\epsilon \]</p>
+      <p class="mate peq2">\[ E[\text{Traicionar}] = 4(1 - \epsilon) + 2(\epsilon) = 4 - 2\epsilon \]</p>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · SLIDER COOPERANTES -->
+<section>
+  <div class="ceja">Pruébelo usted</div>
+  <h2>¿Pueden invadir los traidores?</h2>
+  <div class="esperados" id="espA"></div>
+  <div class="controles solo-clase" style="margin-top:18px;max-width:620px">
+    <label>Mutantes ε <input type="range" id="epsA" min="0" max="50" step="1" value="5"><span class="num" id="epsAV">5 %</span></label>
+  </div>
+  <div class="veredicto fragment">Mueva ε como quiera. Los traidores siempre ganan 1 punto más. Los <strong>mutantes</strong>, de mayor aptitud, invaden con éxito una población de cooperadores. <strong>Cooperar no es EEE.</strong></div>
+</section>
+
+<!-- 22 · ¿Y SI SON TRAIDORES? -->
+<section data-background-image="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWV6ZnhqZzE5aDBsajZqb3FreHRvc3FzeDAwaDljcDAyc2puaW1rMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/4C6DsW3eKoSsdYg5z4/giphy.gif" data-background-opacity="0.3">
+  <div class="grande-pregunta"><div><h1>¿Qué ocurre si todos son <span>traidores</span>?</h1><p class="sub" style="margin-top:16px">Hay que mirar la característica de todos</p></div></div>
+</section>
+
+<!-- 23 · SLIDER TRAIDORES -->
+<section>
+  <div class="ceja">Valor esperado del traidor y del cooperador</div>
+  <h2>Ahora los mutantes son cooperadores</h2>
+  <div class="fila">
+    <div class="col">
+      <p class="mate peq2">\[ E[\text{Traicionar}] = 2(1 - \epsilon) + 4(\epsilon) = 2 + 2\epsilon \]</p>
+      <p class="mate peq2">\[ E[\text{Cooperar}] = 1(1 - \epsilon) + 3(\epsilon) = 1 + 2\epsilon \]</p>
+    </div>
+    <div class="col">
+      <div class="esperados" id="espB"></div>
+      <div class="controles solo-clase" style="margin-top:18px">
+        <label>Mutantes ε <input type="range" id="epsB" min="0" max="50" step="1" value="5"><span class="num" id="epsBV">5 %</span></label>
+      </div>
+    </div>
+  </div>
+  <div class="veredicto fragment">Los cooperadores, de menor aptitud, no logran invadir a una población de traidores. <strong>Traicionar es un EEE.</strong></div>
+</section>
+
+<!-- 24 · SIMULADOR -->
+<section id="simulador">
+  <div class="ceja">Simulador de evolución</div>
+  <h2>Vea a la población cambiar</h2>
+  <div class="fila">
+    <div style="flex:0 0 640px">
+      <svg class="grafico" id="gSim" viewBox="0 0 640 420" role="img" aria-label="Proporción de cada estrategia en la población por generación"></svg>
+      <div class="leyenda-sim"><span><i style="background:var(--azul)"></i><span id="nomA">Cooperan</span></span><span><i style="background:var(--rojo)"></i><span id="nomB">Traicionan</span></span></div>
+    </div>
+    <div class="col controles">
+      <div class="botones solo-clase">
+        <button data-sim="dilema">Dilema</button>
+        <button data-sim="repetido">Ojo por ojo, 10 rondas</button>
+        <button data-sim="halcon">Halcón y paloma</button>
+      </div>
+      <p class="peq" id="simDesc" style="margin:0"></p>
+      <label class="solo-clase" style="grid-template-columns:200px 1fr 70px"><span>Empiezan <span id="simEtq">cooperando</span></span><input type="range" id="simX" min="1" max="99" step="1" value="90"><span class="num" id="simXV">90 %</span></label>
+      <div class="botones solo-clase"><button class="primario" id="simPlay">Simular 40 generaciones</button></div>
+      <p id="simLectura" style="margin:0;font-size:21px"></p>
+    </div>
+  </div>
+  <aside class="notes">Dilema: la cooperación desaparece siempre, empiece donde empiece. Ojo por ojo con 10 rondas: si arrancan con más de 1 de cada 9 jugando ojo por ojo, la cooperación gana; con menos, ganan los traidores. Halcón y paloma: la población termina mezclada, un tercio de palomas y dos tercios de halcones.</aside>
+</section>
+
+<!-- 25 · DILEMAS SOCIALES -->
+<section>
+  <div class="ceja">Dilemas sociales y estrategias evolutivas</div>
+  <h2>Las sociedades también viven el dilema</h2>
+  <ul>
+    <li>Las sociedades pueden vivir dilemas como el de los <strong>prisioneros</strong>.</li>
+    <li>Todos preferimos un mundo de colaboradores a uno de traidores, \( \text{todos cooperan} \succ \text{todos traicionan} \). Sin embargo, pasa algo curioso.</li>
+  </ul>
+  <div class="versus" style="margin-top:12px">
+    <div class="caso fragment"><span class="etiqueta">No es EEE</span><h3>La cooperación</h3><p>Un solo traidor puede explotar un mundo de cooperantes y reproducirse más rápido que ellos.</p></div>
+    <div class="caso fragment"><span class="etiqueta az">Sí es EEE</span><h3>La traición</h3><p>Es peligroso ser el único cooperador en un mundo de traidores.</p></div>
+  </div>
+</section>
+
+<!-- 26 · LA SALIDA -->
+<section>
+  <div class="ceja">Entonces, ¿cómo sobreviven los murciélagos?</div>
+  <h2>La repetición cambia el juego</h2>
+  <div class="fila centro-v">
+    <table class="matriz">
+      <tr><th></th><th></th><th colspan="2" class="jug j2">El otro</th></tr>
+      <tr><th></th><th></th><th>Ojo por ojo</th><th>Traidor</th></tr>
+      <tr><th rowspan="2" class="jug j1"><span class="lado">Usted</span></th><th>Ojo por ojo</th>
+        <td class="fragment custom marcar"><span class="j1">30</span> , <span class="j2">30</span></td><td><span class="j1">19</span> , <span class="j2">22</span></td></tr>
+      <tr><th>Traidor</th>
+        <td><span class="j1">22</span> , <span class="j2">19</span></td><td class="fragment custom marcar"><span class="j1">20</span> , <span class="j2">20</span></td></tr>
+    </table>
+    <div class="col">
+      <p>Si se encuentran <strong>10 veces</strong> con el mismo compañero, como los murciélagos de una misma cueva, los pagos suman diez rondas del dilema.</p>
+      <p class="fragment">Ahora <strong>Ojo por ojo</strong> es EEE, porque 30 &gt; 22. Un traidor que llega gana la primera ronda y después lo castigan nueve veces.</p>
+      <p class="fragment peq">Traidor también es EEE (20 &gt; 19). Cuál gana depende de cuántos cooperadores haya al principio. Basta con que más de 1 de cada 9 juegue Ojo por ojo. Pruébelo en el simulador.</p>
+    </div>
+  </div>
+  <aside class="notes">Ojo por ojo contra ojo por ojo, 3 × 10 = 30. Ojo por ojo contra traidor, 1 + 2 × 9 = 19 y 4 + 2 × 9 = 22. Traidor contra traidor, 2 × 10 = 20.</aside>
+</section>
+
+<!-- 27 · CIERRE DEL TEMA -->
+<section>
+  <div class="capitulo">
+    <p class="cita-grande">Un mundo de puros cooperadores es <strong>hermoso</strong> y también <strong>frágil</strong>. La cooperación sobrevive cuando nos volvemos a encontrar, cuando recordamos quién nos ayudó y cuando el que traiciona paga por hacerlo.</p>
+    <div class="cita-autor">LO QUE NOS ENSEÑAN LOS MURCIÉLAGOS, AXELROD Y LA TEORÍA DE JUEGOS</div>
+  </div>
+</section>
+
+<!-- 28 · EL CURSO -->
+<section id="curso">
+  <div class="ceja">Lo que nos llevamos del curso</div>
+  <h2>Cinco clases, una manera de pensar</h2>
+  <div class="curso">
+    <div class="fragment"><span class="n">CLASE 1</span><b>El dilema</b><span>Lo racional para cada uno puede ser malo para todos.</span></div>
+    <div class="fragment"><span class="n">CLASE 2</span><b>Nash</b><span>Nadie gana cambiando solo. Puede haber varios equilibrios o ninguno en puras.</span></div>
+    <div class="fragment"><span class="n">CLASE 3</span><b>Cournot</b><span>Pocas firmas eligiendo cantidades quedan entre la competencia y el monopolio.</span></div>
+    <div class="fragment"><span class="n">CLASE 4</span><b>Bertrand y mixtas</b><span>Competir en precios es feroz, y a veces lo mejor es ser impredecible.</span></div>
+    <div class="fragment"><span class="n">CLASE 5</span><b>Evolución</b><span>Las estrategias que pagan más se reproducen. La repetición salva la cooperación.</span></div>
+  </div>
+  <p class="fragment" style="margin-top:30px;font-size:30px">La próxima vez que esté en un trancón, una terminal o un trabajo en grupo, pregúntese <strong>cuál es el juego</strong>.</p>
+</section>
+
+<!-- 29 · GIF FINAL -->
+<section data-background-image="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGhueDJuMnc4MzN1b3NzbGZwMWtjeXByM2RxZTFoZXVoM2UydXllYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dLrXrKZXPHrmWctsqk/giphy.gif" data-background-size="cover" data-background-opacity="0.6">
+</section>
+
+<!-- 30 · REFERENCIAS -->
+<section>
+  <div class="ceja">Referencias</div>
+  <h2>Para leer más</h2>
+  <div class="refs">
+    <p>Osborne, M. J. y Rubinstein, A. (1994). <em>A Course in Game Theory</em>. MIT Press.</p>
+    <p>Dixit, A. K., Skeath, S. y Reiley, D. H. (2020). <em>Games of Strategy</em> (5.ª ed.). W. W. Norton.</p>
+    <p>Watson, J. (2013). <em>Strategy: An Introduction to Game Theory</em> (3.ª ed.). W. W. Norton.</p>
+    <p>Gibbons, R. (1992). <em>A Primer in Game Theory</em>. Harvester Wheatsheaf.</p>
+    <p>Straub, P. G. (2022). <em>Theoretical Foundations of Game Theory</em>. Springer.</p>
+    <p>Binmore, K. (2007). <em>Playing for Real</em>. Oxford University Press.</p>
+    <p>Safner, R. (2021). <em>Lecture Notes on Game Theory</em>. Hood College.</p>
+    <p><span class="nueva">NUEVA</span><br>Darwin, C. (1859). <em>On the Origin of Species</em>. John Murray.</p>
+    <p><span class="nueva">NUEVA</span><br>Maynard Smith, J. y Price, G. R. (1973). The Logic of Animal Conflict. <em>Nature</em>, 246, 15–18.</p>
+    <p><span class="nueva">NUEVA</span><br>Axelrod, R. (1984). <em>The Evolution of Cooperation</em>. Basic Books.</p>
+    <p><span class="nueva">NUEVA</span><br>Wilkinson, G. S. (1984). Reciprocal Food Sharing in the Vampire Bat. <em>Nature</em>, 308, 181–184.</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] }, svg: { fontCache: "global" } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const IMPRESION = /print-pdf/i.test(location.search);
+const NS = "http://www.w3.org/2000/svg";
+const fmt = x => (Math.round(x * 100) / 100).toLocaleString("es-CO");
+
+Reveal.initialize({
+  width: 1280, height: 720, margin: 0.05,
+  center: false, hash: true, transition: "fade", transitionSpeed: "fast",
+  slideNumber: "c/t", controls: true, progress: true,
+  pdfSeparateFragments: false,
+  plugins: typeof RevealNotes !== "undefined" ? [RevealNotes] : []
+});
+
+function el(svg, tag, attrs, texto) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (texto !== undefined) e.textContent = texto;
+  svg.appendChild(e); return e;
+}
+
+/* ---------- Imágenes del profesor (se ven en GitHub Pages) ---------- */
+(function () {
+  [["figExt"], ["figNor"]].forEach(([id]) => {
+    const caja = $(id), img = new Image();
+    img.alt = caja.dataset.alt;
+    img.onload = () => caja.replaceChildren(img);
+    img.onerror = () => { caja.innerHTML = `<div class="sin-img">Aquí va la figura <b>${caja.dataset.src.split("/").pop()}</b> de su carpeta de imágenes. Si no aparece, revise que esté en <b>imagen/</b> dentro del repositorio.</div>`; };
+    img.src = caja.dataset.src;
+  });
+  const ax = new Image(); ax.className = "foto-axelrod"; ax.alt = "Robert Axelrod";
+  ax.onload = () => { $("fotoAxelrod").append(ax); const f = document.createElement("div"); f.className = "fuente"; f.textContent = "Robert Axelrod"; $("fotoAxelrod").append(f); };
+  ax.src = "../imagen/Robert%20Axelrod.png";
+})();
+
+/* ---------- Valores esperados con mutantes ---------- */
+function esperados(caja, slider, etq, filas) {
+  function pintar() {
+    const e = +$(slider).value / 100;
+    $(etq).textContent = Math.round(e * 100) + " %";
+    $(caja).innerHTML = filas.map(f => {
+      const v = f.calc(e);
+      return `<div class="fila-e"><span>${f.nombre}</span><div class="pista"><div class="relleno" style="width:${v / 4.2 * 100}%;background:${f.color}"></div></div><span class="v">${fmt(v)}</span></div>`;
+    }).join("");
+  }
+  $(slider).addEventListener("input", pintar); pintar();
+}
+esperados("espA", "epsA", "epsAV", [
+  { nombre: "Cooperar, los de siempre", calc: e => 3 - 2 * e, color: "var(--azul)" },
+  { nombre: "Traicionar, los mutantes", calc: e => 4 - 2 * e, color: "var(--rojo)" }
+]);
+esperados("espB", "epsB", "epsBV", [
+  { nombre: "Traicionar, los de siempre", calc: e => 2 + 2 * e, color: "var(--rojo)" },
+  { nombre: "Cooperar, los mutantes", calc: e => 1 + 2 * e, color: "var(--azul)" }
+]);
+
+/* ---------- Simulador de dinámica del replicador ---------- */
+(function () {
+  const JUEGOS = {
+    dilema:   { a: "Cooperan", b: "Traicionan", etq: "cooperando", p: [3, 1, 4, 2], x0: 90,
+                desc: "El dilema de la clase. Cooperar contra cooperar paga 3, traicionar a un cooperador paga 4." },
+    repetido: { a: "Ojo por ojo", b: "Traidores", etq: "con ojo por ojo", p: [30, 19, 22, 20], x0: 20,
+                desc: "Cada pareja juega 10 rondas del dilema. Ojo por ojo coopera primero y luego copia al otro." },
+    halcon:   { a: "Palomas", b: "Halcones", etq: "como palomas", p: [2, 0, 4, -1], x0: 90,
+                desc: "Pelean por un recurso que vale 4. Pelear cuesta 6. La paloma nunca pelea, el halcón siempre." }
+  };
+  let actual = "dilema", timer = null;
+  const svg = $("gSim"), X0 = 60, Y0 = 370, W = 560, H = 340, G = 40;
+  const sx = g => X0 + g / G * W, sy = v => Y0 - v * H;
+  function trayectoria(j, x0) {
+    const [a, b, c, d] = j.p, k = 2 - Math.min(a, b, c, d);
+    const xs = [x0];
+    let x = x0;
+    for (let g = 0; g < G; g++) {
+      const fA = x * a + (1 - x) * b + k, fB = x * c + (1 - x) * d + k, prom = x * fA + (1 - x) * fB;
+      x = x * fA / prom; xs.push(x);
+    }
+    return xs;
+  }
+  function ejes() {
+    svg.innerHTML = "";
+    [0, .25, .5, .75, 1].forEach(v => { el(svg, "line", { class: "rej", x1: X0, y1: sy(v), x2: X0 + W, y2: sy(v) }); el(svg, "text", { x: X0 - 10, y: sy(v) + 5, "text-anchor": "end" }, Math.round(v * 100) + "%"); });
+    [0, 10, 20, 30, 40].forEach(g => el(svg, "text", { x: sx(g), y: Y0 + 22, "text-anchor": "middle" }, g));
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0 + W, y2: Y0 });
+    el(svg, "line", { class: "eje", x1: X0, y1: Y0, x2: X0, y2: Y0 - H });
+    el(svg, "text", { x: X0 + W, y: Y0 + 44, "text-anchor": "end" }, "Generación");
+  }
+  function dibujar(xs, hasta) {
+    ejes();
+    const pA = [], pB = [];
+    for (let g = 0; g <= hasta; g++) { pA.push(sx(g) + "," + sy(xs[g])); pB.push(sx(g) + "," + sy(1 - xs[g])); }
+    el(svg, "polyline", { points: pB.join(" "), style: "fill:none;stroke:var(--rojo);stroke-width:4" });
+    el(svg, "polyline", { points: pA.join(" "), style: "fill:none;stroke:var(--azul);stroke-width:4" });
+    el(svg, "circle", { cx: sx(hasta), cy: sy(xs[hasta]), r: 6, style: "fill:var(--azul)" });
+    el(svg, "circle", { cx: sx(hasta), cy: sy(1 - xs[hasta]), r: 6, style: "fill:var(--rojo)" });
+  }
+  function lectura(j, xs) {
+    const f = xs[G];
+    if (actual === "halcon") return `La población se mezcla. Quedan cerca de <b>${Math.round(f * 100)} %</b> de palomas y <b>${Math.round((1 - f) * 100)} %</b> de halcones. Ninguna estrategia pura es estable, la estable es la mezcla.`;
+    if (f > 0.99) return `Ganan <b>${j.a.toLowerCase()}</b>. Llegan casi al 100 % de la población.`;
+    if (f < 0.01) return `Ganan <b>${j.b.toLowerCase()}</b>. ${actual === "repetido" ? "Arrancaron con muy pocos ojo por ojo. Pruebe con más de 11 %." : "La cooperación desaparece, empiece donde empiece."}`;
+    return `Después de ${G} generaciones van ${Math.round(f * 100)} % contra ${Math.round((1 - f) * 100)} %. Todavía están cambiando.`;
+  }
+  function cargar(k) {
+    actual = k; const j = JUEGOS[k];
+    $("nomA").textContent = j.a; $("nomB").textContent = j.b; $("simEtq").textContent = j.etq; $("simDesc").textContent = j.desc;
+    $("simX").value = j.x0; $("simXV").textContent = j.x0 + " %";
+    document.querySelectorAll("[data-sim]").forEach(b => b.classList.toggle("on", b.dataset.sim === k));
+    clearInterval(timer); timer = null;
+    const xs = trayectoria(j, j.x0 / 100); dibujar(xs, 0); $("simLectura").textContent = "";
+  }
+  function jugar() {
+    clearInterval(timer);
+    const j = JUEGOS[actual], xs = trayectoria(j, +$("simX").value / 100);
+    let g = 0;
+    timer = setInterval(() => { dibujar(xs, g); if (++g > G) { clearInterval(timer); timer = null; $("simLectura").innerHTML = lectura(j, xs); } }, 60);
+  }
+  document.querySelectorAll("[data-sim]").forEach(b => b.onclick = () => cargar(b.dataset.sim));
+  $("simX").addEventListener("input", () => { $("simXV").textContent = $("simX").value + " %"; const xs = trayectoria(JUEGOS[actual], +$("simX").value / 100); dibujar(xs, 0); });
+  $("simPlay").onclick = jugar;
+  cargar("dilema");
+  if (IMPRESION) { const xs = trayectoria(JUEGOS.dilema, 0.9); dibujar(xs, G); $("simLectura").innerHTML = lectura(JUEGOS.dilema, xs); }
+})();
+</script>
